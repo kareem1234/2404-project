@@ -19,8 +19,9 @@ class Controller : public Gtk::Window 	{
 		GenInfoMenu *genInfoMenu;
 		Student *students;
 		void setLoginMenu();
+		void teacher_summary_button_clicked();
 		void setGenInfoMenu();
-		void setCourseListMenu();
+		void setCourseListMenu(int type);
 		void setStudentMenu();
 		void setTeacherMenu();
 		void login_teacher_button_clicked();

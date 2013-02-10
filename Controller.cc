@@ -58,19 +58,25 @@ void Controller::setGenInfoMenu(){
 
 }
 
-void Controller::setCourseListMenu(){
+void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu	 // updated
-	courseList = new CourseListMenu(0);
+	courseList = new CourseListMenu(type);
 	add(*courseList);
 	courseList->show_all();
 
 	//connect signal handlers /// NOT UPDATED
-	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
-	refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
+	if(type == 0){
+		Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
+		refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
 
-	courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
-	courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
-	
+		courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
+
+		courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
+	}else if(type == 1){
+
+
+
+	}
 
 }
 
@@ -94,7 +100,10 @@ void Controller::setTeacherMenu(){
 	teacherMenu->show_all();
 
 	//connect signal handlers
-		teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
+	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
+
+	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
+
 }
 void Controller::login_teacher_button_clicked(){
 
@@ -142,13 +151,21 @@ void Controller::teacher_cancel_button_clicked(){
 	setLoginMenu();
 
 }
+void Controller::teacher_summary_button_clicked(){
+
+	remove();
+	delete (teacherMenu);
+	teacherMenu=0;
+	setCourseListMenu(1);
+
+}
 // updated
 void Controller::student_create_button_clicked(){
 
 	remove();
 	delete (studentMenu);
 	studentMenu=0;
-	setCourseListMenu();
+	setCourseListMenu(0);
 
 }
 

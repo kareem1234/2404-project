@@ -11,21 +11,26 @@ using namespace std;
 class CourseListMenu : public Gtk::Frame {
 	//private members
 	private:
+		int type;
 		Gtk::Grid* grid;
 		Gtk::TreeView *m_TreeView;
 		Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
 		Gtk::Button* cancel;
 		Gtk::Button* select;
+		Gtk::TextView *m_TextView;
+		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
+		
 		int loadCourseList();
 	//public members
 	public:
-		CourseListMenu(int type);
+		CourseListMenu(int Type);
 		~CourseListMenu();
 		Gtk::Grid*     getGrid();
 		Gtk::Button*   getCancel();
 		Gtk::Button*   getSelect();
 		Gtk::TreeView* getTreeView();
 		string getString();
+		void setString();
 
 		class ModelColumns : public Gtk::TreeModel:: ColumnRecord	{
 			public:
@@ -38,6 +43,7 @@ class CourseListMenu : public Gtk::Frame {
 
 		ModelColumns m_Columns;
 		Gtk:: ScrolledWindow m_ScrolledWindow;
+		Gtk:: ScrolledWindow m_ScrolledWindow2;
 };
 
 #endif
