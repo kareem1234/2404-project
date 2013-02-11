@@ -47,7 +47,6 @@ class Student 	{
 		void setStanding(string standing);
 		void setCgpa(string mark);
 		void setGpa(string mark);
-		void setApplication(Application *app);
 		bool checkName(string name);
 		bool checkStuNum(string num);
 		bool checkEmail(string emailAdd);

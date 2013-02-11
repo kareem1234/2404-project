@@ -40,15 +40,19 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(m_ScrolledWindow,0,0,2,2);
 		grid->attach(m_ScrolledWindow2,0,2,3,3);
 		grid->attach(*cancel,0,5,1,1);
-		grid->attach(*select,1,5,1,1);	
-			
-
+		grid->attach(*select,1,5,1,1);
+	} else if (type == 3 || type == 4)	{
+		grid->attach(m_ScrolledWindow,0,0,2,3);
+		grid->attach(*select,0,3,2,1);
 	}
+
 	// setup courseList
 	m_refTreeModel = Gtk::ListStore::create(m_Columns);
 	m_TreeView->set_model(m_refTreeModel);
 	loadCourseList();
-	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
+	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
+	else if (type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
+	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
 
 	add(*grid);
 }

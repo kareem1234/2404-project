@@ -2,7 +2,7 @@
 
 #include "Student.h"
 
-
+#include <iostream>
 using namespace std;
 
 #include <stdlib.h>
@@ -18,7 +18,6 @@ Student::Student()	{
 
 //Destructor
 Student::~Student()	{
-
 	
 
 }
@@ -33,8 +32,6 @@ Student::Student(Student& other){
 	year = other.getStanding();
 	cgpa = other.getCgpa();
 	gpa = other.getGpa();
-
-
 }
 
 //Returns complete name when called
@@ -122,11 +119,6 @@ void Student::setGpa(string mark)	{
 	float newMark;
 	newMark = atof(mark.c_str());
 	gpa = newMark;
-}
-
-//Sets application to given application
-void Student::setApplication(Application *app)	{
-	applications.pushBack(*app);
 }
 
 //Save function saves newest application under the student
