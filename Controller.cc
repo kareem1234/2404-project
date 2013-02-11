@@ -1,5 +1,6 @@
 #include "Controller.h"
 
+#include <iostream>
 using namespace std;
 
 Controller::Controller(){
@@ -7,23 +8,28 @@ Controller::Controller(){
 	// create window 
 	Gtk:Window window;
 	set_size_request(300,400);
-	studentMenu=0;
-	courseList =0;
-	loginMenu =0;
-	genInfoMenu=0;
+	studentMenu = 0;
+	courseList = 0;
+	loginMenu = 0;
+	genInfoMenu = 0;
+	relMenu = 0;
+	taMenu = 0;
+	workMenu = 0;
+	students = 0;
 	setLoginMenu();
 
 }
 
 Controller:: ~Controller()	{
 			
-		delete(studentMenu);
-		delete(courseList);
-		delete(loginMenu);
-		delete(genInfoMenu);
-		if(students != NULL){
-			delete(students);
-		};
+	delete(studentMenu);
+	delete(courseList);
+	delete(loginMenu);
+	delete(genInfoMenu);
+	delete(relMenu);
+	delete(taMenu);
+	delete(workMenu);
+	if(students != 0)	delete(students);
 }
 
 
@@ -52,8 +58,7 @@ void Controller::setGenInfoMenu(){
 	genInfoMenu->show_all();
 
 	// connect signal handlers // updated
-	genInfoMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_cancel_button_clicked));
-	genInfoMenu->getSubmit()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_submit_button_clicked));
+	genInfoMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_next_button_clicked));
 
 
 }
@@ -99,6 +104,29 @@ void Controller::setTeacherMenu(){
 	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
 
 }
+
+//Sets the related course menu, waiting for input
+void Controller::setRelatedCourseMenu()	{
+	relMenu = new RelatedCourseMenu();
+	add(*relMenu);
+	show_all();
+
+	relMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_next_button_clicked));
+	relMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_add_button_clicked));
+}
+
+void Controller::setTACourseMenu()	{
+	taMenu = new TACourseMenu();
+	add(*taMenu);
+	show_all();
+}
+
+void Controller::setExperienceMenu()	{
+	workMenu = new WorkExperienceMenu();
+	add(*workMenu);
+	show_all();
+}
+
 void Controller::login_teacher_button_clicked(){
 
 	remove();
@@ -111,21 +139,10 @@ void Controller::login_student_button_clicked(){
 
 	remove();
 	delete (loginMenu);
-	loginMenu= 0;
+	loginMenu = 0;
 	setStudentMenu();
 }
 
-void Controller::genInfo_cancel_button_clicked(){
-	// delete student
-	delete(students);
-	students =0;
-
-	remove();
-	delete (genInfoMenu);
-	genInfoMenu=0;
-	setStudentMenu();
-
-}
 //updated
 void Controller::student_cancel_button_clicked(){
 
@@ -180,15 +197,25 @@ void Controller::courselist_select_button_clicked(){
 		courseList=0;
 		setGenInfoMenu();
 		return;
-	}else if(students != 0){
+	} else if(type == 3)	{
+		remove();
+		delete(courseList);
+		courseList = 0;
+		//students->applications.getTail()->relatedCourses.pushBack(RelatedCourse r(course));
+		setRelatedCourseMenu();
+		return;
+	} else if(type == 4)	{
+		remove();
+		delete(courseList);
+		courseList = 0;
+		//students->applications.getTail()->relatedCourses.pushBack(RelatedCourse r(course));
+		setTACourseMenu();
+	} else if(type == 1 && students != 0){
 		int length = students->getNumApps();
 		Application app;
-		cout<<"1"<<endl;
 		for(int i =0; i<length; i++){
 			bool toPush = students->applications.popFront(&app);
-			cout<<"2"<<endl;
 			if( course.compare(app.getCourse()) == 0){
-				cout<<"3"<<endl;
 				stringstream ss;
 				ss<<students->getFirstName()<<" "<<students->getLastName()<<endl;
 				ss<<students->getStuNum()<<" "<<students->getEmail()<<endl;
@@ -218,29 +245,39 @@ void Controller::courselist_cancel_button_clicked(){
 }
 
 // updated
-void Controller::genInfo_submit_button_clicked(){
+void Controller::genInfo_next_button_clicked(){
 	if(checkStudentInfo()){
 		applyInfo();
 		students->save();
 		remove();
 		delete (genInfoMenu);
-		genInfoMenu=0;
-		setStudentMenu();
+		genInfoMenu = 0;
+		setCourseListMenu(3);
 	}
+}
+
+void Controller::relMenu_next_button_clicked()	{
+	remove();
+	delete(relMenu);
+	relMenu = 0;
+	setCourseListMenu(4);
+}
+
+void Controller::relMenu_add_button_clicked()	{
+	
 }
 
 //Create the new application and assigns it to the student created // not updated
 void Controller::createProfile(string s)	{
 
-	Application *app = new Application(s);
+	Application app(s);
 
-	if(students == NULL)	{
+	if(students == 0)	{
 		students = new Student();
-		students->setApplication(app);
+		students->applications.pushBack(app);
 	} else	{
-		students->setApplication(app);
+		students->applications.pushBack(app);
 	}
-	delete(app);
 }
 
 //Checks student info currently entered to see if valid // not updated
@@ -250,49 +287,49 @@ bool Controller::checkStudentInfo()	{
 	
 	//Checks first name
 	if(!students->checkName(genInfoMenu->getFirstName()->get_text()))	{
-		genInfoMenu->getFirstName()->set_text(" ");
+		genInfoMenu->getFirstName()->set_text("");
 		result = false;
 	}
 
 	//Checks last name
 	if(!students->checkName(genInfoMenu->getLastName()->get_text()))	{
-		genInfoMenu->getLastName()->set_text(" ");
+		genInfoMenu->getLastName()->set_text("");
 		result = false;
 	}
 
 	//Checks student number
 	if(!students->checkStuNum(genInfoMenu->getStuNum()->get_text()))	{
-		genInfoMenu->getStuNum()->set_text(" ");
+		genInfoMenu->getStuNum()->set_text("");
 		result = false;
 	}
 
 	//Checks email address
 	if(!students->checkEmail(genInfoMenu->getEmail()->get_text()))	{
-		genInfoMenu->getEmail()->set_text(" ");
+		genInfoMenu->getEmail()->set_text("");
 		result = false;
 	}
 
 	//Checks major
 	if(!students->checkMajor(genInfoMenu->getMajor()->get_text()))	{
-		genInfoMenu->getMajor()->set_text(" ");
+		genInfoMenu->getMajor()->set_text("");
 		result = false;
 	}
 
 	//Checks year of standing
 	if(!students->checkStanding(genInfoMenu->getYear()->get_text()))	{
-		genInfoMenu->getYear()->set_text(" ");
+		genInfoMenu->getYear()->set_text("");
 		result = false;
 	}
 
 	//Checks cgpa value
 	if(!students->checkCgpa(genInfoMenu->getCgpa()->get_text()))	{
-		genInfoMenu->getCgpa()->set_text(" ");
+		genInfoMenu->getCgpa()->set_text("");
 		result = false;
 	}
 
 	//Checks gpa value
 	if(!students->checkGpa(genInfoMenu->getGpa()->get_text()))	{
-		genInfoMenu->getGpa()->set_text(" ");
+		genInfoMenu->getGpa()->set_text("");
 		result = false;
 	}
 
