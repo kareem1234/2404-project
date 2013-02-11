@@ -13,8 +13,7 @@ class GenInfoMenu : public Gtk::Frame 	{
 	//Private members
 	private:
 		Gtk::Grid* grid;
-		Gtk::Button* cancelB;
-		Gtk::Button* submitB;
+		Gtk::Button* nextB;
 		Gtk::Label* genInfoL;
 		Gtk::Entry* firstNameT;
 		Gtk::Entry* lastNameT;
@@ -37,8 +36,7 @@ class GenInfoMenu : public Gtk::Frame 	{
 		GenInfoMenu();
 		~GenInfoMenu();
 		Gtk::Grid* getGrid();
-		Gtk::Button* getCancel();
-		Gtk::Button* getSubmit();
+		Gtk::Button* getNext();
 		Gtk::Entry* getFirstName();
 		Gtk::Entry* getLastName();
 		Gtk::Entry* getStuNum();

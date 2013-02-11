@@ -36,11 +36,9 @@ GenInfoMenu::GenInfoMenu()	{
 	genInfoL->set_size_request(150, 30);
 	
 	//Create buttons
-	cancelB = new Gtk::Button("CANCEL");
-	cancelB->set_size_request(70,30);
 
-	submitB = new Gtk::Button("SUBMIT");
-	submitB->set_size_request(70,30);
+	nextB = new Gtk::Button("NEXT");
+	nextB->set_size_request(70,30);
 	
 	//Create entry fields	
 	firstNameT = new Gtk::Entry();
@@ -83,16 +81,14 @@ GenInfoMenu::GenInfoMenu()	{
 	grid->attach(*cgpaT,2,6,1,1);	
 	grid->attach(*gpaL,1,7,1,1);	
 	grid->attach(*gpaT,2,7,1,1);	
-	grid->attach(*cancelB,0,8,2,1);
-	grid->attach(*submitB,2,8,2,1);
+	grid->attach(*nextB,1,8,4,1);
 
 	add(*grid);
 }
 
 GenInfoMenu::~GenInfoMenu()	{
 		delete(grid);
-		delete(cancelB);
-		delete(submitB);
+		delete(nextB);
 		delete(genInfoL);
 		delete(firstNameT);
 		delete(lastNameT);
@@ -117,14 +113,9 @@ Gtk::Grid* GenInfoMenu::getGrid()	{
 	return grid;
 }
 
-//Returns cancel button if called
-Gtk::Button* GenInfoMenu::getCancel()	{
-	return cancelB;
-}
-
 //Returns submit button if called
-Gtk::Button* GenInfoMenu::getSubmit()	{
-	return submitB;
+Gtk::Button* GenInfoMenu::getNext()	{
+	return nextB;
 }
 
 //Returns firstName field if called

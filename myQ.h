@@ -1,3 +1,6 @@
+#ifndef MYQ_H
+#define MYQ_H
+
 #include<iostream>
 using namespace std;
 template <class T> class myQ {
@@ -9,10 +12,10 @@ template <class T> class myQ {
 				T data;
 				Node* next;
 				Node(){
-							
+				  next = 0;
 				}
 				~Node(){
-										
+				  						
 				}	
 		};
 		// instance variables
@@ -30,15 +33,11 @@ template <class T> class myQ {
 		// destructor
 		~myQ(){
 			Node* currentNode = 0;
-			if(head != 0){
-			 	currentNode= head->next;
-				delete(head);
-				while(currentNode != 0){
-					head = currentNode;
-					currentNode = head->next;
-					delete(head);
+			while(head != 0)  {
+				currentNode = head;
+				head = head->next;
+				delete currentNode;
 			}
-                    }
 		};
 
 		// queue methods
@@ -47,20 +46,21 @@ template <class T> class myQ {
 		bool front(T* element);
 		bool isEmpty();
 		int length();	
+		T* getTail();
 
 };
 
 template <class T>
  bool myQ<T>::isEmpty(){
 
-	if( l== 0) return false;
+	if(l == 0) return false;
 
 
 	return true;
 }
 
 template<class T>
-int myQ<T>:: length(){
+int myQ<T>::length(){
 	return l;
 
 }
@@ -117,5 +117,9 @@ bool myQ<T>::popFront(T* element){
 	return false;
 }
 
+template<class T>
+T* myQ<T>::getTail()	{
+	return &(tail->data);
+}
 
-
+#endif

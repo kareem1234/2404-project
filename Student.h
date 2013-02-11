@@ -3,7 +3,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 // include que class for data storage
-#include "myQ.cc"
+#include "myQ.h"
 #include "Application.h"
 #include <string>
 using namespace std;
@@ -47,7 +47,6 @@ class Student 	{
 		void setStanding(string standing);
 		void setCgpa(string mark);
 		void setGpa(string mark);
-		void setApplication(Application *app);
 		bool checkName(string name);
 		bool checkStuNum(string num);
 		bool checkEmail(string emailAdd);
