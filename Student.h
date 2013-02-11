@@ -2,7 +2,8 @@
 
 #ifndef STUDENT_H
 #define STUDENT_H
-
+// include que class for data storage
+#include "myQ.cc"
 #include "Application.h"
 #include <string>
 using namespace std;
@@ -19,16 +20,16 @@ class Student 	{
 		int year;
 		float cgpa;
 		float gpa;
-		Application* application;
 		bool validString(string s);
 		bool validInt(string s);
 		bool validFloat(string s);
 
 	//Public members
 	public:
-		Student(Application* app);
+		Student();
 		Student(Student& other);
 		~Student();
+		myQ<Application> applications;
 		string getFirstName();
 		string getLastName();
 		string getStuNum();
@@ -37,6 +38,7 @@ class Student 	{
 		int getStanding();
 		float getCgpa();
 		float getGpa();
+		int getNumApps();
 		Application* getApplications();
 		void setName(string name1, string name2);
 		void setStuNum(string num);

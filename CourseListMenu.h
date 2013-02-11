@@ -30,7 +30,8 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::Button*   getSelect();
 		Gtk::TreeView* getTreeView();
 		string getString();
-		void setString();
+		void setString(string app);
+		int getType();
 
 		class ModelColumns : public Gtk::TreeModel:: ColumnRecord	{
 			public:

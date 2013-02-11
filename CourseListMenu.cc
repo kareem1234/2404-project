@@ -25,7 +25,6 @@ CourseListMenu::CourseListMenu(int Type){
 		m_ScrolledWindow2.add(*m_TextView);
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		m_refTextBuffer = Gtk::TextBuffer::create();
-		m_refTextBuffer->set_text("TESTING");
 		m_TextView->set_buffer(m_refTextBuffer);
 	}
 
@@ -66,6 +65,9 @@ CourseListMenu::~CourseListMenu()	{
 
 	delete(m_TextView);
 
+}
+int CourseListMenu::getType(){
+	return type;
 }
 
 //Loads list of courses into GUI list
@@ -114,7 +116,10 @@ string CourseListMenu::getString(){
 		return s;
 	}
 }
+void CourseListMenu::setString(string app){
+	m_refTextBuffer->set_text(app);
 
+}
 Gtk::TreeView* CourseListMenu::getTreeView(){
 	return m_TreeView;
 }

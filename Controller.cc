@@ -65,18 +65,12 @@ void Controller::setCourseListMenu(int type){
 	courseList->show_all();
 
 	//connect signal handlers /// NOT UPDATED
-	if(type == 0){
 		Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
 		refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
 
 		courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
 
 		courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
-	}else if(type == 1){
-
-
-
-	}
 
 }
 
@@ -178,20 +172,48 @@ void Controller::courselist_treeview_row_selected(){
 void Controller::courselist_select_button_clicked(){
 	
 	string course(courseList->getString());
-	createProfile(course);
-	remove();
-	delete (courseList);
-	courseList=0;
-	setGenInfoMenu();
+	int type;
+	if( (type = courseList->getType()) == 0  ){
+		createProfile(course);
+		remove();
+		delete (courseList);
+		courseList=0;
+		setGenInfoMenu();
+		return;
+	}else if(students != 0){
+		int length = students->getNumApps();
+		Application app;
+		cout<<"1"<<endl;
+		for(int i =0; i<length; i++){
+			bool toPush = students->applications.popFront(&app);
+			cout<<"2"<<endl;
+			if( course.compare(app.getCourse()) == 0){
+				cout<<"3"<<endl;
+				stringstream ss;
+				ss<<students->getFirstName()<<" "<<students->getLastName()<<endl;
+				ss<<students->getStuNum()<<" "<<students->getEmail()<<endl;
+				ss<<students->getMajor()<<" "<<students->getStanding()<<endl;
+				ss<<students->getCgpa()<<" "<<students->getGpa()<<endl;
+				courseList->setString(ss.str());
+				students->applications.pushBack(app);
+				return;
+			}
+			if(toPush)
+			students->applications.pushBack(app);
+		}
+	}
+	courseList->setString("No application found");
 
 }
 // updated
 void Controller::courselist_cancel_button_clicked(){
-	
+	int type = courseList->getType();
 	remove();
 	delete (courseList);
 	courseList=0;
+	if(type ==0 )
 	setStudentMenu();
+	else setTeacherMenu();
 
 }
 
@@ -213,10 +235,12 @@ void Controller::createProfile(string s)	{
 	Application *app = new Application(s);
 
 	if(students == NULL)	{
-		students = new Student(app);
+		students = new Student();
+		students->setApplication(app);
 	} else	{
 		students->setApplication(app);
 	}
+	delete(app);
 }
 
 //Checks student info currently entered to see if valid // not updated

@@ -8,6 +8,9 @@
 #include"LoginMenu.h"
 #include"GenInfoMenu.h"
 #include "TeacherMenu.h"
+#include<iostream>
+#include<sstream>
+#include<string>
 
 class Controller : public Gtk::Window 	{
 	

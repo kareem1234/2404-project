@@ -2,8 +2,6 @@
 
 #include "Student.h"
 
-// include que class for data storage
-#include "myQ.cc"
 
 using namespace std;
 
@@ -12,23 +10,21 @@ using namespace std;
 ofstream saveLog;
 
 //Default constructor
-Student::Student(Application* app = NULL)	{
+Student::Student()	{
 
-	//Assigning parameters to data members
-	application = app;
+	
+	
 }
 
 //Destructor
 Student::~Student()	{
 
-	delete(application);
-	application=0;
+	
 
 }
 // copy constructor
 Student::Student(Student& other){
-	application = new Application();
-	*application = *(other.application);
+	applications = other.applications;
 	firstName = other.getFirstName();
 	lastName= other.getLastName(); 
 	stuNum = other.getStuNum();
@@ -81,7 +77,9 @@ float Student::getGpa()	{
 
 //Returns head of list of applications
 Application* Student::getApplications()	{
-	return application;
+	Application* app = new Application;
+	applications.popFront(app);
+	return app;
 }
 
 //Sets first and last name with given strings
@@ -128,7 +126,7 @@ void Student::setGpa(string mark)	{
 
 //Sets application to given application
 void Student::setApplication(Application *app)	{
-	application = app;
+	applications.pushBack(*app);
 }
 
 //Save function saves newest application under the student
@@ -136,7 +134,8 @@ void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);	
 	saveLog << firstName + " " << lastName << " " << stuNum << " " << email;
         saveLog << " " << major << " " << cgpa << " " << gpa;
-	application->save();
+	//must fix saving for each application in que
+	//application->save();
 	saveLog << endl;
 }
 
@@ -148,7 +147,9 @@ bool Student::checkName(string name)	{
 	}
  	return true;
 }
-
+int Student::getNumApps(){
+	return applications.length();
+}
 //Checks student number for weird values
 bool Student::checkStuNum(string num)	{
 	float check;
