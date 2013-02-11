@@ -49,13 +49,13 @@ void Application::save()	{
 	saveLog << " " << applicationNum + " " + status + " " + course;
 	int l = assistedCourses.length();
 	for(int i = 0; i< l; i++){
-		AssistedCourse course;
+		AssistantCourse course;
 		assistedCourses.popFront(&course);
 		course.save();
 		assistedCourses.pushBack(course);
 	}
 	l = relatedCourses.length();
-	for(int i= 0; i< l: i++){
+	for(int i= 0; i<l; i++){
 		RelatedCourse course;
 		relatedCourses.popFront(&course);
 		course.save();

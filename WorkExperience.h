@@ -17,8 +17,8 @@ class WorkExperience{
 
 
 	public:
-		WorkExperience(string Title, string Duties,
-				string Duration, string Start, string End);
+		WorkExperience(string Title = "", string Duties = "",
+				string Duration = "", string Start = "", string End = "");
 		void save();
 		void setTitle(string Title);
 		void setEnd(string End);
