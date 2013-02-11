@@ -201,14 +201,16 @@ void Controller::courselist_select_button_clicked(){
 		remove();
 		delete(courseList);
 		courseList = 0;
-		//students->applications.getTail()->relatedCourses.pushBack(RelatedCourse r(course));
+		RelatedCourse r(course);
+		students->applications.getTail()->relatedCourses.pushBack(r);
 		setRelatedCourseMenu();
 		return;
 	} else if(type == 4)	{
 		remove();
 		delete(courseList);
 		courseList = 0;
-		//students->applications.getTail()->relatedCourses.pushBack(RelatedCourse r(course));
+		RelatedCourse r(course);
+		students->applications.getTail()->relatedCourses.pushBack(r);
 		setTACourseMenu();
 	} else if(type == 1 && students != 0){
 		int length = students->getNumApps();
