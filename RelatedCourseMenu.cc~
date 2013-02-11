@@ -94,7 +94,7 @@ RelatedCourseMenu::~RelatedCourseMenu()	{
 	delete(relatedCourseL);
 	delete(termD);
 	delete(yearT);
-	delete(finalD);
+	delete(finalT);
 	delete(termL);
 	delete(yearL);
 	delete(finalL);
