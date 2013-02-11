@@ -3,7 +3,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 // include que class for data storage
-#include "myQ.cc"
+#include "myQ.h"
 #include "Application.h"
 #include <string>
 using namespace std;

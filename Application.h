@@ -3,6 +3,10 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "AssistantCourse.h"
+#include "RelatedCourse.h"
+#include "WorkExperience.h"
+#include "myQ.h"
 #include <string>
 using namespace std;
 
@@ -18,6 +22,9 @@ class Application {
 	public:
 		Application(string c);
 		Application();
+		myQ<AssistantCourse> assistedCourses;
+		myQ<RelatedCourse>   relatedCourses;
+		myQ<WorkExperience>  workExperiences;
 		int getApplicationNum();
 		string getStatus();
 		string getCourse();

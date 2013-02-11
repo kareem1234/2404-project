@@ -135,7 +135,13 @@ void Student::save()	{
 	saveLog << firstName + " " << lastName << " " << stuNum << " " << email;
         saveLog << " " << major << " " << cgpa << " " << gpa;
 	//must fix saving for each application in que
-	//application->save();
+	int l = applications.length();
+	for(int i=0; i < l; i++){
+		Application app;
+		applications.popFront(&app);
+		app.save();
+		applications.pushBack(app);
+	}
 	saveLog << endl;
 }
 

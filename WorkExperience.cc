@@ -1,7 +1,7 @@
 #include "WorkExperience.h"
-
+using namespace std;
 WorkExperience:: WorkExperience(string Title, string Duties,
-string Duration, string Start, String End){
+string Duration, string Start, string End){
 
 title = Title;
 duties = Duties;
@@ -12,7 +12,7 @@ setDuration(Duration);
 }
 
 void WorkExperience::save(){
-	saveLog<<" "<<title<<" "<< duration<< " "<<start<<" "<<end<<" "<< duties;
+	saveLog<<" " "W"<<title<<" "<< duration<< " "<<start<<" "<<end<<" "<< duties;
 
 }
 
@@ -21,8 +21,8 @@ void WorkExperience::setTitle(string Title){
 
 }
 
-int WorkExperience::setDuration(String Duration){
-	stringstream toConver(Duration);
+int WorkExperience::setDuration(string Duration){
+	stringstream toConvert(Duration);
 	if( ! (toConvert >> duration) )
 		return duration = -1;
 
@@ -61,7 +61,7 @@ string WorkExperience:: getEnd(){
 	return end;
 }
 
-string WorkExpereince:: getStart(){
+string WorkExperience:: getStart(){
 
 	return start;
 }

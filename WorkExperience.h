@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include<string>
+using namespace std;
 extern ofstream saveLog;
 
 class WorkExperience{
@@ -16,9 +18,9 @@ class WorkExperience{
 
 	public:
 		WorkExperience(string Title, string Duties,
-				string Duration, string Start, String End);
+				string Duration, string Start, string End);
 		void save();
-		void setTitle();
+		void setTitle(string Title);
 		void setEnd(string End);
 		void setStart(string Start);
 		int setDuration(string Duration);
@@ -34,4 +36,4 @@ class WorkExperience{
 
 
 
-}
+};

@@ -1,5 +1,5 @@
-Assignment1:	Main.o Controller.o Student.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o
-		g++ -o Assignment1 Main.o Controller.o Student.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
+Assignment1:	Main.o Controller.o Student.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o AssistantCourse.o RelatedCourse.o WorkExperience.o Course.o
+		g++ -o Assignment1 Main.o Controller.o Student.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o AssistantCourse.o RelatedCourse.o Course.o  WorkExperience.o `pkg-config gtkmm-3.0 --cflags --libs`
 
 Main.o:		Main.h Main.cc 
 		g++ -c Main.cc `pkg-config gtkmm-3.0 --cflags --libs`
@@ -25,8 +25,19 @@ LoginMenu.o:	LoginMenu.h LoginMenu.cc
 CourseListMenu.o:	CourseListMenu.h CourseListMenu.cc
 			g++ -c CourseListMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
-TeacherMenu.o:  TeacherMenu.h TeacherMenu.cc
+TeacherMenu.o:	TeacherMenu.h TeacherMenu.cc
 		g++ -c TeacherMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+WorkExperience.o:	WorkExperience.h WorkExperience.cc
+			g++ -c WorkExperience.cc
+
+RelatedCourse.o:	RelatedCourse.h RelatedCourse.cc
+			g++ -c RelatedCourse.cc
+
+AssistantCourse.o:	AssistantCourse.h AssistantCourse.cc
+			g++ -c AssistantCourse.cc	
+Course.o:		Course.h Course.cc
+			g++ -c Course.cc
 
 clean: 		
 		rm *.o *.h~ *.cc~ saveLog.txt Assignment1

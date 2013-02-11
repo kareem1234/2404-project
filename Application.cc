@@ -47,4 +47,30 @@ void Application::setCourse(string c){
 //Save method saves current application to output file
 void Application::save()	{
 	saveLog << " " << applicationNum + " " + status + " " + course;
+	int l = assistedCourses.length();
+	for(int i = 0; i< l; i++){
+		AssistedCourse course;
+		assistedCourses.popFront(&course);
+		course.save();
+		assistedCourses.pushBack(course);
+	}
+	l = relatedCourses.length();
+	for(int i= 0; i< l: i++){
+		RelatedCourse course;
+		relatedCourses.popFront(&course);
+		course.save();
+		relatedCourses.pushBack(course);
+	}
+	l= workExperiences.length();
+	for(int i= 0; i<l; i++){
+		WorkExperience work;
+		workExperiences.popFront(&work);
+		work.save();
+		workExperiences.pushBack(work);
+	}
 }
+
+
+
+
+
