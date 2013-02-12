@@ -5,6 +5,10 @@
 //Include statements
 #include "Course.h"
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+extern ofstream saveLog;
 using namespace std;
 
 //RelatedCourse class declaration, inherits from Course

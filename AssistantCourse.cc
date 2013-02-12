@@ -2,7 +2,7 @@
 
 //Include statements
 #include "AssistantCourse.h"
-
+using namespace std;
 //Default AssistantCourse constructor using member initialation
 AssistantCourse::AssistantCourse(string name, string t, int y, string sup)
 	: Course::Course(name, t, y), supervisor(sup)
@@ -25,5 +25,8 @@ void AssistantCourse::setSupervisor(string sup)	{
 
 //Saves all necessary details to file
 void AssistantCourse::save()	{
+	saveLog<<" "<<"A"<<" "<<getCourseName()<<" "<<getTerm();
+	saveLog<<" "<<getYear()<<" "<<getSupervisor();	
+	
 
 }

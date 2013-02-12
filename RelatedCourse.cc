@@ -25,5 +25,7 @@ void RelatedCourse::setFinalGrade(string final)	{
 
 //Saves necessary info to file
 void RelatedCourse::save()	{
+	saveLog<<" "<<"R"<<" "<<getCourseName()<<" "<<getTerm();
+	saveLog<<" "<<getYear()<<" "<<getFinalGrade();	
 
 }

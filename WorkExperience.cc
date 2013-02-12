@@ -12,7 +12,7 @@ setDuration(Duration);
 }
 
 void WorkExperience::save(){
-	saveLog<<" " "W"<<title<<" "<< duration<< " "<<start<<" "<<end<<" "<< duties;
+	saveLog<<" "<<"W"<<" "<<title<<" "<< duration<< " "<<start<<" "<<end<<" "<< duties;
 
 }
 
