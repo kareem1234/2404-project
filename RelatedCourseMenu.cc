@@ -7,8 +7,8 @@
 RelatedCourseMenu::RelatedCourseMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
-	addCourseB = new Gtk::Button("ADD COURSE");
-	nextB = new Gtk::Button("NEXT");
+	addCourseB = new Gtk::Button("ADD ANOTHER COURSE");
+	nextB = new Gtk::Button("ADD AND CONTINUE");
 
 	//Create labels
 	relatedCourseL = new Gtk::Label("RELATED COURSE");
@@ -78,8 +78,8 @@ RelatedCourseMenu::RelatedCourseMenu()	{
 	grid->attach(*yearT,1,2,1,1);
 	grid->attach(*finalL,0,3,1,1);
 	grid->attach(*finalD,1,3,1,1);
-	grid->attach(*addCourseB,0,4,1,1);
-	grid->attach(*nextB,1,4,1,1);
+	grid->attach(*addCourseB,0,4,2,1);
+	grid->attach(*nextB,0,5,2,1);
 
 	add(*grid);
 }

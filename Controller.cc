@@ -35,7 +35,6 @@ Controller:: ~Controller()	{
 
 void Controller::setLoginMenu()  {
 
-	students = 0;
 	// allocated new loginMenu // updated
 	loginMenu = new LoginMenu;
 	add(*loginMenu);
@@ -54,6 +53,7 @@ void Controller::setGenInfoMenu(){
 
 	// allocate new GenInfoMenu // updated
 	genInfoMenu = new GenInfoMenu;
+	genInfoMenu->setStudentInfo(students);
 	add(*genInfoMenu);
 	genInfoMenu->show_all();
 
@@ -75,6 +75,7 @@ void Controller::setCourseListMenu(int type){
 
 	courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
 	courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
+	courseList->getSkip()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_skip_button_clicked));
 
 }
 
@@ -129,6 +130,8 @@ void Controller::setExperienceMenu()	{
 	add(*workMenu);
 	show_all();
 
+	workMenu->getSkipButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_skip_button_clicked));
+	workMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_cancel_button_clicked));
 	workMenu->getSubmitButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_submit_button_clicked));
 	workMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_add_button_clicked));
 }
@@ -204,7 +207,6 @@ void Controller::courselist_select_button_clicked(){
 		setGenInfoMenu();
 		return;
 	} else if(type == 3)	{
-		cout<<"courselist clicked"<<endl;
 		remove();
 		delete(courseList);
 		courseList = 0;
@@ -254,6 +256,21 @@ void Controller::courselist_cancel_button_clicked(){
 
 }
 
+void Controller::courselist_skip_button_clicked()	{
+	int type(courseList->getType());
+	if(type == 3)	{
+		remove();
+		delete(courseList);
+		courseList = 0;
+		setCourseListMenu(4);
+	} else if(type == 4)	{
+		remove();
+		delete(courseList);
+		courseList = 0;
+		setExperienceMenu();
+	}
+}
+
 // updated
 void Controller::genInfo_next_button_clicked(){
 	if(genInfoMenu->checkInfo()){
@@ -275,10 +292,12 @@ void Controller::relMenu_next_button_clicked()	{
 	}
 }
 void Controller::taMenu_next_button_clicked()	{
-	remove();
-	delete(taMenu);
-	taMenu = 0;
-	setExperienceMenu();
+	if(taMenu->checkInput())	{
+		remove();
+		delete(taMenu);
+		taMenu = 0;
+		setExperienceMenu();
+	}
 }
 void Controller::workExperience_submit_button_clicked(){
 	if(workMenu->checkInput())	{	
@@ -299,10 +318,12 @@ void Controller::relMenu_add_button_clicked()	{
 }
 
 void Controller::taMenu_add_button_clicked()	{
-	remove();
-	delete(taMenu);
-	taMenu = 0;
-	setCourseListMenu(4);
+	if(taMenu->checkInput())	{	
+		remove();
+		delete(taMenu);
+		taMenu = 0;
+		setCourseListMenu(4);
+	}
 }
 
 void Controller::workExperience_add_button_clicked()	{
@@ -312,6 +333,22 @@ void Controller::workExperience_add_button_clicked()	{
 		workMenu = 0;
 		setExperienceMenu();
 	}
+}
+
+void Controller::workExperience_skip_button_clicked()	{
+	remove();
+	delete(workMenu);
+	workMenu = 0;
+	setStudentMenu();
+}
+
+void Controller::workExperience_cancel_button_clicked()	{
+	
+	//Delete application
+	remove();
+	delete(workMenu);
+	workMenu = 0;
+	setStudentMenu();
 }
 
 //Create the new application and assigns it to the student created // not updated

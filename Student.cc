@@ -12,9 +12,9 @@ ofstream saveLog;
 
 //Default constructor
 Student::Student()	{
-
-	
-	
+	year = -1;
+	cgpa = -1;
+	gpa = -1;
 }
 
 //Destructor

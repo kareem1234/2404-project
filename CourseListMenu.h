@@ -16,6 +16,7 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::TreeView *m_TreeView;
 		Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
 		Gtk::Button* cancel;
+		Gtk::Button* skip;
 		Gtk::Button* select;
 		Gtk::TextView *m_TextView;
 		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
@@ -27,6 +28,7 @@ class CourseListMenu : public Gtk::Frame {
 		~CourseListMenu();
 		Gtk::Grid*     getGrid();
 		Gtk::Button*   getCancel();
+		Gtk::Button*   getSkip();
 		Gtk::Button*   getSelect();
 		Gtk::TreeView* getTreeView();
 		string getString();

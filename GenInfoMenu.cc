@@ -1,7 +1,7 @@
 //GenInfoMenu source file
 
 #include "GenInfoMenu.h"
-#include "Student.h"
+#include <sstream>
 
 //Default constructor
 GenInfoMenu::GenInfoMenu()	{
@@ -37,7 +37,7 @@ GenInfoMenu::GenInfoMenu()	{
 	genInfoL->set_size_request(150, 30);
 	
 	//Create buttons
-	nextB = new Gtk::Button("NEXT");
+	nextB = new Gtk::Button("CONTINUE");
 	nextB->set_size_request(70,30);
 	
 	//Create entry fields	
@@ -256,4 +256,30 @@ bool GenInfoMenu::checkInfo()	{
 	//Returns result
 	return result;
 
+}
+
+void GenInfoMenu::setStudentInfo(Student* s)	{
+	if(s == 0)	return;	
+	
+	stringstream l;
+	setFirstName(s->getFirstName());
+	setLastName(s->getLastName());
+	setStuNum(s->getStuNum());
+	setMajor(s->getMajor());
+	if(s->getStanding() != -1)	{
+		l.str("");
+		l << s->getStanding();
+		setYear(l.str());
+	}
+	setEmail(s->getEmail());
+	if(s->getCgpa() != -1)	{
+		l.str("");
+		l << s->getCgpa();
+		setCgpa(l.str());
+	}
+	if(s->getGpa() != -1)	{
+		l.str("");
+		l << s->getGpa();
+		setGpa(l.str());
+	}
 }

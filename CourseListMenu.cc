@@ -11,6 +11,7 @@ CourseListMenu::CourseListMenu(int Type){
 	type = Type;
 	grid = new Gtk::Grid();
 	cancel = new Gtk::Button("CANCEL");
+	skip = new Gtk::Button("SKIP");
 	select= new Gtk::Button("SELECT");
 	select->set_sensitive(false);
 	m_TreeView = new Gtk::TreeView;
@@ -31,20 +32,22 @@ CourseListMenu::CourseListMenu(int Type){
 
 	cancel->set_size_request(70,30);
     	select->set_size_request(70,30);
+	skip->set_size_request(70,30);
 	m_ScrolledWindow.set_size_request(300,400);
 
 	if(type == 0){
 		grid->attach(m_ScrolledWindow,0,0,2,3);
-		grid->attach(*cancel,0,3,1,1);
-		grid->attach(*select,1,3,1,1);	
+		grid->attach(*cancel,0,3,2,1);
+		grid->attach(*select,0,4,2,1);	
 	}else if(type == 1){
 		grid->attach(m_ScrolledWindow,0,0,2,2);
 		grid->attach(m_ScrolledWindow2,0,2,3,3);
-		grid->attach(*cancel,0,5,1,1);
-		grid->attach(*select,1,5,1,1);
+		grid->attach(*cancel,0,5,2,1);
+		grid->attach(*select,0,6,2,1);
 	} else if (type == 3 || type == 4)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);
+		grid->attach(*skip,0,4,2,1);
 	}
 
 	// setup courseList
@@ -61,13 +64,10 @@ CourseListMenu::CourseListMenu(int Type){
 CourseListMenu::~CourseListMenu()	{
 
 	delete(grid);
-
 	delete(cancel);
-
+	delete(skip);
 	delete(select);
-
 	delete(m_TreeView);
-
 	delete(m_TextView);
 
 }
@@ -105,6 +105,11 @@ Gtk::Grid* CourseListMenu::getGrid()  {
 //Returns cancel button when called
 Gtk::Button* CourseListMenu::getCancel(){
 	return cancel;
+}
+
+//Returns skip button when called
+Gtk::Button* CourseListMenu::getSkip()	{
+	return skip;
 }
 
 //Returns select button when called

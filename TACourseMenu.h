@@ -23,7 +23,7 @@ class TACourseMenu : public Gtk::Frame 	{
 		Gtk::Button* addCourseB;
 		Gtk::Button* nextB;
 		Gtk::Label* relatedCourseL;
-		Gtk::ComboBox* termD;
+		Gtk::ComboBoxText* termD;
 		Gtk::Entry* yearT;
 		Gtk::Entry* supervisorT;
 		Gtk::Label* termL;
@@ -39,11 +39,12 @@ class TACourseMenu : public Gtk::Frame 	{
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
 		Gtk::Button* getNextButton();
-		Gtk::ComboBox* getTerm();
+		Gtk::ComboBoxText* getTerm();
 		Gtk::Entry* getYear();
 		Gtk::Entry* getSupervisor();
 		void setYear(string);
 		void setSupervisor(string);
+		int checkInput();
 };
 
 #endif

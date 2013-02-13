@@ -21,6 +21,8 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 
 		Gtk::Grid* grid;
 		Gtk::Button* addB;
+		Gtk::Button* cancelB;
+		Gtk::Button* skipSubmitB;
 		Gtk::Button* submitB;
 		Gtk::Label* experienceL;
 		Gtk::Label* titleL;
@@ -51,6 +53,8 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 		~WorkExperienceMenu();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
+		Gtk::Button* getCancelButton();
+		Gtk::Button* getSkipButton();
 		Gtk::Button* getSubmitButton();
 		Gtk::Entry* getTitle();
 		Gtk::TextView* getDuties();

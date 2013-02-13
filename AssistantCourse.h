@@ -24,6 +24,8 @@ class AssistantCourse : public Course	{
 		string getSupervisor();
 		void setSupervisor(string);
 		void save();
+		static bool checkYear(string);
+		static bool checkSupervisor(string);
 };
 
 #endif

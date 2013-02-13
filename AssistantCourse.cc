@@ -2,7 +2,8 @@
 
 //Include statements
 #include "AssistantCourse.h"
-using namespace std;
+#include <stdlib.h>
+
 //Default AssistantCourse constructor using member initialation
 AssistantCourse::AssistantCourse(string name, string t, int y, string sup)
 	: Course::Course(name, t, y), supervisor(sup)
@@ -27,6 +28,22 @@ void AssistantCourse::setSupervisor(string sup)	{
 void AssistantCourse::save()	{
 	saveLog<<" "<<"A"<<" "<<getCourseName()<<" "<<getTerm();
 	saveLog<<" "<<getYear()<<" "<<getSupervisor();	
-	
+}
 
+bool AssistantCourse::checkYear(string s)	{
+	int check = 0;
+	check = atoi(s.c_str());
+	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
+		return false;
+	}
+	if(check < 0 || check > 2013)	return false;
+
+	return true;
+}
+
+bool AssistantCourse::checkSupervisor(string s)	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{
+		return false;
+	}
+ 	return true;
 }

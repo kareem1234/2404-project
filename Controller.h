@@ -47,11 +47,14 @@ class Controller : public Gtk::Window 	{
 		void taMenu_add_button_clicked();
 		void workExperience_submit_button_clicked();
 		void workExperience_add_button_clicked();
+		void workExperience_skip_button_clicked();
+		void workExperience_cancel_button_clicked();
 		void student_cancel_button_clicked();
 		void student_create_button_clicked();
 		void courselist_treeview_row_selected();
 		void courselist_select_button_clicked();
 		void courselist_cancel_button_clicked();
+		void courselist_skip_button_clicked();
 		void createProfile(string s);
 		bool checkStudentInfo();
 		void applyInfo();

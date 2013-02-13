@@ -9,8 +9,10 @@
 WorkExperienceMenu::WorkExperienceMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
-	addB = new Gtk::Button("ADD EXPERIENCE");
-	submitB = new Gtk::Button("SUBMIT");
+	addB = new Gtk::Button("ADD MORE EXPERIENCE");
+	cancelB = new Gtk::Button("CANCEL APPLICATION");
+	skipSubmitB = new Gtk::Button("SKIP AND SUBMIT APPLICATION");
+	submitB = new Gtk::Button("SUBMIT APPLICATION");
 
 	//Create labels
 	experienceL = new Gtk::Label("WORK EXPERIENCE");
@@ -110,8 +112,10 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 	grid->attach(*toL,3,5,1,1);
 	grid->attach(*endMonth,4,5,1,1);
 	grid->attach(*endYear,5,5,1,1);
-	grid->attach(*addB,0,6,2,1);
-	grid->attach(*submitB,2,6,4,1);
+	grid->attach(*addB,0,6,6,1);
+	grid->attach(*cancelB,0,7,6,1);
+	grid->attach(*skipSubmitB,0,8,6,1);
+	grid->attach(*submitB,0,8,6,1);
 
 	add(*grid);
 }
@@ -119,6 +123,8 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 WorkExperienceMenu::~WorkExperienceMenu()	{
 	delete grid;
 	delete addB;
+	delete cancelB;
+	delete skipSubmitB;
 	delete submitB;
 	delete experienceL;
 	delete titleL;
@@ -141,6 +147,14 @@ Gtk::Grid* WorkExperienceMenu::getGrid()	{
 
 Gtk::Button* WorkExperienceMenu::getAddButton()	{
 	return addB;
+}
+
+Gtk::Button* WorkExperienceMenu::getCancelButton()	{
+	return cancelB;
+}
+
+Gtk::Button* WorkExperienceMenu::getSkipButton()	{
+	return skipSubmitB;
 }
 
 Gtk::Button* WorkExperienceMenu::getSubmitButton()	{
