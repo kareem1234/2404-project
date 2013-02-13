@@ -3,10 +3,10 @@ using namespace std;
 WorkExperience:: WorkExperience(string Title, string Duties,
 string Duration, string Start, string End){
 
-title = Title;
-duties = Duties;
-start = Start;
-end = End;
+	title = Title;
+	duties = Duties;
+	start = Start;
+	end = End;
 
 setDuration(Duration); 
 }
@@ -62,12 +62,19 @@ string WorkExperience:: getEnd(){
 }
 
 string WorkExperience:: getStart(){
-
 	return start;
 }
 
+bool WorkExperience::checkDuties(string s)	{
+	if(s == "")	return false;
+	return true;
+}
 
-
-
+bool WorkExperience::checkTitle(string s)	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
+		return false;
+	}
+ 	return true;
+}
 
 

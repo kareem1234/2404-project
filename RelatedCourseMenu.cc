@@ -2,12 +2,12 @@
 
 //Include statements
 #include "RelatedCourseMenu.h"
+#include "Course.h"
 
 RelatedCourseMenu::RelatedCourseMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
 	addCourseB = new Gtk::Button("ADD COURSE");
-	//addCourseB->set_sensitive(false);
 	nextB = new Gtk::Button("NEXT");
 
 	//Create labels
@@ -24,13 +24,13 @@ RelatedCourseMenu::RelatedCourseMenu()	{
 	finalL->set_size_request(70, 30);
 
 	//Set combo boxes and entry boxes
-	termD = new Gtk::ComboBox();
+	termD = new Gtk::ComboBoxText();
 	termD->set_size_request(70, 30);
 
 	yearT = new Gtk::Entry();
 	yearT->set_size_request(70, 30);
 
-	finalD = new Gtk::ComboBox();
+	finalD = new Gtk::ComboBoxText();
 	finalD->set_size_request(70, 30);
 
 	term_refTreeModel = Gtk::ListStore::create(term_Columns);
@@ -71,9 +71,6 @@ RelatedCourseMenu::RelatedCourseMenu()	{
 	row1 = *(grade_refTreeModel->append());
 	row1[grade_Columns.m_col_value] = "D-";
 
-	termD->pack_start(term_Columns.m_col_value);
-	finalD->pack_start(grade_Columns.m_col_value);
-
 	grid->attach(*relatedCourseL,0,0,2,1);
 	grid->attach(*termL,0,1,1,1);
 	grid->attach(*termD,1,1,1,1);
@@ -112,7 +109,7 @@ Gtk::Button* RelatedCourseMenu::getNextButton()	{
 	return nextB;
 }
 
-Gtk::ComboBox* RelatedCourseMenu::getTerm()	{
+Gtk::ComboBoxText* RelatedCourseMenu::getTerm()	{
 	return termD;
 }
 
@@ -120,10 +117,31 @@ Gtk::Entry* RelatedCourseMenu::getYear()	{
 	return yearT;
 }
 
-Gtk::ComboBox* RelatedCourseMenu::getFinalGrade()	{
+Gtk::ComboBoxText* RelatedCourseMenu::getFinalGrade()	{
 	return finalD;
 }
 
 void RelatedCourseMenu::setYear(string y)	{
 	yearT->set_text(y);
+}
+
+bool RelatedCourseMenu::checkInput()	{
+	//Variable storing boolean result
+	bool result = true;
+	
+	//Checks term selected
+	if(termD->get_active_row_number() == -1)	{
+		result = false;
+	}
+	//Checks year
+	if(!Course::checkYear(yearT->get_text()))	{
+		yearT->set_text("");
+		result = false;
+	}
+	//Checks final selected
+	if(finalD->get_active_row_number() == -1)	{
+		result = false;
+	}
+
+	return result;
 }

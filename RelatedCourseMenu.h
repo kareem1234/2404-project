@@ -23,9 +23,9 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 		Gtk::Button* addCourseB;
 		Gtk::Button* nextB;
 		Gtk::Label* relatedCourseL;
-		Gtk::ComboBox* termD;
+		Gtk::ComboBoxText* termD;
 		Gtk::Entry* yearT;
-		Gtk::ComboBox* finalD;
+		Gtk::ComboBoxText* finalD;
 		Gtk::Label* termL;
 		Gtk::Label* yearL;
 		Gtk::Label* finalL;
@@ -41,10 +41,11 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
 		Gtk::Button* getNextButton();
-		Gtk::ComboBox* getTerm();
+		Gtk::ComboBoxText* getTerm();
 		Gtk::Entry* getYear();
-		Gtk::ComboBox* getFinalGrade();
+		Gtk::ComboBoxText* getFinalGrade();
 		void setYear(string);
+		bool checkInput();
 };
 
 #endif

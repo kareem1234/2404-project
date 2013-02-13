@@ -23,6 +23,7 @@ CourseListMenu::CourseListMenu(int Type){
 		
 	if(type == 1){
 		m_ScrolledWindow2.add(*m_TextView);
+		m_TextView->set_editable(false);
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		m_refTextBuffer = Gtk::TextBuffer::create();
 		m_TextView->set_buffer(m_refTextBuffer);

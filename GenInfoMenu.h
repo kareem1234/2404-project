@@ -53,6 +53,7 @@ class GenInfoMenu : public Gtk::Frame 	{
 		void setEmail(string r);
 		void setGpa(string g);
 		void setCgpa(string g);
+		bool checkInfo();
 };
 
 #endif

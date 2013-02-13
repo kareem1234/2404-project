@@ -20,9 +20,9 @@ class Student 	{
 		int year;
 		float cgpa;
 		float gpa;
-		bool validString(string s);
-		bool validInt(string s);
-		bool validFloat(string s);
+		static bool validString(string s);
+		static bool validInt(string s);
+		static bool validFloat(string s);
 
 	//Public members
 	public:
@@ -47,13 +47,13 @@ class Student 	{
 		void setStanding(string standing);
 		void setCgpa(string mark);
 		void setGpa(string mark);
-		bool checkName(string name);
-		bool checkStuNum(string num);
-		bool checkEmail(string emailAdd);
-		bool checkMajor(string study);
-		bool checkStanding(string standing);
-		bool checkCgpa(string mark);
-		bool checkGpa(string mark);
+		static bool checkName(string name);
+		static bool checkStuNum(string num);
+		static bool checkEmail(string emailAdd);
+		static bool checkMajor(string study);
+		static bool checkStanding(string standing);
+		static bool checkCgpa(string mark);
+		static bool checkGpa(string mark);
 		void save();
 };
 

@@ -1,6 +1,7 @@
 //GenInfoMenu source file
 
 #include "GenInfoMenu.h"
+#include "Student.h"
 
 //Default constructor
 GenInfoMenu::GenInfoMenu()	{
@@ -36,7 +37,6 @@ GenInfoMenu::GenInfoMenu()	{
 	genInfoL->set_size_request(150, 30);
 	
 	//Create buttons
-
 	nextB = new Gtk::Button("NEXT");
 	nextB->set_size_request(70,30);
 	
@@ -198,4 +198,62 @@ void GenInfoMenu::setGpa(string g)	{
 //Sets cgpa field to inputted string
 void GenInfoMenu::setCgpa(string g)	{
 	cgpaT->set_text(g);
+}
+
+//Checks student info currently entered to see if valid // not updated
+bool GenInfoMenu::checkInfo()	{
+	//Variable storing boolean result
+	bool result = true;
+	
+	//Checks first name
+	if(!Student::checkName(firstNameT->get_text()))	{
+		firstNameT->set_text("");
+		result = false;
+	}
+
+	//Checks last name
+	if(!Student::checkName(lastNameT->get_text()))	{
+		lastNameT->set_text("");
+		result = false;
+	}
+
+	//Checks student number
+	if(!Student::checkStuNum(stuNumT->get_text()))	{
+		stuNumT->set_text("");
+		result = false;
+	}
+
+	//Checks email address
+	if(!Student::checkEmail(emailT->get_text()))	{
+		emailT->set_text("");
+		result = false;
+	}
+
+	//Checks major
+	if(!Student::checkMajor(majorT->get_text()))	{
+		majorT->set_text("");
+		result = false;
+	}
+
+	//Checks year of standing
+	if(!Student::checkStanding(yearT->get_text()))	{
+		yearT->set_text("");
+		result = false;
+	}
+
+	//Checks cgpa value
+	if(!Student::checkCgpa(cgpaT->get_text()))	{
+		cgpaT->set_text("");
+		result = false;
+	}
+
+	//Checks gpa value
+	if(!Student::checkGpa(gpaT->get_text()))	{
+		gpaT->set_text("");
+		result = false;
+	}
+
+	//Returns result
+	return result;
+
 }

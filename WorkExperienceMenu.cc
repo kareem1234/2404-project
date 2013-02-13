@@ -2,21 +2,25 @@
 
 //Include statements
 #include "WorkExperienceMenu.h"
+#include "WorkExperience.h"
 #include <sstream>
+#include <iostream>
 
 WorkExperienceMenu::WorkExperienceMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
 	addB = new Gtk::Button("ADD EXPERIENCE");
-	addB->set_sensitive(false);
-	nextB = new Gtk::Button("NEXT");
+	submitB = new Gtk::Button("SUBMIT");
 
 	//Create labels
 	experienceL = new Gtk::Label("WORK EXPERIENCE");
 	experienceL->set_size_request(70, 30);
 
-	responsabilitiesL = new Gtk::Label("RESPONSIBILITIES");
-	responsabilitiesL->set_size_request(70, 30);
+	titleL = new Gtk::Label("TITLE");
+	titleL->set_size_request(70, 30);
+
+	dutiesL = new Gtk::Label("DUTIES");
+	dutiesL->set_size_request(70, 30);
 	
 	durationL = new Gtk::Label("DURATION");
 	durationL->set_size_request(70, 30);
@@ -28,25 +32,28 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 	toL->set_size_request(30, 30);
 
 	//Set combo boxes and entry boxes
-	responsabilitiesT = new Gtk::TextView();
-	responsabilitiesT->set_size_request(70,60);
+	titleT = new Gtk::Entry();
+	titleT->set_size_request(70,30);	
 
-	responsabilitiesW.add(*responsabilitiesT);
-	responsabilitiesW.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+	dutiesT = new Gtk::TextView();
+	dutiesT->set_size_request(70,60);
 
-	durationD = new Gtk::ComboBox();
+	dutiesW.add(*dutiesT);
+	dutiesW.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
+	durationD = new Gtk::ComboBoxText();
 	durationD->set_size_request(70, 30);
 
-	startMonth = new Gtk::ComboBox();
+	startMonth = new Gtk::ComboBoxText();
 	startMonth->set_size_request(70, 30);
 
-	startYear = new Gtk::ComboBox();
+	startYear = new Gtk::ComboBoxText();
 	startYear->set_size_request(70, 30);
 
-	endMonth = new Gtk::ComboBox();
+	endMonth = new Gtk::ComboBoxText();
 	endMonth->set_size_request(70, 30);
 
-	endYear = new Gtk::ComboBox();
+	endYear = new Gtk::ComboBoxText();
 	endYear->set_size_request(70, 30);
 
 	duration_refTreeModel = Gtk::ListStore::create(duration_Columns);
@@ -90,27 +97,21 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 		if(i != 2013)	row3 = *(year_refTreeModel->append());
 	}
 
-	durationD->pack_start(duration_Columns.m_col_value);
-
-	startMonth->pack_start(month_Columns.m_col_value);
-	endMonth->pack_start(month_Columns.m_col_value);
-
-	startYear->pack_start(year_Columns.m_col_value);
-	endYear->pack_start(year_Columns.m_col_value);
-
 	grid->attach(*experienceL,0,0,6,1);
-	grid->attach(*responsabilitiesL,0,1,1,1);
-	grid->attach(responsabilitiesW,1,1,5,2);
-	grid->attach(*durationL,0,3,1,1);
-	grid->attach(*durationD,1,3,5,1);
-	grid->attach(*dateL,0,4,1,1);
-	grid->attach(*startMonth,1,4,1,1);
-	grid->attach(*startYear,2,4,1,1);
-	grid->attach(*toL,3,4,1,1);
-	grid->attach(*endMonth,4,4,1,1);
-	grid->attach(*endYear,5,4,1,1);
-	grid->attach(*addB,0,5,2,1);
-	grid->attach(*nextB,2,5,4,1);
+	grid->attach(*titleL,0,1,1,1);
+	grid->attach(*titleT,1,1,5,1);
+	grid->attach(*dutiesL,0,2,1,1);
+	grid->attach(dutiesW,1,2,5,2);
+	grid->attach(*durationL,0,4,1,1);
+	grid->attach(*durationD,1,4,5,1);
+	grid->attach(*dateL,0,5,1,1);
+	grid->attach(*startMonth,1,5,1,1);
+	grid->attach(*startYear,2,5,1,1);
+	grid->attach(*toL,3,5,1,1);
+	grid->attach(*endMonth,4,5,1,1);
+	grid->attach(*endYear,5,5,1,1);
+	grid->attach(*addB,0,6,2,1);
+	grid->attach(*submitB,2,6,4,1);
 
 	add(*grid);
 }
@@ -118,13 +119,15 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 WorkExperienceMenu::~WorkExperienceMenu()	{
 	delete grid;
 	delete addB;
-	delete nextB;
+	delete submitB;
 	delete experienceL;
-	delete responsabilitiesL;
+	delete titleL;
+	delete dutiesL;
 	delete durationL;
 	delete dateL;
 	delete toL;
-	delete responsabilitiesT;
+	delete titleT;
+	delete dutiesT;
 	delete durationD;
 	delete startMonth;
 	delete startYear;
@@ -140,36 +143,89 @@ Gtk::Button* WorkExperienceMenu::getAddButton()	{
 	return addB;
 }
 
-Gtk::Button* WorkExperienceMenu::getNextButton()	{
-	return nextB;
+Gtk::Button* WorkExperienceMenu::getSubmitButton()	{
+	return submitB;
 }
 
-Gtk::TextView* WorkExperienceMenu::getResponsabilities()	{
-	return responsabilitiesT;
+Gtk::Entry* WorkExperienceMenu::getTitle()	{
+	return titleT;
 }
 
-Gtk::ComboBox* WorkExperienceMenu::getDuration()	{
+Gtk::TextView* WorkExperienceMenu::getDuties()	{
+	return dutiesT;
+}
+
+Gtk::ComboBoxText* WorkExperienceMenu::getDuration()	{
 	return durationD;
 }
 
-Gtk::ComboBox* WorkExperienceMenu::getStartMonth()	{
+Gtk::ComboBoxText* WorkExperienceMenu::getStartMonth()	{
 	return startMonth;
 }
 
-Gtk::ComboBox* WorkExperienceMenu::getStartYear()	{
+Gtk::ComboBoxText* WorkExperienceMenu::getStartYear()	{
 	return startYear;
 }
 
-Gtk::ComboBox* WorkExperienceMenu::getEndMonth()	{
+Gtk::ComboBoxText* WorkExperienceMenu::getEndMonth()	{
 	return endMonth;
 }
 
-Gtk::ComboBox* WorkExperienceMenu::getEndYear()	{
+Gtk::ComboBoxText* WorkExperienceMenu::getEndYear()	{
 	return endYear;
 }
 
-void WorkExperienceMenu::setResponsabilities(string t)	{
+void WorkExperienceMenu::setDuties(string t)	{
 	Glib::RefPtr<Gtk::TextBuffer> buffer;
 	buffer->set_text(t);	
-	responsabilitiesT->set_buffer(buffer);
+	dutiesT->set_buffer(buffer);
+}
+
+string WorkExperienceMenu::getDutiesText()	{
+	string s;
+	Glib::RefPtr<Gtk::TextBuffer> buffer;	
+	buffer = dutiesT->get_buffer();
+	return	s = buffer;
+}
+
+int WorkExperienceMenu::checkInput()	{
+	//Variable storing boolean result
+	bool result = true;
+	
+	//Checks title
+	if(!WorkExperience::checkTitle(titleT->get_text()))	{
+		titleT->set_text("");
+		result = false;
+	}
+
+	//Checks duties
+	if(!WorkExperience::checkDuties(getDutiesText()))	{
+		setDuties("");
+		result = false;
+	}
+
+	//Checks if duration selected
+	if(durationD->get_active_row_number() == -1)	{
+		result = false;
+	}
+
+	//Checks if dates are selected correctly
+	if(startMonth->get_active_row_number() == -1 || startYear->get_active_row_number() == -1
+	   || endMonth->get_active_row_number() == -1 || endYear->get_active_row_number() == -1 )	{
+		result = false;
+	} else	{
+		int startY, endY, startM, endM;
+
+		startY = atoi(startYear->get_active_text().c_str());
+		endY = atoi(endYear->get_active_text().c_str());
+		startM = atoi(startMonth->get_active_text().c_str());
+		endM = atoi(endMonth->get_active_text().c_str());
+
+		if(startY > endY)	result = false;
+		else if(startY == endY && startM > endM)	result = false;
+	}
+
+	
+	//Returns result
+	return result;
 }

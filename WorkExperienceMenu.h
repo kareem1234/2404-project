@@ -21,19 +21,21 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 
 		Gtk::Grid* grid;
 		Gtk::Button* addB;
-		Gtk::Button* nextB;
+		Gtk::Button* submitB;
 		Gtk::Label* experienceL;
-		Gtk::Label* responsabilitiesL;
+		Gtk::Label* titleL;
+		Gtk::Label* dutiesL;
 		Gtk::Label* durationL;
 		Gtk::Label* dateL;
 		Gtk::Label* toL;
-		Gtk::TextView* responsabilitiesT;
-		Gtk::ScrolledWindow responsabilitiesW; 
-		Gtk::ComboBox* durationD;
-		Gtk::ComboBox* startMonth;
-		Gtk::ComboBox* startYear;
-		Gtk::ComboBox* endMonth;
-		Gtk::ComboBox* endYear;
+		Gtk::Entry* titleT;
+		Gtk::TextView* dutiesT;
+		Gtk::ScrolledWindow dutiesW; 
+		Gtk::ComboBoxText* durationD;
+		Gtk::ComboBoxText* startMonth;
+		Gtk::ComboBoxText* startYear;
+		Gtk::ComboBoxText* endMonth;
+		Gtk::ComboBoxText* endYear;
 		
 		ModelColumns duration_Columns;
 		ModelColumns month_Columns;
@@ -49,14 +51,17 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 		~WorkExperienceMenu();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
-		Gtk::Button* getNextButton();
-		Gtk::TextView* getResponsabilities();
-		Gtk::ComboBox* getDuration();
-		Gtk::ComboBox* getStartMonth();
-		Gtk::ComboBox* getStartYear();
-		Gtk::ComboBox* getEndMonth();
-		Gtk::ComboBox* getEndYear();
-		void setResponsabilities(string);
+		Gtk::Button* getSubmitButton();
+		Gtk::Entry* getTitle();
+		Gtk::TextView* getDuties();
+		Gtk::ComboBoxText* getDuration();
+		Gtk::ComboBoxText* getStartMonth();
+		Gtk::ComboBoxText* getStartYear();
+		Gtk::ComboBoxText* getEndMonth();
+		Gtk::ComboBoxText* getEndYear();
+		void setDuties(string);
+		string getDutiesText();
+		int checkInput();
 };
 
 #endif

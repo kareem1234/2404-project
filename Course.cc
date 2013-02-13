@@ -2,6 +2,7 @@
 
 //Include statements
 #include "Course.h"
+#include <stdlib.h>
 
 //Default constructor, with term and year defaulted to current time
 Course::Course(string name, string t, int y)	
@@ -46,4 +47,19 @@ void Course::setYear(int y)	{
 //Save data to output file
 void Course::save()	{
 	
+}
+
+int Course::checkYear(string s)	{
+	float check;	
+	
+	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
+		return false;
+	}
+
+	check = atof(s.c_str());
+	if(check > 2013 || check < 0)	{
+		return false;
+	}
+
+	return true;
 }

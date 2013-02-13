@@ -7,7 +7,7 @@ using namespace std;
 
 #include <stdlib.h>
 #include <fstream>
-#include<string>
+#include <string>
 ofstream saveLog;
 
 //Default constructor
@@ -196,6 +196,7 @@ bool Student::checkStanding(string standing)	{
 bool Student::checkCgpa(string mark)	{
 	float check;
 	if(!validFloat(mark))	{
+		printf("Not accepted!");
 		return false;
 	}
 	check = atof(mark.c_str());
@@ -220,7 +221,7 @@ bool Student::checkGpa(string mark)	{
 
 //Checks string has no funny characters or numbers
 bool Student::validString(string s)	{
-	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == " ")	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
 		return false;
 	}
  	return true;
@@ -228,7 +229,7 @@ bool Student::validString(string s)	{
 
 //Checks string is a valid integer with no spaces or characters
 bool Student::validInt(string s)		{
-	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == " ")	{
+	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
 		return false;
 	}
 	return true;
@@ -236,10 +237,14 @@ bool Student::validInt(string s)		{
 
 //Checks string is a valid float with no spaces or characters except '.'
 bool Student::validFloat(string s)		{
-	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == " ")	{
+	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{
+		printf("Found something\n");
 		return false;
 	}
+/*
 	unsigned found = s.find("..");
-	if (found!=std::string::npos) return false;
+	if (found!=string::npos) return false;
+	return true;
+*/
 	return true;
 }

@@ -44,7 +44,9 @@ class Controller : public Gtk::Window 	{
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();
 		void taMenu_next_button_clicked();
-		void workExperience_next_button_clicked();	
+		void taMenu_add_button_clicked();
+		void workExperience_submit_button_clicked();
+		void workExperience_add_button_clicked();
 		void student_cancel_button_clicked();
 		void student_create_button_clicked();
 		void courselist_treeview_row_selected();

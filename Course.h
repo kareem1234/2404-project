@@ -25,6 +25,7 @@ class Course	{
 		void setTerm(string);
 		void setYear(int);
 		void save();
+		static int checkYear(string s);
 };
 
 #endif

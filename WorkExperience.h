@@ -30,10 +30,6 @@ class WorkExperience{
 		string getStart();
 		int    getDuration();
 		string getDuties();
-		
-
-
-
-
-
+		static bool checkDuties(string);
+		static bool checkTitle(string);	
 };
