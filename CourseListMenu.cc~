@@ -37,13 +37,13 @@ CourseListMenu::CourseListMenu(int Type){
 
 	if(type == 0){
 		grid->attach(m_ScrolledWindow,0,0,2,3);
-		grid->attach(*select,0,3,2,1);	
-		grid->attach(*cancel,0,4,2,1);
+		grid->attach(*cancel,0,3,2,1);
+		grid->attach(*select,0,4,2,1);	
 	}else if(type == 1){
 		grid->attach(m_ScrolledWindow,0,0,2,2);
 		grid->attach(m_ScrolledWindow2,0,2,3,3);
-		grid->attach(*select,0,5,2,1);		
-		grid->attach(*cancel,0,6,2,1);
+		grid->attach(*cancel,0,5,2,1);
+		grid->attach(*select,0,6,2,1);
 	} else if (type == 3 || type == 4)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);
