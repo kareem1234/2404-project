@@ -2,12 +2,13 @@
 
 //Include statements
 #include "TACourseMenu.h"
+#include<iostream>
 
 TACourseMenu::TACourseMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
 	addCourseB = new Gtk::Button("ADD COURSE");
-	addCourseB->set_sensitive(false);
+	//addCourseB->set_sensitive(false);
 	nextB = new Gtk::Button("NEXT");
 
 	//Create labels
@@ -32,10 +33,10 @@ TACourseMenu::TACourseMenu()	{
 
 	supervisorT = new Gtk::Entry();
 	supervisorT->set_size_request(70, 30);
-
+	cout<<"yup problem in the constructor3"<<endl;
 	term_refTreeModel = Gtk::ListStore::create(term_Columns);
 	termD->set_model(term_refTreeModel);
-
+	cout<<"yup problem in the constructor2"<<endl;
 	Gtk::TreeModel::Row row = *(term_refTreeModel->append());
 	row[term_Columns.m_col_value] = "Fall";
 	row = *(term_refTreeModel->append());
@@ -44,7 +45,7 @@ TACourseMenu::TACourseMenu()	{
 	row[term_Columns.m_col_value] = "Summer";
 
 	termD->pack_start(term_Columns.m_col_value);
-
+	cout<<"yup problem in the constructor1"<<endl;
 	grid->attach(*relatedCourseL,0,0,2,1);
 	grid->attach(*termL,0,1,1,1);
 	grid->attach(*termD,1,1,1,1);
@@ -56,6 +57,7 @@ TACourseMenu::TACourseMenu()	{
 	grid->attach(*nextB,1,4,1,1);
 
 	add(*grid);
+	cout<<"yup problem in the constructor"<<endl;
 }
 	
 TACourseMenu::~TACourseMenu()	{

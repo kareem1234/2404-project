@@ -7,7 +7,7 @@ RelatedCourseMenu::RelatedCourseMenu()	{
 	//Create grid
 	grid = new Gtk::Grid();
 	addCourseB = new Gtk::Button("ADD COURSE");
-	addCourseB->set_sensitive(false);
+	//addCourseB->set_sensitive(false);
 	nextB = new Gtk::Button("NEXT");
 
 	//Create labels

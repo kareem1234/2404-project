@@ -80,8 +80,10 @@ GenInfoMenu::GenInfoMenu()	{
 	grid->attach(*cgpaL,1,6,1,1);	
 	grid->attach(*cgpaT,2,6,1,1);	
 	grid->attach(*gpaL,1,7,1,1);	
-	grid->attach(*gpaT,2,7,1,1);	
-	grid->attach(*nextB,1,8,4,1);
+	grid->attach(*gpaT,2,7,1,1);
+	grid->attach(*yearL,1,8,1,1);
+	grid->attach(*yearT,2,8,1,1);	
+	grid->attach(*nextB,1,9,4,1);
 
 	add(*grid);
 }

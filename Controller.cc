@@ -119,12 +119,18 @@ void Controller::setTACourseMenu()	{
 	taMenu = new TACourseMenu();
 	add(*taMenu);
 	show_all();
+
+
+	taMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_next_button_clicked));
+
 }
 
 void Controller::setExperienceMenu()	{
 	workMenu = new WorkExperienceMenu();
 	add(*workMenu);
 	show_all();
+
+	workMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_next_button_clicked));
 }
 
 void Controller::login_teacher_button_clicked(){
@@ -198,6 +204,7 @@ void Controller::courselist_select_button_clicked(){
 		setGenInfoMenu();
 		return;
 	} else if(type == 3)	{
+		cout<<"courselist clicked"<<endl;
 		remove();
 		delete(courseList);
 		courseList = 0;
@@ -209,9 +216,10 @@ void Controller::courselist_select_button_clicked(){
 		remove();
 		delete(courseList);
 		courseList = 0;
-		RelatedCourse r(course);
-		students->applications.getTail()->relatedCourses.pushBack(r);
+		AssistantCourse r(course);
+		students->applications.getTail()->assistedCourses.pushBack(r);
 		setTACourseMenu();
+		return;
 	} else if(type == 1 && students != 0){
 		int length = students->getNumApps();
 		Application app;
@@ -262,7 +270,21 @@ void Controller::relMenu_next_button_clicked()	{
 	remove();
 	delete(relMenu);
 	relMenu = 0;
+	cout<<"problem deleting"<<endl;
 	setCourseListMenu(4);
+}
+void Controller::taMenu_next_button_clicked()	{
+	remove();
+	delete(taMenu);
+	taMenu = 0;
+	cout<<"aslo here"<<endl;
+	setExperienceMenu();
+}
+void Controller::workExperience_next_button_clicked(){
+	remove();	
+	delete(workMenu);
+	workMenu=0;
+	setStudentMenu();
 }
 
 void Controller::relMenu_add_button_clicked()	{

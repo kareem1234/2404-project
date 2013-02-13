@@ -7,6 +7,7 @@ using namespace std;
 
 #include <stdlib.h>
 #include <fstream>
+#include<string>
 ofstream saveLog;
 
 //Default constructor
@@ -185,7 +186,7 @@ bool Student::checkStanding(string standing)	{
 		return false;
 	}
 	check = atof(standing.c_str());
-	if(check > 4 && check < 1)	{
+	if(check > 4 || check < 1)	{
 		return false;
 	}
 	return true;
@@ -198,7 +199,7 @@ bool Student::checkCgpa(string mark)	{
 		return false;
 	}
 	check = atof(mark.c_str());
-	if(check > 12 && check < 0)	{
+	if(check > 12 || check < 0)	{
 		return false;
 	}
 	return true;
@@ -211,7 +212,7 @@ bool Student::checkGpa(string mark)	{
 		return false;
 	}
 	check = atof(mark.c_str());
-	if(check > 12 && check < 0)	{
+	if(check > 12 || check < 0)	{
 		return false;
 	}
 	return true;
@@ -238,5 +239,7 @@ bool Student::validFloat(string s)		{
 	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == " ")	{
 		return false;
 	}
+	unsigned found = s.find("..");
+	if (found!=std::string::npos) return false;
 	return true;
 }

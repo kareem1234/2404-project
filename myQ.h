@@ -119,7 +119,19 @@ bool myQ<T>::popFront(T* element){
 
 template<class T>
 T* myQ<T>::getTail()	{
-	return &(tail->data);
+	if(tail != 0){
+		return &(tail->data);
+	}else{
+		if(head != 0 ){
+			return &(head->data);
+		}else{
+			head = new Node;
+			l++;
+			return &(head->data);		
+		}
+	}
+
+
 }
 
 #endif

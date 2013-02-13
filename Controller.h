@@ -11,6 +11,7 @@
 #include "RelatedCourseMenu.h"
 #include "TACourseMenu.h"
 #include "WorkExperienceMenu.h"
+#include "RelatedCourseMenu.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -42,6 +43,8 @@ class Controller : public Gtk::Window 	{
 		void genInfo_next_button_clicked();
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();
+		void taMenu_next_button_clicked();
+		void workExperience_next_button_clicked();	
 		void student_cancel_button_clicked();
 		void student_create_button_clicked();
 		void courselist_treeview_row_selected();
