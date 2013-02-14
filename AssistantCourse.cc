@@ -26,8 +26,7 @@ void AssistantCourse::setSupervisor(string sup)	{
 
 //Saves all necessary details to file
 void AssistantCourse::save()	{
-	saveLog<<" "<<"A"<<" "<<getCourseName()<<" "<<getTerm();
-	saveLog<<" "<<getYear()<<" "<<getSupervisor();	
+	saveLog<<" "<<"A"<<" "<<getCourseName()<<" "<<getTerm()<<" "<<saveLog<<" "<<getYear()<<" "<<getSupervisor();	
 }
 
 bool AssistantCourse::checkYear(string s)	{

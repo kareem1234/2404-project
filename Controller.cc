@@ -236,26 +236,10 @@ void Controller::courselist_select_button_clicked(){
 		students->applications.getTail()->assistedCourses.pushBack(&r);
 		setTACourseMenu();
 		return;
-	} else if(type == 1 && students != 0){
-		int length = students->getNumApps();
-		Application app;
-		for(int i =0; i<length; i++){
-			bool toPush = students->applications.popFront(&app);
-			if( course.compare(app.getCourse()) == 0){
-				stringstream ss;
-				ss<<students->getFirstName()<<" "<<students->getLastName()<<endl;
-				ss<<students->getStuNum()<<" "<<students->getEmail()<<endl;
-				ss<<students->getMajor()<<" "<<students->getStanding()<<endl;
-				ss<<students->getCgpa()<<" "<<students->getGpa()<<endl;
-				courseList->setString(ss.str());
-				students->applications.pushBack(&app);
-				return;
-			}
-			if(toPush)
-			students->applications.pushBack(&app);
-		}
+	} else if(type == 1 ){
+		courseList->findApp();
+
 	}
-	courseList->setString("No application found");
 
 }
 // updated

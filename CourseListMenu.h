@@ -4,8 +4,12 @@
 #define COURSELIST_H
 
 #include <gtkmm.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 using namespace std;
+extern ofstream saveLog;
 
 //Define CourseList class
 class CourseListMenu : public Gtk::Frame {
@@ -32,6 +36,7 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::Button*   getSelect();
 		Gtk::TreeView* getTreeView();
 		string getString();
+		void findApp();
 		void setString(string app);
 		int getType();
 

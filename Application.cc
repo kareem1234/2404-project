@@ -47,43 +47,40 @@ void Application::setCourse(string c){
 	
 //Save method saves current application to output file
 void Application::save()	{
-	saveLog << " " << applicationNum + " " + status + " " + course;
-	cout<<"here?"<<endl;
+	saveLog << " " <<" Ap"<<" "<<applicationNum +" "+status + " " + course;
 	int l = assistedCourses.length();
-	cout<<"not here"<<endl;
-	for(int i = 0; i< l; i++)	{
-		AssistantCourse Course;
-		cout<<"this is the spot1"<<endl;
-		assistedCourses.popFront(&Course);
-		cout<<"popped assitant course "<< i << endl;
-		Course.save();
-		cout<<"saved assitant course "<< i << endl;
-		assistedCourses.pushBack(&Course);
-		cout<<"pushed assitant course "<< i << endl;
+	for(int i = 0; i< l; i++){
+		AssistantCourse* a = new AssistantCourse;
+
+		assistedCourses.popFront(a);
+
+		a->save();
+
+		assistedCourses.pushBack(a);
+
 	}
 	l = relatedCourses.length();
 	for(int i= 0; i<l; i++)	{
 		RelatedCourse *r = new RelatedCourse;
-		cout<<"this is the spot2"<<endl;
+
 		cout<<r<<endl;
 		relatedCourses.popFront(r);
-		cout<<"popped related course "<< i << endl;
+
 		r->save();
-		cout<<"saved related course "<< i << endl;
+
 		relatedCourses.pushBack(r);
-		cout<<"pushed related course "<< i << endl;
-		cout<<relatedCourses.length()<<endl;
+
 	}
 	l= workExperiences.length();
 	for(int i= 0; i<l; i++)	{
-		WorkExperience work;
-		cout<<"this is the spot3"<<endl;
-		workExperiences.popFront(&work);
-		cout<<"popped experience  "<< i << endl;
-		work.save();
-		cout<<"saved experience  "<< i << endl;
-		workExperiences.pushBack(&work);
-		cout<<"pushed experience  "<< i << endl;
+		WorkExperience *work = new WorkExperience;
+
+		workExperiences.popFront(work);
+
+		work->save();
+
+		workExperiences.pushBack(work);
+
 	}
 }
 

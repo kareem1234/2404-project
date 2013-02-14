@@ -36,7 +36,7 @@ template <class T> class myQ {
 			while(head != 0)  {
 				currentNode = head;
 				head = head->next;
-				delete currentNode;
+				//delete currentNode;
 			}
 		};
 
@@ -78,7 +78,6 @@ template<class T>
 bool myQ<T>::pushBack(T* ele){
 		if(head == 0){ // empty list
 			head = new Node;
-			cout << "Hi there!" << endl;
 			head->data = *ele;
 			l++;
 			return true;
@@ -104,20 +103,16 @@ bool myQ<T>::pushBack(T* ele){
 //
 template <class T>
 bool myQ<T>::popFront(T* element){
-	cout<<"popping front"<<endl;
 	if(head != 0){
-		cout<<"head isnt 0"<<endl;
 		Node *de = head;
-		cout<<" head dereferenced"<<endl;
-		cout<<"we printed"<<endl;
-		cout<<de->data<<endl;
-		cout<<"printeeeeed"<<endl;
 		*element = de->data;
-		cout<<"element dereferenced"<<endl;
 		head = de->next;
-		cout<<" head = head->next"<<endl;
 		delete(de);
 		l--;
+		if(l == 0){
+			head = 0;
+			tail = 0;
+		}
 		return true;
 	}
 	return false;

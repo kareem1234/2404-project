@@ -95,6 +95,47 @@ int CourseListMenu::loadCourseList(){
 
 	return 1;
 }
+void CourseListMenu:: findApp(){
+	string line;
+	ifstream myfile("saveLog.txt");
+	while(getline(myfile,line)){
+		istringstream toParse ( line , istringstream::in);
+		string firstName, lastName, stuNum , email, major, standing, cgpa ,gpa;
+		getline(toParse,firstName,' ');
+		getline(toParse,lastName,' ');
+		getline(toParse,stuNum,' ');
+		getline(toParse,email,' ');
+		getline(toParse,major,' ');
+		getline(toParse,cgpa,' ');
+		getline(toParse,gpa,' ');
+		
+		string symbol="";
+		bool done = false;
+		while( !done &&  (symbol.compare("Ap") != 0) ){
+			if(!getline(toParse,symbol,' ')) 
+				done = true;
+			if(symbol.compare("Ap") != 0 ){
+				string appNum, status, course;
+				getline(toParse, appNum, ' ');
+				getline(toParse, status,' ');
+				getline(toParse,course,' ');
+				stringstream output;
+				if(course.compare(getString()) == 0){
+					output<<firstName<<" "<<lastName<<endl;
+					output<<stuNum<<" "<<email<<endl;
+					output<<major<<" "<<standing<<endl;
+					output<<cgpa<<" "<<gpa<<endl;
+					output<<course<<endl;
+					setString(output.str());
+					return;
+					}	
+				}
+			}
+		}
+
+
+	setString("NO APPLICATION FOUND");
+}
 
 //Returns frame when called
 Gtk::Grid* CourseListMenu::getGrid()  {

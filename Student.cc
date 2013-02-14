@@ -124,21 +124,18 @@ void Student::setGpa(string mark)	{
 
 //Save function saves newest application under the student
 void Student::save()	{
-	saveLog.open("saveLog.txt", ios::app);	
-	saveLog << firstName + " " << lastName << " " << stuNum << " " << email;
-        saveLog << " " << major << " " << cgpa << " " << gpa;
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog<<endl;	
+	saveLog << firstName + " " << lastName << " " << stuNum << " " << email<< " " << major << " " << cgpa << " " << gpa;
 	//must fix saving for each application in que
 	int l = applications.length();
 	for(int i=0; i < l; i++){
 		Application app;
-		cout<<"Saving application "<< i << endl; 
 		applications.popFront(&app);
-		cout<<"Popped application "<< i << endl;
 		app.save();
 		applications.pushBack(&app);
-		cout<<"Pushed application"<< i << endl;
 	}
-	saveLog << endl;
+	saveLog.close();
 }
 
 //Check functions check all data members for correct values
@@ -201,7 +198,6 @@ bool Student::checkStanding(string standing)	{
 bool Student::checkCgpa(string mark)	{
 	float check;
 	if(!validFloat(mark))	{
-		printf("Not accepted!");
 		return false;
 	}
 	check = atof(mark.c_str());
