@@ -1,4 +1,6 @@
 #include "Controller.h"
+#include "RelatedCourse.h"
+#include "AssistantCourse.h"
 
 #include <iostream>
 using namespace std;
@@ -155,36 +157,46 @@ void Controller::login_student_button_clicked(){
 //updated
 void Controller::student_cancel_button_clicked(){
 
+	cout << "Seg meg" << endl;
+	students->save();
+	cout << "Seg meg2" << endl;
+	//cout<<"related courss l is "<< students->applications.relatedCourses.length()<<endl;
+	//cout<<"courss l is "<< students->applications.assistedCourses.length()<<endl;
+	//cout<<"work l is "<< students->applications.workExperiences.length()<<endl;
 	delete(students);
-	students=0;
+	cout << "Seg meg3" << endl;
+	students = 0;
 	remove();
 	delete (studentMenu);
-	studentMenu=0;
+	studentMenu = 0;
 	setLoginMenu();
 
 }
+
 void Controller::teacher_cancel_button_clicked(){
 
 	remove();
 	delete (teacherMenu);
-	teacherMenu=0;
+	teacherMenu = 0;
 	setLoginMenu();
 
 }
+
 void Controller::teacher_summary_button_clicked(){
 
 	remove();
 	delete (teacherMenu);
-	teacherMenu=0;
+	teacherMenu = 0;
 	setCourseListMenu(1);
 
 }
+
 // updated
 void Controller::student_create_button_clicked(){
 
 	remove();
 	delete (studentMenu);
-	studentMenu=0;
+	studentMenu = 0;
 	setCourseListMenu(0);
 
 }
@@ -211,7 +223,9 @@ void Controller::courselist_select_button_clicked(){
 		delete(courseList);
 		courseList = 0;
 		RelatedCourse r(course);
-		students->applications.getTail()->relatedCourses.pushBack(r);
+		cout<<"yooo"<<endl;
+		students->applications.getTail()->relatedCourses.pushBack(&r);
+		cout<<"check"<<endl;
 		setRelatedCourseMenu();
 		return;
 	} else if(type == 4)	{
@@ -219,7 +233,7 @@ void Controller::courselist_select_button_clicked(){
 		delete(courseList);
 		courseList = 0;
 		AssistantCourse r(course);
-		students->applications.getTail()->assistedCourses.pushBack(r);
+		students->applications.getTail()->assistedCourses.pushBack(&r);
 		setTACourseMenu();
 		return;
 	} else if(type == 1 && students != 0){
@@ -234,11 +248,11 @@ void Controller::courselist_select_button_clicked(){
 				ss<<students->getMajor()<<" "<<students->getStanding()<<endl;
 				ss<<students->getCgpa()<<" "<<students->getGpa()<<endl;
 				courseList->setString(ss.str());
-				students->applications.pushBack(app);
+				students->applications.pushBack(&app);
 				return;
 			}
 			if(toPush)
-			students->applications.pushBack(app);
+			students->applications.pushBack(&app);
 		}
 	}
 	courseList->setString("No application found");
@@ -274,8 +288,7 @@ void Controller::courselist_skip_button_clicked()	{
 // updated
 void Controller::genInfo_next_button_clicked(){
 	if(genInfoMenu->checkInfo()){
-		applyInfo();
-		students->save();
+		applyStudentInfo();
 		remove();
 		delete (genInfoMenu);
 		genInfoMenu = 0;
@@ -284,7 +297,8 @@ void Controller::genInfo_next_button_clicked(){
 }
 
 void Controller::relMenu_next_button_clicked()	{
-	if(relMenu->checkInput())	{	
+	if(relMenu->checkInput())	{
+		applyRelatedCourse();	
 		remove();
 		delete(relMenu);
 		relMenu = 0;
@@ -293,6 +307,7 @@ void Controller::relMenu_next_button_clicked()	{
 }
 void Controller::taMenu_next_button_clicked()	{
 	if(taMenu->checkInput())	{
+		applyTACourse();	
 		remove();
 		delete(taMenu);
 		taMenu = 0;
@@ -300,7 +315,8 @@ void Controller::taMenu_next_button_clicked()	{
 	}
 }
 void Controller::workExperience_submit_button_clicked(){
-	if(workMenu->checkInput())	{	
+	if(workMenu->checkInput())	{
+		applyWorkExperience();	
 		remove();	
 		delete(workMenu);
 		workMenu=0;
@@ -309,7 +325,8 @@ void Controller::workExperience_submit_button_clicked(){
 }
 
 void Controller::relMenu_add_button_clicked()	{
-	if(relMenu->checkInput())	{	
+	if(relMenu->checkInput())	{
+		applyRelatedCourse();		
 		remove();
 		delete(relMenu);
 		relMenu = 0;
@@ -318,7 +335,8 @@ void Controller::relMenu_add_button_clicked()	{
 }
 
 void Controller::taMenu_add_button_clicked()	{
-	if(taMenu->checkInput())	{	
+	if(taMenu->checkInput())	{
+		applyTACourse();	
 		remove();
 		delete(taMenu);
 		taMenu = 0;
@@ -327,7 +345,8 @@ void Controller::taMenu_add_button_clicked()	{
 }
 
 void Controller::workExperience_add_button_clicked()	{
-	if(workMenu->checkInput())	{	
+	if(workMenu->checkInput())	{
+		applyWorkExperience();
 		remove();
 		delete(workMenu);
 		workMenu = 0;
@@ -345,6 +364,7 @@ void Controller::workExperience_skip_button_clicked()	{
 void Controller::workExperience_cancel_button_clicked()	{
 	
 	//Delete application
+	//students->applications->deleteTail();
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -358,14 +378,14 @@ void Controller::createProfile(string s)	{
 
 	if(students == 0)	{
 		students = new Student();
-		students->applications.pushBack(app);
+		students->applications.pushBack(&app);
 	} else	{
-		students->applications.pushBack(app);
+		students->applications.pushBack(&app);
 	}
 }
 
 // not updated
-void Controller::applyInfo()	{ 
+void Controller::applyStudentInfo()	{ 
 	students->setName(genInfoMenu->getFirstName()->get_text(), genInfoMenu->getLastName()->get_text());
 	students->setStuNum(genInfoMenu->getStuNum()->get_text());
 	students->setEmail(genInfoMenu->getEmail()->get_text());
@@ -373,9 +393,29 @@ void Controller::applyInfo()	{
 	students->setStanding(genInfoMenu->getYear()->get_text());
 	students->setCgpa(genInfoMenu->getCgpa()->get_text());
 	students->setGpa(genInfoMenu->getGpa()->get_text());
-	students->getApplications()->setStatus("pending");
+	students->applications.getTail()->setStatus("pending");
+	//students->getApplications()->setStatus("pending");
 }
 
+void Controller::applyRelatedCourse()	{
+	students->applications.getTail()->relatedCourses.getTail()->setTerm(relMenu->getTerm()->get_active_text());
+	students->applications.getTail()->relatedCourses.getTail()->setYear(relMenu->getYear()->get_text());
+	students->applications.getTail()->relatedCourses.getTail()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
+}
+
+void Controller::applyTACourse()	{
+	students->applications.getTail()->assistedCourses.getTail()->setTerm(taMenu->getTerm()->get_active_text());
+	students->applications.getTail()->assistedCourses.getTail()->setYear(taMenu->getYear()->get_text());
+	students->applications.getTail()->assistedCourses.getTail()->setSupervisor(taMenu->getSupervisor()->get_text());
+}
+
+void Controller::applyWorkExperience()	{
+	students->applications.getTail()->workExperiences.getTail()->setTitle(workMenu->getTitle()->get_text());
+	students->applications.getTail()->workExperiences.getTail()->setDuration(workMenu->getDuration()->get_active_text());
+	students->applications.getTail()->workExperiences.getTail()->setDuties(workMenu->getDutiesText());	
+	students->applications.getTail()->workExperiences.getTail()->setStart(workMenu->getStartDate());
+	students->applications.getTail()->workExperiences.getTail()->setEnd(workMenu->getEndDate());
+}
 
 
 

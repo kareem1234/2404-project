@@ -19,7 +19,7 @@ class AssistantCourse : public Course	{
 
 	//Public data members
 	public:
-		AssistantCourse(string = "", string = "", int = 2013, string = "");
+		AssistantCourse(string = "", string = "", string = "", string = "");
 		~AssistantCourse();
 		string getSupervisor();
 		void setSupervisor(string);

@@ -41,7 +41,7 @@ template <class T> class myQ {
 		};
 
 		// queue methods
-		bool pushBack(T element);
+		bool pushBack(T* element);
 		bool popFront(T* element);
 		bool front(T* element);
 		bool isEmpty();
@@ -75,41 +75,48 @@ bool myQ<T>::front(T* element){
 
 }
 template<class T>
-bool myQ<T>::pushBack(T ele){
-	if(true){
-		
+bool myQ<T>::pushBack(T* ele){
 		if(head == 0){ // empty list
 			head = new Node;
-			head->data = ele;
+			cout << "Hi there!" << endl;
+			head->data = *ele;
 			l++;
 			return true;
 		}else if(tail == 0){ // tail not initialised
 			tail = new Node;
-			tail->data = ele;
+			tail->data = *ele;
 			head->next = tail;
 			l++;
 			return true;
 			
 		}else{ // add to back
 			Node* newTail = new Node;
-			newTail->data = ele;
+			newTail->data = *ele;
 			tail->next = newTail;
 			tail= newTail;
 			l++;
 			return true;
 
 		}
-	}
 	 return false;	
 }
 
 //
 template <class T>
 bool myQ<T>::popFront(T* element){
+	cout<<"popping front"<<endl;
 	if(head != 0){
+		cout<<"head isnt 0"<<endl;
 		Node *de = head;
+		cout<<" head dereferenced"<<endl;
+		cout<<*element<<endl;
+		cout<<"we printed"<<endl;
+		cout<<de->data<<endl;
+		cout<<"printeeeeed"<<endl;
 		*element = de->data;
+		cout<<"element dereferenced"<<endl;
 		head = de->next;
+		cout<<" head = head->next"<<endl;
 		delete(de);
 		l--;
 		return true;
@@ -121,16 +128,11 @@ template<class T>
 T* myQ<T>::getTail()	{
 	if(tail != 0){
 		return &(tail->data);
-	}else{
-		if(head != 0 ){
+	}else if(head != 0 ){
 			return &(head->data);
-		}else{
-			head = new Node;
-			l++;
-			return &(head->data);		
-		}
 	}
-
+	
+	return 0;
 
 }
 

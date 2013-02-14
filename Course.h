@@ -12,18 +12,18 @@ class Course	{
 	private:
 		string 	courseName;
 		string 	term;
-		int 	year;
+		string 	year;
 
 	//Public data members
 	public:	
-		Course(string, string = "WINTER", int = 2013);
+		Course(string = "", string = "", string = "");
 		~Course();
 		string getCourseName();
 		string getTerm();
-		int getYear();
+		string getYear();
 		void setCourseName(string);
 		void setTerm(string);
-		void setYear(int);
+		void setYear(string);
 		void save();
 		static int checkYear(string s);
 };

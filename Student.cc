@@ -131,9 +131,12 @@ void Student::save()	{
 	int l = applications.length();
 	for(int i=0; i < l; i++){
 		Application app;
+		cout<<"Saving application "<< i << endl; 
 		applications.popFront(&app);
+		cout<<"Popped application "<< i << endl;
 		app.save();
-		applications.pushBack(app);
+		applications.pushBack(&app);
+		cout<<"Pushed application"<< i << endl;
 	}
 	saveLog << endl;
 }
@@ -146,9 +149,11 @@ bool Student::checkName(string name)	{
 	}
  	return true;
 }
+
 int Student::getNumApps(){
 	return applications.length();
 }
+
 //Checks student number for weird values
 bool Student::checkStuNum(string num)	{
 	float check;
@@ -241,10 +246,9 @@ bool Student::validFloat(string s)		{
 		printf("Found something\n");
 		return false;
 	}
-/*
+
 	unsigned found = s.find("..");
 	if (found!=string::npos) return false;
 	return true;
-*/
-	return true;
+
 }

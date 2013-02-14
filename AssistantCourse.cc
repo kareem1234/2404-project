@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 //Default AssistantCourse constructor using member initialation
-AssistantCourse::AssistantCourse(string name, string t, int y, string sup)
+AssistantCourse::AssistantCourse(string name, string t, string y, string sup)
 	: Course::Course(name, t, y), supervisor(sup)
 {	}
 

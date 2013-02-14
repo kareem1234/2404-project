@@ -7,8 +7,7 @@ string Duration, string Start, string End){
 	duties = Duties;
 	start = Start;
 	end = End;
-
-setDuration(Duration); 
+	setDuration(Duration); 
 }
 
 void WorkExperience::save(){

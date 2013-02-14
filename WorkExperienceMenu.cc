@@ -202,6 +202,14 @@ string WorkExperienceMenu::getDutiesText()	{
 	return	s = buffer;
 }
 
+string WorkExperienceMenu::getStartDate()	{
+	return startMonth->get_active_text() + "/" + startYear->get_active_text();
+}
+
+string WorkExperienceMenu::getEndDate()	{
+	return endMonth->get_active_text() + "/" + endYear->get_active_text();
+}
+
 int WorkExperienceMenu::checkInput()	{
 	//Variable storing boolean result
 	bool result = true;

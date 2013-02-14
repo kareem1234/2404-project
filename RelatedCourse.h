@@ -19,8 +19,9 @@ class RelatedCourse : public Course 	{
 
 	//Public data members
 	public:
-		RelatedCourse(string = "", string = "", int = 2013, string = "");
+		RelatedCourse(string = "", string = "", string = "", string = "");
 		~RelatedCourse();
+		RelatedCourse(RelatedCourse&);
 		string getFinalGrade();
 		void setFinalGrade(string);
 		void save();

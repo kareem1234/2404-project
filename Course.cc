@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 //Default constructor, with term and year defaulted to current time
-Course::Course(string name, string t, int y)	
+Course::Course(string name, string t, string y)	
 	: courseName(name), term(t), year(y)
 {	}
 
@@ -25,7 +25,7 @@ string Course::getTerm()	{
 }
 
 //Returns the year of the course
-int Course::getYear()	{
+string Course::getYear()	{
 	return year;
 }
 
@@ -40,7 +40,7 @@ void Course::setTerm(string t)	{
 }
 
 //Sets year of the course
-void Course::setYear(int y)	{
+void Course::setYear(string y)	{
 	year = y;
 }
 

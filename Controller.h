@@ -2,11 +2,11 @@
 #define CONTROLLER_H
 
 // include statements
-#include"Student.h"
-#include"CourseListMenu.h"
-#include"StudentMenu.h"
-#include"LoginMenu.h"
-#include"GenInfoMenu.h"
+#include "Student.h"
+#include "CourseListMenu.h"
+#include "StudentMenu.h"
+#include "LoginMenu.h"
+#include "GenInfoMenu.h"
 #include "TeacherMenu.h"
 #include "RelatedCourseMenu.h"
 #include "TACourseMenu.h"
@@ -56,8 +56,10 @@ class Controller : public Gtk::Window 	{
 		void courselist_cancel_button_clicked();
 		void courselist_skip_button_clicked();
 		void createProfile(string s);
-		bool checkStudentInfo();
-		void applyInfo();
+		void applyStudentInfo();
+		void applyRelatedCourse();
+		void applyTACourse();
+		void applyWorkExperience();
 
 	public:
 		Controller();

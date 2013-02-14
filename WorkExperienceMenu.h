@@ -63,6 +63,8 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 		Gtk::ComboBoxText* getStartYear();
 		Gtk::ComboBoxText* getEndMonth();
 		Gtk::ComboBoxText* getEndYear();
+		string getStartDate();
+		string getEndDate();
 		void setDuties(string);
 		string getDutiesText();
 		int checkInput();

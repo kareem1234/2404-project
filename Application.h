@@ -6,7 +6,7 @@
 #include "AssistantCourse.h"
 #include "RelatedCourse.h"
 #include "WorkExperience.h"
-#include "myQ.h"
+#include "myQ.cc"
 #include <string>
 using namespace std;
 
