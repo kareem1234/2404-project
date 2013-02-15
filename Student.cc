@@ -126,7 +126,7 @@ void Student::setGpa(string mark)	{
 void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);
 	saveLog<<endl;	
-	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$";
+	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$"<<year<<"$";
 	int l = applications.length();
 	for(int i=0; i < l; i++){
 		Application app;

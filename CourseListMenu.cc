@@ -29,13 +29,13 @@ CourseListMenu::CourseListMenu(int Type){
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		m_refTextBuffer = Gtk::TextBuffer::create();
 		m_TextView->set_buffer(m_refTextBuffer);
-		m_ScrolledWindow2.set_size_request(100,200);
+		m_ScrolledWindow2.set_size_request(80,200);
 	}
 
 	cancel->set_size_request(70,30);
     	select->set_size_request(70,30);
 	skip->set_size_request(70,30);
-	m_ScrolledWindow.set_size_request(300,400);
+	m_ScrolledWindow.set_size_request(250,400);
 
 	if(type == 0){
 		grid->attach(m_ScrolledWindow,0,0,2,3);
@@ -105,7 +105,9 @@ int CourseListMenu::loadCourseList(){
 void CourseListMenu:: findApp(){
 	string line;
 	stringstream output;
+	stringstream newOutput;
 	bool found = false;
+	int totalApps = 0;
 
 	ifstream myfile("saveLog.txt");
 	while(getline(myfile,line)){
@@ -118,6 +120,7 @@ void CourseListMenu:: findApp(){
 		getline(toParse,major,'$');
 		getline(toParse,cgpa,'$');
 		getline(toParse,gpa,'$');
+		getline(toParse,standing,'$');
 		
 		string symbol = "";
 		bool done = false;
@@ -126,12 +129,8 @@ void CourseListMenu:: findApp(){
 				done = true;
 			string appNum, status, course;
 			getline(toParse, appNum, '$');
-			cout << "appNum:" << appNum << endl;
 			getline(toParse, status,'$');
-			cout << "status:" << status << endl;
 			getline(toParse,course,'$');
-			cout << "Course:" << course << endl;
-			cout << "Course required:" << getString() << endl;
 			if(course.compare(getString()) == 0){
 				output<<"Name: "<<firstName<<" "<<lastName<<endl;
 				output<<"Student Number: "<<stuNum<<endl;
@@ -141,12 +140,68 @@ void CourseListMenu:: findApp(){
 				output<<"Cgpa: "<<cgpa<<endl;
 				output<<"Gpa: "<<gpa<<endl;
 				output<<"Applied to TA: "<<course<<endl;
-				output<<"-----------------------"<<endl;
-				found = true;				
+				output<<"---------------------------"<<endl;
+				found = true;
+				totalApps++;
+			
 			}	
 		}
 	}
-	if(found)	setString(output.str());
+	if(found){
+		if(totalApps == 1 ){
+			setString(output.str());
+			return;
+		}else{
+			int length = 9*totalApps;
+			string toSort[length];
+			int    pos = 0;
+			int    intSort[totalApps];
+			//int count = 0;
+			for(int i=0;i<length;i++){
+				getline(output,toSort[i],'\n');	
+				// extract gpa's
+				if(toSort[i].at(0) =='G'){
+					istringstream buffer(toSort[i]);
+					buffer>>intSort[pos];
+					pos++;
+				}
+			}
+			// loop through intSort
+			bool done = false;
+			while(done == false){
+				done = true;
+				int highest= -1;
+				int index = -1;
+				for(int i = 0; i<pos; i++){
+					if(intSort[i] != -1 && intSort[i] >= highest){
+						highest = intSort[i];
+						index = i;
+						//intSort[i]=-1;
+						done = false;
+					}
+				}
+				if(!done){
+					intSort[index] = -1;
+					//find the associated gpa and send it to the new output buffer				
+					int start = index*9;
+					int stop = start+9;
+					for(start;start<stop;start++){
+						newOutput<<toSort[start]<<endl;						
+						
+						
+					}					
+				}				
+			}
+			setString(newOutput.str());
+		}
+
+
+
+
+
+
+
+	}	
 	else		setString("NO APPLICATION FOUND");
 }
 

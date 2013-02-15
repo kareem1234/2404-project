@@ -33,7 +33,6 @@ template <class T> class myQ {
 		// destructor
 		~myQ(){
 			Node* currentNode = 0;
-			cout<<"length is l: "<<l;
 			while(head != 0)  {
 				currentNode = head;
 				head = head->next;
