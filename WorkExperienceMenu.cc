@@ -115,7 +115,7 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 	grid->attach(*addB,0,6,6,1);
 	grid->attach(*cancelB,0,7,6,1);
 	grid->attach(*skipSubmitB,0,8,6,1);
-	grid->attach(*submitB,0,8,6,1);
+	grid->attach(*submitB,0,9,6,1);
 
 	add(*grid);
 }

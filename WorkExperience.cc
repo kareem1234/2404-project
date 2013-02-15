@@ -11,7 +11,7 @@ string Duration, string Start, string End){
 }
 
 void WorkExperience::save(){
-	saveLog<<" "<<"W"<<" "<<title<<" "<< duration<< " "<<start<<" "<<end<<" "<< duties;
+	saveLog<< "Wor" << "$" << title << "$" << duration << "$" << start << "$" << end << "$" << duties << "$";
 
 }
 
@@ -41,13 +41,11 @@ void WorkExperience:: setEnd(string End){
 }
 
 string WorkExperience::getDuties(){
-
 	return duties;
 }
 
 
 int WorkExperience:: getDuration(){
-
 	return duration;
 }
 
@@ -56,7 +54,6 @@ string WorkExperience:: getTitle(){
 }	
 
 string WorkExperience:: getEnd(){
-	
 	return end;
 }
 
@@ -70,9 +67,11 @@ bool WorkExperience::checkDuties(string s)	{
 }
 
 bool WorkExperience::checkTitle(string s)	{
-	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{
 		return false;
 	}
+	unsigned found = s.find("..");
+	if (found!=string::npos) return false;
  	return true;
 }
 

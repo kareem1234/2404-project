@@ -26,7 +26,7 @@ void AssistantCourse::setSupervisor(string sup)	{
 
 //Saves all necessary details to file
 void AssistantCourse::save()	{
-	saveLog<<" "<<"A"<<" "<<getCourseName()<<" "<<getTerm()<<" "<<saveLog<<" "<<getYear()<<" "<<getSupervisor();	
+	saveLog<< "Ass" << "$" << getCourseName() << "$" << getTerm() << "$" << getYear() << "$" << getSupervisor() << "$";	
 }
 
 bool AssistantCourse::checkYear(string s)	{
@@ -44,5 +44,7 @@ bool AssistantCourse::checkSupervisor(string s)	{
 	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{
 		return false;
 	}
+	unsigned found = s.find("..");
+	if (found!=string::npos) return false;
  	return true;
 }

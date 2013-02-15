@@ -1,7 +1,7 @@
 #ifndef MYQ_H
 #define MYQ_H
 
-#include<iostream>
+#include <iostream>
 using namespace std;
 template <class T> class myQ {
 	
@@ -33,6 +33,7 @@ template <class T> class myQ {
 		// destructor
 		~myQ(){
 			Node* currentNode = 0;
+			cout<<"length is l: "<<l;
 			while(head != 0)  {
 				currentNode = head;
 				head = head->next;
@@ -45,7 +46,8 @@ template <class T> class myQ {
 		bool popFront(T* element);
 		bool front(T* element);
 		bool isEmpty();
-		int length();	
+		int length();
+		void deleteTail();	
 		T* getTail();
 
 };
@@ -105,17 +107,50 @@ template <class T>
 bool myQ<T>::popFront(T* element){
 	if(head != 0){
 		Node *de = head;
-		*element = de->data;
-		head = de->next;
+		*element = head->data;
+		head = head->next;
 		delete(de);
+		de = 0;
 		l--;
 		if(l == 0){
 			head = 0;
 			tail = 0;
 		}
+		if(l==1){
+			tail = 0;
+			head->next = tail;
+		}
 		return true;
 	}
 	return false;
+}
+
+template<class T>
+void myQ<T>::deleteTail()	{
+	Node *current = 0;
+	Node *prev = 0;
+
+	if(l == 0)	return;
+
+	current = head;
+	while(current->next != 0)	{
+		prev = current;
+		current = current->next;
+	}
+	
+	if(prev == 0)	{
+		delete current;
+		l--;
+		head = 0;
+		tail = 0;
+	} else	{
+		delete current;
+		l--;
+		prev->next = 0;
+		if(l >= 2)	tail = prev;
+		else	tail = 0;
+	}
+	
 }
 
 template<class T>

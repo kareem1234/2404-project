@@ -21,7 +21,6 @@ class RelatedCourse : public Course 	{
 	public:
 		RelatedCourse(string = "", string = "", string = "", string = "");
 		~RelatedCourse();
-		RelatedCourse(RelatedCourse&);
 		string getFinalGrade();
 		void setFinalGrade(string);
 		void save();

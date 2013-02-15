@@ -10,13 +10,13 @@ extern ofstream saveLog;
 int Application::totalApplications = 0;
 
 //Default constructor
-Application::Application(string c = "UNKNOWN"){
+Application::Application(string c = ""){
 	course = c;
 	applicationNum = ++totalApplications;
 } 
 
 Application:: Application (){
-	course = "UNKNOWN";
+	course = "";
 	applicationNum = ++totalApplications;
 
 }
@@ -47,7 +47,7 @@ void Application::setCourse(string c){
 	
 //Save method saves current application to output file
 void Application::save()	{
-	saveLog << " " <<" Ap"<<" "<<applicationNum +" "+status + " " + course;
+	saveLog << "App" << "$" << applicationNum << "$" << status << "$" << course << "$";
 	int l = assistedCourses.length();
 	for(int i = 0; i< l; i++){
 		AssistantCourse* a = new AssistantCourse;

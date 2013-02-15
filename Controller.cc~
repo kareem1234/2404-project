@@ -378,6 +378,7 @@ void Controller::applyStudentInfo()	{
 	students->setCgpa(genInfoMenu->getCgpa()->get_text());
 	students->setGpa(genInfoMenu->getGpa()->get_text());
 	students->applications.getTail()->setStatus("pending");
+	//students->getApplications()->setStatus("pending");
 }
 
 void Controller::applyRelatedCourse()	{

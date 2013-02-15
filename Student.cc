@@ -126,7 +126,7 @@ void Student::setGpa(string mark)	{
 void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);
 	saveLog<<endl;	
-	saveLog << firstName + " " << lastName << " " << stuNum << " " << email<< " " << major << " " << cgpa << " " << gpa;
+	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$";
 	//must fix saving for each application in que
 	int l = applications.length();
 	for(int i=0; i < l; i++){
@@ -222,7 +222,7 @@ bool Student::checkGpa(string mark)	{
 
 //Checks string has no funny characters or numbers
 bool Student::validString(string s)	{
-	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`;:'") != string::npos || s == "")	{
 		return false;
 	}
  	return true;

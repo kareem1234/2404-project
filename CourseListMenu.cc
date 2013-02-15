@@ -28,6 +28,7 @@ CourseListMenu::CourseListMenu(int Type){
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		m_refTextBuffer = Gtk::TextBuffer::create();
 		m_TextView->set_buffer(m_refTextBuffer);
+		m_ScrolledWindow2.set_size_request(100,200);
 	}
 
 	cancel->set_size_request(70,30);
@@ -97,44 +98,50 @@ int CourseListMenu::loadCourseList(){
 }
 void CourseListMenu:: findApp(){
 	string line;
+	stringstream output;
+	bool found = false;
+
 	ifstream myfile("saveLog.txt");
 	while(getline(myfile,line)){
-		istringstream toParse ( line , istringstream::in);
+		istringstream toParse (line, istringstream::in);
 		string firstName, lastName, stuNum , email, major, standing, cgpa ,gpa;
-		getline(toParse,firstName,' ');
-		getline(toParse,lastName,' ');
-		getline(toParse,stuNum,' ');
-		getline(toParse,email,' ');
-		getline(toParse,major,' ');
-		getline(toParse,cgpa,' ');
-		getline(toParse,gpa,' ');
+		getline(toParse,firstName,'$');
+		getline(toParse,lastName,'$');
+		getline(toParse,stuNum,'$');
+		getline(toParse,email,'$');
+		getline(toParse,major,'$');
+		getline(toParse,cgpa,'$');
+		getline(toParse,gpa,'$');
 		
-		string symbol="";
+		string symbol = "";
 		bool done = false;
-		while( !done &&  (symbol.compare("Ap") != 0) ){
-			if(!getline(toParse,symbol,' ')) 
+		while(!done &&  (symbol.compare("Ap") != 0) ){
+			if(!getline(toParse,symbol,'$')) 
 				done = true;
-			if(symbol.compare("Ap") != 0 ){
-				string appNum, status, course;
-				getline(toParse, appNum, ' ');
-				getline(toParse, status,' ');
-				getline(toParse,course,' ');
-				stringstream output;
-				if(course.compare(getString()) == 0){
-					output<<firstName<<" "<<lastName<<endl;
-					output<<stuNum<<" "<<email<<endl;
-					output<<major<<" "<<standing<<endl;
-					output<<cgpa<<" "<<gpa<<endl;
-					output<<course<<endl;
-					setString(output.str());
-					return;
-					}	
-				}
-			}
+			string appNum, status, course;
+			getline(toParse, appNum, '$');
+			cout << "appNum:" << appNum << endl;
+			getline(toParse, status,'$');
+			cout << "status:" << status << endl;
+			getline(toParse,course,'$');
+			cout << "Course:" << course << endl;
+			cout << "Course required:" << getString() << endl;
+			if(course.compare(getString()) == 0){
+				output<<"Name: "<<firstName<<" "<<lastName<<endl;
+				output<<"Student Number: "<<stuNum<<endl;
+				output<<"Email: "<<email<<endl;
+				output<<"Major: "<<major<<endl;
+				output<<"Year Standing: "<<standing<<endl;
+				output<<"Cgpa: "<<cgpa<<endl;
+				output<<"Gpa: "<<gpa<<endl;
+				output<<"Applied to TA: "<<course<<endl;
+				output<<"-----------------------"<<endl;
+				found = true;				
+			}	
 		}
-
-
-	setString("NO APPLICATION FOUND");
+	}
+	if(found)	setString(output.str());
+	else		setString("NO APPLICATION FOUND");
 }
 
 //Returns frame when called
