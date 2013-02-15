@@ -1,0 +1,8 @@
+DESIGN DOCUMENTATION  
+UML DIAGRAM included in seperate pdf
+
+Although it was recommened to save data into seperate files, we exercised our design skills and output student data into one file
+This allows for a uniform variable name across the program where all student info can be written to. Having one file allows for minimized storage space.
+Data can eaily be read back in and stored into objects due to the fact all data for one student is written on one line within the storage file.
+All data is deliminated by special characters allowing for compound strings including empty space. Parsing is quick and efficitent due to the specific nature in which data is outputed.
+Having one student object outputed to a line allows for quick searching for xth student.
