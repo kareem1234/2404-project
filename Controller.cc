@@ -5,6 +5,7 @@
 #include <iostream>
 using namespace std;
 
+//Default constructor
 Controller::Controller(){
 		
 	// create window 
@@ -22,6 +23,7 @@ Controller::Controller(){
 
 }
 
+//Default destructor
 Controller:: ~Controller()	{
 			
 	delete(studentMenu);
@@ -34,7 +36,7 @@ Controller:: ~Controller()	{
 	if(students != 0)	delete(students);
 }
 
-
+//Sets the login menu
 void Controller::setLoginMenu()  {
 
 	// allocated new loginMenu // updated
@@ -51,6 +53,7 @@ void Controller::setLoginMenu()  {
 
 }
 
+//Sets general info menu
 void Controller::setGenInfoMenu(){
 
 	// allocate new GenInfoMenu // updated
@@ -65,6 +68,7 @@ void Controller::setGenInfoMenu(){
 
 }
 
+//Sets the course list menu
 void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu	 // updated
 	courseList = new CourseListMenu(type);
@@ -81,6 +85,7 @@ void Controller::setCourseListMenu(int type){
 
 }
 
+//Sets the student menu
 void Controller::setStudentMenu(){
 
 	//allocate a new StudentMenu
@@ -94,6 +99,7 @@ void Controller::setStudentMenu(){
 	studentMenu->getCreateButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::student_create_button_clicked));
 }
 
+//Set the teacher menu
 void Controller::setTeacherMenu(){
 	//allocate a new TeacherMenu
 	teacherMenu = new TeacherMenu();
@@ -102,7 +108,6 @@ void Controller::setTeacherMenu(){
 
 	//connect signal handlers
 	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
-
 	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
 
 }
@@ -117,16 +122,17 @@ void Controller::setRelatedCourseMenu()	{
 	relMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_add_button_clicked));
 }
 
+//Sets the ta course menu
 void Controller::setTACourseMenu()	{
 	taMenu = new TACourseMenu();
 	add(*taMenu);
 	show_all();
 
-
 	taMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_next_button_clicked));
 	taMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_add_button_clicked));
 }
 
+//Sets the work experience menu
 void Controller::setExperienceMenu()	{
 	workMenu = new WorkExperienceMenu();
 	add(*workMenu);
@@ -138,6 +144,7 @@ void Controller::setExperienceMenu()	{
 	workMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_add_button_clicked));
 }
 
+//Action listener functions for all menus buttons
 void Controller::login_teacher_button_clicked(){
 
 	remove();
@@ -154,23 +161,15 @@ void Controller::login_student_button_clicked(){
 	setStudentMenu();
 }
 
-//updated
 void Controller::student_cancel_button_clicked(){
 
-	cout << "Seg meg" << endl;
 	if(students != 0)	students->save();
-	cout << "Seg meg2" << endl;
-	//cout<<"related courss l is "<< students->applications.relatedCourses.length()<<endl;
-	//cout<<"courss l is "<< students->applications.assistedCourses.length()<<endl;
-	//cout<<"work l is "<< students->applications.workExperiences.length()<<endl;
 	delete(students);
-	cout << "Seg meg3" << endl;
 	students = 0;
 	remove();
 	delete (studentMenu);
 	studentMenu = 0;
 	setLoginMenu();
-
 }
 
 void Controller::teacher_cancel_button_clicked(){
@@ -179,7 +178,6 @@ void Controller::teacher_cancel_button_clicked(){
 	delete (teacherMenu);
 	teacherMenu = 0;
 	setLoginMenu();
-
 }
 
 void Controller::teacher_summary_button_clicked(){
@@ -188,25 +186,20 @@ void Controller::teacher_summary_button_clicked(){
 	delete (teacherMenu);
 	teacherMenu = 0;
 	setCourseListMenu(1);
-
 }
 
-// updated
 void Controller::student_create_button_clicked(){
 
 	remove();
 	delete (studentMenu);
 	studentMenu = 0;
 	setCourseListMenu(0);
-
 }
 
-// updated
 void Controller::courselist_treeview_row_selected(){
 	courseList->getSelect()->set_sensitive(true);
 }
 
-// updated
 void Controller::courselist_select_button_clicked(){
 	
 	string course(courseList->getString());
@@ -223,9 +216,7 @@ void Controller::courselist_select_button_clicked(){
 		delete(courseList);
 		courseList = 0;
 		RelatedCourse r(course);
-		cout<<"yooo"<<endl;
 		students->applications.getTail()->relatedCourses.pushBack(&r);
-		cout<<"check"<<endl;
 		setRelatedCourseMenu();
 		return;
 	} else if(type == 4)	{
@@ -238,11 +229,9 @@ void Controller::courselist_select_button_clicked(){
 		return;
 	} else if(type == 1 ){
 		courseList->findApp();
-
 	}
-
 }
-// updated
+
 void Controller::courselist_cancel_button_clicked(){
 	int type = courseList->getType();
 	remove();
@@ -251,7 +240,6 @@ void Controller::courselist_cancel_button_clicked(){
 	if(type ==0 )
 	setStudentMenu();
 	else setTeacherMenu();
-
 }
 
 void Controller::courselist_skip_button_clicked()	{
@@ -269,7 +257,6 @@ void Controller::courselist_skip_button_clicked()	{
 	}
 }
 
-// updated
 void Controller::genInfo_next_button_clicked(){
 	if(genInfoMenu->checkInfo()){
 		applyStudentInfo();
@@ -368,7 +355,7 @@ void Controller::createProfile(string s)	{
 	}
 }
 
-// not updated
+//Applies given info to student
 void Controller::applyStudentInfo()	{ 
 	students->setName(genInfoMenu->getFirstName()->get_text(), genInfoMenu->getLastName()->get_text());
 	students->setStuNum(genInfoMenu->getStuNum()->get_text());
@@ -380,18 +367,21 @@ void Controller::applyStudentInfo()	{
 	students->applications.getTail()->setStatus("pending");
 }
 
+//Applies given info to related course
 void Controller::applyRelatedCourse()	{
 	students->applications.getTail()->relatedCourses.getTail()->setTerm(relMenu->getTerm()->get_active_text());
 	students->applications.getTail()->relatedCourses.getTail()->setYear(relMenu->getYear()->get_text());
 	students->applications.getTail()->relatedCourses.getTail()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
 }
 
+//Applies given info to ta course
 void Controller::applyTACourse()	{
 	students->applications.getTail()->assistedCourses.getTail()->setTerm(taMenu->getTerm()->get_active_text());
 	students->applications.getTail()->assistedCourses.getTail()->setYear(taMenu->getYear()->get_text());
 	students->applications.getTail()->assistedCourses.getTail()->setSupervisor(taMenu->getSupervisor()->get_text());
 }
 
+//Applies given info to work experience
 void Controller::applyWorkExperience()	{
 	WorkExperience work;
 	students->applications.getTail()->workExperiences.pushBack(&work);

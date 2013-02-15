@@ -1,5 +1,6 @@
 //CourseListMenu source file
 
+//Include statements
 #include "CourseListMenu.h"
 using namespace std;
 
@@ -17,11 +18,11 @@ CourseListMenu::CourseListMenu(int Type){
 	m_TreeView = new Gtk::TreeView;
 	m_TextView = new Gtk::TextView;
 	
-
+	//Make scrolling view
 	m_ScrolledWindow.add(*m_TreeView);
 	m_ScrolledWindow.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		
-		
+	//Depending on the type the list looks different and has different behaviour
 	if(type == 1){
 		m_ScrolledWindow2.add(*m_TextView);
 		m_TextView->set_editable(false);
@@ -51,7 +52,7 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*skip,0,4,2,1);
 	}
 
-	// setup courseList
+	//Setup courseList
 	m_refTreeModel = Gtk::ListStore::create(m_Columns);
 	m_TreeView->set_model(m_refTreeModel);
 	loadCourseList();
@@ -62,6 +63,7 @@ CourseListMenu::CourseListMenu(int Type){
 	add(*grid);
 }
 
+//Default destructor
 CourseListMenu::~CourseListMenu()	{
 
 	delete(grid);
@@ -72,6 +74,8 @@ CourseListMenu::~CourseListMenu()	{
 	delete(m_TextView);
 
 }
+
+//Returns int type describing what list it is
 int CourseListMenu::getType(){
 	return type;
 }
@@ -96,6 +100,8 @@ int CourseListMenu::loadCourseList(){
 
 	return 1;
 }
+
+//Finds applications
 void CourseListMenu:: findApp(){
 	string line;
 	stringstream output;
@@ -147,7 +153,6 @@ void CourseListMenu:: findApp(){
 //Returns frame when called
 Gtk::Grid* CourseListMenu::getGrid()  {
 	return grid;
-	
 }
 
 //Returns cancel button when called
@@ -165,6 +170,7 @@ Gtk::Button* CourseListMenu::getSelect(){
 	return select;
 }
 
+//Returns the current selection
 string CourseListMenu::getString(){
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView->get_selection();
 	Gtk::TreeModel::iterator iter = refTreeSelection->get_selected();
@@ -174,10 +180,14 @@ string CourseListMenu::getString(){
 		return s;
 	}
 }
+
+//Sets the courseList textfield if visible
 void CourseListMenu::setString(string app){
 	m_refTextBuffer->set_text(app);
 
 }
+
+//Returns the tree view
 Gtk::TreeView* CourseListMenu::getTreeView(){
 	return m_TreeView;
 }

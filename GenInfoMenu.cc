@@ -1,5 +1,6 @@
 //GenInfoMenu source file
 
+//Include statements
 #include "GenInfoMenu.h"
 #include <sstream>
 
@@ -65,7 +66,7 @@ GenInfoMenu::GenInfoMenu()	{
 	cgpaT = new Gtk::Entry();
 	cgpaT->set_size_request(70,30);
 	
-	//Position the all
+	//Position them all
 	grid->attach(*genInfoL,1,0,2,1);
 	grid->attach(*firstNameL,1,1,1,1);
 	grid->attach(*firstNameT,2,1,1,1);
@@ -88,6 +89,7 @@ GenInfoMenu::GenInfoMenu()	{
 	add(*grid);
 }
 
+//Default destructor
 GenInfoMenu::~GenInfoMenu()	{
 		delete(grid);
 		delete(nextB);
@@ -258,6 +260,7 @@ bool GenInfoMenu::checkInfo()	{
 
 }
 
+//Sets the incoming student values from form currently displayed
 void GenInfoMenu::setStudentInfo(Student* s)	{
 	if(s == 0)	return;	
 	

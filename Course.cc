@@ -49,6 +49,7 @@ void Course::save()	{
 	
 }
 
+//Checks given year
 int Course::checkYear(string s)	{
 	float check;	
 	

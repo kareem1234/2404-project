@@ -1,7 +1,8 @@
+//Controller header file
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-// include statements
+//Include statements
 #include "Student.h"
 #include "CourseListMenu.h"
 #include "StudentMenu.h"
@@ -17,7 +18,7 @@
 #include <string>
 
 class Controller : public Gtk::Window 	{
-	
+	//Private members
 	private:
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
@@ -60,7 +61,7 @@ class Controller : public Gtk::Window 	{
 		void applyRelatedCourse();
 		void applyTACourse();
 		void applyWorkExperience();
-
+	//Public members
 	public:
 		Controller();
 		~Controller();

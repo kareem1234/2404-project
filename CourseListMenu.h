@@ -3,6 +3,7 @@
 #ifndef COURSELIST_H
 #define COURSELIST_H
 
+//Include statements
 #include <gtkmm.h>
 #include <fstream>
 #include <iostream>
@@ -24,8 +25,8 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::Button* select;
 		Gtk::TextView *m_TextView;
 		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
-		
 		int loadCourseList();
+
 	//public members
 	public:
 		CourseListMenu(int Type);
