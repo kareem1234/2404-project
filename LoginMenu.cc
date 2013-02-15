@@ -20,6 +20,7 @@ LoginMenu::LoginMenu()	{
 	add(*box);
 }
 
+// destructor 
 LoginMenu::~LoginMenu()	{
 	delete(box);
 	delete(studentB);
