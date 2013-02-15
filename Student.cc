@@ -127,7 +127,6 @@ void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);
 	saveLog<<endl;	
 	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$";
-	//must fix saving for each application in que
 	int l = applications.length();
 	for(int i=0; i < l; i++){
 		Application app;
