@@ -56,4 +56,4 @@ myQ.o:	myQ.cc
 	g++ -c myQ.cc
 
 clean: 		
-		rm *.o *.h~ *.cc~ saveLog.txt Makefile~ Assignment1
+		rm *.o *.h~ *.cc~ saveLog.txt Makefile~ Assignment2
