@@ -3,23 +3,22 @@
 #include "Application.h"
 #include "AssistantCourse.h"
 #include <iostream>
-#include <fstream>
-extern ofstream saveLog;
 
 //Static variable initialized
 int Application::totalApplications = 0;
 
 //Default constructor
-Application::Application(string c = "")	{
+Application::Application(string c)	{
 	course = c;
 	applicationNum = ++totalApplications;
 } 
 
-//Empty constructor
-Application::Application ()	{
-	course = "";
-	applicationNum = ++totalApplications;
-
+//Default destructor
+Application::~Application()	{
+	assistedCourses.clear();
+	relatedCourses.clear();
+	workExperiences.clear();
+	cout << "Application #" << applicationNum << " cleared" << endl;
 }
 
 //Get methods defined
@@ -46,31 +45,30 @@ void Application::setStatus(string stat){
 void Application::setCourse(string c){
 	course = c;
 }
+
+//Returns the assisted courses if called
+myQ<AssistantCourse>* Application::getAssisted()	{
+	return &assistedCourses;
+}
+
+//Returns the work experience if called
+myQ<RelatedCourse>* Application::getRelated()	{
+	return &relatedCourses;
+}
+
+//Returns the work experience if called
+myQ<WorkExperience>* Application::getExperience()	{
+	return &workExperiences;
+}
 	
 //Save method saves current application to output file
 void Application::save()	{
+	saveLog.open("saveLog.txt", ios::app);
 	saveLog << "App" << "$" << applicationNum << "$" << status << "$" << course << "$";
-	int l = assistedCourses.length();
-	for(int i = 0; i< l; i++){
-		AssistantCourse* a = new AssistantCourse;
-		assistedCourses.popFront(a);
-		a->save();
-		assistedCourses.pushBack(a);
-	}
-	l = relatedCourses.length();
-	for(int i= 0; i<l; i++)	{
-		RelatedCourse *r = new RelatedCourse;
-		relatedCourses.popFront(r);
-		r->save();
-		relatedCourses.pushBack(r);
-	}
-	l= workExperiences.length();
-	for(int i= 0; i<l; i++)	{
-		WorkExperience *work = new WorkExperience;
-		workExperiences.popFront(work);
-		work->save();
-		workExperiences.pushBack(work);
-	}
+	saveLog.close();
+	assistedCourses.save();
+	relatedCourses.save();
+	workExperiences.save();
 }
 
 

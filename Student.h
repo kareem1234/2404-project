@@ -5,6 +5,7 @@
 // include que class for data storage
 #include "myQ.cc"
 #include "Application.h"
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -12,6 +13,7 @@ using namespace std;
 class Student 	{
 	//Private members
 	private:
+		ofstream saveLog;
 		string firstName;
 		string lastName;
 		string stuNum;
@@ -20,6 +22,7 @@ class Student 	{
 		int year;
 		float cgpa;
 		float gpa;
+		myQ<Application> applications;
 		static bool validString(string s);
 		static bool validInt(string s);
 		static bool validFloat(string s);
@@ -27,9 +30,7 @@ class Student 	{
 	//Public members
 	public:
 		Student();
-		Student(Student& other);
 		~Student();
-		myQ<Application> applications;
 		string getFirstName();
 		string getLastName();
 		string getStuNum();
@@ -39,7 +40,7 @@ class Student 	{
 		float getCgpa();
 		float getGpa();
 		int getNumApps();
-		Application* getApplications();
+		myQ<Application>* getApplications();
 		void setName(string name1, string name2);
 		void setStuNum(string num);
 		void setEmail(string emailAdd);

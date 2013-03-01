@@ -7,6 +7,7 @@
 #include "RelatedCourse.h"
 #include "WorkExperience.h"
 #include "myQ.cc"
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -14,20 +15,25 @@ using namespace std;
 class Application {
 	//Private members
 	private:
+		ofstream saveLog;
 		static int totalApplications;
 		int applicationNum;
 		string status;
 		string course;
-	//Public members
-	public:
-		Application(string c);
-		Application();
 		myQ<AssistantCourse> assistedCourses;
 		myQ<RelatedCourse>   relatedCourses;
 		myQ<WorkExperience>  workExperiences;
+
+	//Public members
+	public:
+		Application(string c = "");
+		~Application();
 		int getApplicationNum();
 		string getStatus();
 		string getCourse();
+		myQ<AssistantCourse>* getAssisted();
+		myQ<RelatedCourse>* getRelated();
+		myQ<WorkExperience>* getExperience();
 		void setStatus(string stat);
 		void setCourse(string c);
 		void save();

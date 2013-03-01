@@ -10,9 +10,10 @@ string Duration, string Start, string End){
 	setDuration(Duration); 
 }
 
-void WorkExperience::save(){
-	saveLog<< "Wor" << "$" << title << "$" << duration << "$" << start << "$" << end << "$" << duties << "$";
-
+void WorkExperience::save()	{
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog << "Wor" << "$" << title << "$" << duration << "$" << start << "$" << end << "$" << duties << "$";
+	saveLog.close();
 }
 
 void WorkExperience::setTitle(string Title){

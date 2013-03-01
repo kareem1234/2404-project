@@ -199,7 +199,7 @@ string WorkExperienceMenu::getDutiesText()	{
 	string s;
 	Glib::RefPtr<Gtk::TextBuffer> buffer;	
 	buffer = dutiesT->get_buffer();
-	return	s = buffer;
+	return	s = buffer->get_text();
 }
 
 string WorkExperienceMenu::getStartDate()	{

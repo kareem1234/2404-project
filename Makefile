@@ -1,5 +1,5 @@
-Assignment2:	Main.o Controller.o Student.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o myQ.o
-		g++ -o Assignment2 Main.o Controller.o Student.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
+Assignment2:	Main.o Controller.o Student.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o
+		g++ -o Assignment2 Main.o Controller.o Student.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
 
 Main.o:		Main.h Main.cc 
 		g++ -c Main.cc `pkg-config gtkmm-3.0 --cflags --libs`
@@ -22,6 +22,9 @@ StudentMenu.o:	StudentMenu.h StudentMenu.cc
 LoginMenu.o:	LoginMenu.h LoginMenu.cc
 		g++ -c LoginMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
+StudentTypeMenu.o:	StudentTypeMenu.h StudentTypeMenu.cc
+			g++ -c StudentTypeMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
 CourseListMenu.o:	CourseListMenu.h CourseListMenu.cc
 			g++ -c CourseListMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
@@ -30,6 +33,15 @@ WorkExperienceMenu.o:	WorkExperienceMenu.h WorkExperienceMenu.cc
 
 TeacherMenu.o:	TeacherMenu.h TeacherMenu.cc
 		g++ -c TeacherMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+RelatedCourseMenu.o:	RelatedCourseMenu.h RelatedCourseMenu.cc
+			g++ -c RelatedCourseMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+WorkExperience.o:	WorkExperience.h WorkExperience.cc
+			g++ -c WorkExperience.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+TACourseMenu.o:	TACourseMenu.h TACourseMenu.cc
+		g++ -c TACourseMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
 RelatedCourse.o:	RelatedCourse.h RelatedCourse.cc
 			g++ -c RelatedCourse.cc
@@ -40,17 +52,8 @@ AssistantCourse.o:	AssistantCourse.h AssistantCourse.cc
 Course.o:	Course.h Course.cc
 		g++ -c Course.cc
 
-RelatedCourseMenu.o:	RelatedCourseMenu.h RelatedCourseMenu.cc
-			g++ -c RelatedCourseMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
-
-WorkExperience.o:	WorkExperience.h WorkExperience.cc
-			g++ -c WorkExperience.cc `pkg-config gtkmm-3.0 --cflags --libs`
-
-myQ.o:			myQ.cc 
-			g++ -c myQ.cc
-
-TACourseMenu.o:	TACourseMenu.h TACourseMenu.cc
-			g++ -c TACourseMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+myQ.o:	myQ.cc 
+	g++ -c myQ.cc
 
 clean: 		
 		rm *.o *.h~ *.cc~ saveLog.txt Makefile~ Assignment1

@@ -9,14 +9,14 @@ StudentMenu::StudentMenu()	{
 	
 	//Create neccessary buttons
 	createB = new Gtk::Button("CREATE APPLICATION", false);
-	createB->set_size_request(70, 30);
+	createB->set_size_request(300, 90);
 
 	editB = new Gtk::Button("EDIT APPLICATION", false);
-	editB->set_size_request(70, 30); 
+	editB->set_size_request(70, 90); 
 	editB->set_sensitive(false);
 
 	cancelB = new Gtk::Button("CANCEL", false);
-	cancelB->set_size_request(70, 30);
+	cancelB->set_size_request(70, 90);
 
 	//Add buttons to the frame
 	box->pack_start(*createB);

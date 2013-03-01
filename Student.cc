@@ -6,9 +6,7 @@
 using namespace std;
 
 #include <stdlib.h>
-#include <fstream>
 #include <string>
-ofstream saveLog;
 
 //Default constructor
 Student::Student()	{
@@ -19,20 +17,8 @@ Student::Student()	{
 
 //Destructor
 Student::~Student()	{
-	
-
-}
-// copy constructor
-Student::Student(Student& other){
-	applications = other.applications;
-	firstName = other.getFirstName();
-	lastName= other.getLastName(); 
-	stuNum = other.getStuNum();
-	email = other.getEmail();
-	major = other.getMajor();
-	year = other.getStanding();
-	cgpa = other.getCgpa();
-	gpa = other.getGpa();
+	applications.clear();
+	cout << "Applications cleared" << endl;
 }
 
 //Returns complete name when called
@@ -74,10 +60,8 @@ float Student::getGpa()	{
 }
 
 //Returns head of list of applications
-Application* Student::getApplications()	{
-	Application* app = new Application;
-	applications.popFront(app);
-	return app;
+myQ<Application>* Student::getApplications()	{
+	return &applications;
 }
 
 //Sets first and last name with given strings
@@ -122,18 +106,15 @@ void Student::setGpa(string mark)	{
 	gpa = newMark;
 }
 
-//Save function saves newest application under the student
+//Save function saves all application under the student
 void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);
-	saveLog<<endl;	
-	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$"<<year<<"$";
-	int l = applications.length();
-	for(int i=0; i < l; i++){
-		Application app;
-		applications.popFront(&app);
-		app.save();
-		applications.pushBack(&app);
-	}
+	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$"<< year << "$";
+	saveLog.close();
+	applications.save();
+
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog << endl;
 	saveLog.close();
 }
 

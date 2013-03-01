@@ -7,6 +7,7 @@
 #include "CourseListMenu.h"
 #include "StudentMenu.h"
 #include "LoginMenu.h"
+#include "StudentTypeMenu.h"
 #include "GenInfoMenu.h"
 #include "TeacherMenu.h"
 #include "RelatedCourseMenu.h"
@@ -24,13 +25,14 @@ class Controller : public Gtk::Window 	{
 		StudentMenu *studentMenu;
 		CourseListMenu *courseList;
 		LoginMenu *loginMenu;
+		StudentTypeMenu *typeMenu;
 		GenInfoMenu *genInfoMenu;
 		RelatedCourseMenu *relMenu;
 		TACourseMenu *taMenu;
 		WorkExperienceMenu *workMenu;
 		Student *students;
 		void setLoginMenu();
-		void teacher_summary_button_clicked();
+		void setTypeMenu();
 		void setGenInfoMenu();
 		void setCourseListMenu(int type);
 		void setStudentMenu();
@@ -40,7 +42,10 @@ class Controller : public Gtk::Window 	{
 		void setExperienceMenu();
 		void login_teacher_button_clicked();
 		void login_student_button_clicked();
+		void typeMenu_grad_button_clicked();
+		void typeMenu_undergrad_button_clicked();
 		void teacher_cancel_button_clicked();
+		void teacher_summary_button_clicked();
 		void genInfo_next_button_clicked();
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();

@@ -3,11 +3,11 @@
 #include <sstream>
 #include <string>
 using namespace std;
-extern ofstream saveLog;
 
 class WorkExperience{
 	
 	private:
+		ofstream saveLog;
 		string title;
 		string duties;
 		int duration;

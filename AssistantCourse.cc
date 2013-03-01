@@ -9,11 +9,6 @@ AssistantCourse::AssistantCourse(string name, string t, string y, string sup)
 	: Course::Course(name, t, y), supervisor(sup)
 {	}
 
-//Default destructor
-AssistantCourse::~AssistantCourse()	{
-
-}
-
 //Returns the name of the supervisor for the course
 string AssistantCourse::getSupervisor()	{
 	return supervisor;
@@ -26,7 +21,9 @@ void AssistantCourse::setSupervisor(string sup)	{
 
 //Saves all necessary details to file
 void AssistantCourse::save()	{
-	saveLog<< "Ass" << "$" << getCourseName() << "$" << getTerm() << "$" << getYear() << "$" << getSupervisor() << "$";	
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog << "Ass" << "$" << getCourseName() << "$" << getTerm() << "$" << getYear() << "$" << getSupervisor() << "$";
+	saveLog.close();	
 }
 
 //Checks the given year

@@ -10,79 +10,88 @@ Controller::Controller(){
 		
 	// create window 
 	Gtk:Window window;
-	set_size_request(300,400);
 	studentMenu = 0;
 	courseList = 0;
 	loginMenu = 0;
+	typeMenu = 0;
 	genInfoMenu = 0;
 	relMenu = 0;
 	taMenu = 0;
 	workMenu = 0;
 	students = 0;
 	setLoginMenu();
-
 }
 
 //Default destructor
-Controller:: ~Controller()	{
+Controller::~Controller()	{
 			
 	delete(studentMenu);
 	delete(courseList);
 	delete(loginMenu);
+	delete(typeMenu);
 	delete(genInfoMenu);
 	delete(relMenu);
 	delete(taMenu);
 	delete(workMenu);
-	if(students != 0)	delete(students);
+	delete(students);
 }
 
 //Sets the login menu
 void Controller::setLoginMenu()  {
 
-	// allocated new loginMenu // updated
+	// allocated new loginMenu
 	loginMenu = new LoginMenu;
 	add(*loginMenu);
 	loginMenu->show_all();
 
 	// connect signal handlers
-	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this,
-	&Controller::login_student_button_clicked));
+	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_student_button_clicked));
 
-	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this,
-	&Controller::login_teacher_button_clicked));	
+	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));	
+}
 
+//Sets student type menu
+void Controller::setTypeMenu()	{
+
+	// allocate new StudentType
+	typeMenu = new StudentTypeMenu;
+	add(*typeMenu);
+	typeMenu->show_all();
+
+	// connect signal handlers
+	typeMenu->getUndergrad()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::typeMenu_undergrad_button_clicked));
+	typeMenu->getGrad()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::typeMenu_grad_button_clicked));
 }
 
 //Sets general info menu
 void Controller::setGenInfoMenu(){
 
-	// allocate new GenInfoMenu // updated
+	// allocate new GenInfoMenu
 	genInfoMenu = new GenInfoMenu;
 	genInfoMenu->setStudentInfo(students);
 	add(*genInfoMenu);
 	genInfoMenu->show_all();
 
-	// connect signal handlers // updated
+	// connect signal handlers
 	genInfoMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_next_button_clicked));
 
-
+	set_default_size(genInfoMenu->get_width(), genInfoMenu->get_height());
 }
 
 //Sets the course list menu
 void Controller::setCourseListMenu(int type){
-	// alllocate new CourseListMenu	 // updated
+	// alllocate new CourseListMenu
 	courseList = new CourseListMenu(type);
 	add(*courseList);
 	courseList->show_all();
 
-	//connect signal handlers /// NOT UPDATED
+	//connect signal handlers
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
 	refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
 
 	courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
 	courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
 	courseList->getSkip()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_skip_button_clicked));
-
 }
 
 //Sets the student menu
@@ -94,7 +103,7 @@ void Controller::setStudentMenu(){
 	add(*studentMenu);
 	studentMenu->show_all();
 	
-	//connnect signal handlers // UPDATED
+	//connnect signal handlers
 	studentMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::student_cancel_button_clicked));
 	studentMenu->getCreateButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::student_create_button_clicked));
 }
@@ -109,7 +118,6 @@ void Controller::setTeacherMenu(){
 	//connect signal handlers
 	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
 	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
-
 }
 
 //Sets the related course menu, waiting for input
@@ -158,6 +166,22 @@ void Controller::login_student_button_clicked(){
 	remove();
 	delete (loginMenu);
 	loginMenu = 0;
+	setTypeMenu();
+}
+
+void Controller::typeMenu_undergrad_button_clicked()	{
+	
+	remove();
+	delete typeMenu;
+	typeMenu = 0;
+	setStudentMenu();
+}
+
+void Controller::typeMenu_grad_button_clicked()	{
+
+	remove();
+	delete typeMenu;
+	typeMenu = 0;
 	setStudentMenu();
 }
 
@@ -215,16 +239,14 @@ void Controller::courselist_select_button_clicked(){
 		remove();
 		delete(courseList);
 		courseList = 0;
-		RelatedCourse r(course);
-		students->applications.getTail()->relatedCourses.pushBack(&r);
+		students->getApplications()->back()->getRelated()->pushBack(new RelatedCourse(course));
 		setRelatedCourseMenu();
 		return;
 	} else if(type == 4)	{
 		remove();
 		delete(courseList);
 		courseList = 0;
-		AssistantCourse r(course);
-		students->applications.getTail()->assistedCourses.pushBack(&r);
+		students->getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course));
 		setTACourseMenu();
 		return;
 	} else if(type == 1 ){
@@ -237,7 +259,7 @@ void Controller::courselist_cancel_button_clicked(){
 	remove();
 	delete (courseList);
 	courseList=0;
-	if(type ==0 )
+	if(type == 0 )
 	setStudentMenu();
 	else setTeacherMenu();
 }
@@ -335,7 +357,9 @@ void Controller::workExperience_skip_button_clicked()	{
 void Controller::workExperience_cancel_button_clicked()	{
 	
 	//Delete application
-	students->applications.deleteTail();
+	cout << "Seggy 1" << endl;
+	students->getApplications()->deleteTail();
+	cout << "Seggy 2" << endl;
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -345,13 +369,13 @@ void Controller::workExperience_cancel_button_clicked()	{
 //Create the new application and assigns it to the student created // not updated
 void Controller::createProfile(string s)	{
 
-	Application app(s);
+	Application* app = new Application(s);
 
 	if(students == 0)	{
 		students = new Student();
-		students->applications.pushBack(&app);
+		students->getApplications()->pushBack(app);
 	} else	{
-		students->applications.pushBack(&app);
+		students->getApplications()->pushBack(app);
 	}
 }
 
@@ -364,32 +388,31 @@ void Controller::applyStudentInfo()	{
 	students->setStanding(genInfoMenu->getYear()->get_text());
 	students->setCgpa(genInfoMenu->getCgpa()->get_text());
 	students->setGpa(genInfoMenu->getGpa()->get_text());
-	students->applications.getTail()->setStatus("pending");
+	students->getApplications()->back()->setStatus("pending");
 }
 
 //Applies given info to related course
 void Controller::applyRelatedCourse()	{
-	students->applications.getTail()->relatedCourses.getTail()->setTerm(relMenu->getTerm()->get_active_text());
-	students->applications.getTail()->relatedCourses.getTail()->setYear(relMenu->getYear()->get_text());
-	students->applications.getTail()->relatedCourses.getTail()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
+	students->getApplications()->back()->getRelated()->back()->setTerm(relMenu->getTerm()->get_active_text());
+	students->getApplications()->back()->getRelated()->back()->setYear(relMenu->getYear()->get_text());
+	students->getApplications()->back()->getRelated()->back()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
 }
 
 //Applies given info to ta course
 void Controller::applyTACourse()	{
-	students->applications.getTail()->assistedCourses.getTail()->setTerm(taMenu->getTerm()->get_active_text());
-	students->applications.getTail()->assistedCourses.getTail()->setYear(taMenu->getYear()->get_text());
-	students->applications.getTail()->assistedCourses.getTail()->setSupervisor(taMenu->getSupervisor()->get_text());
+	students->getApplications()->back()->getAssisted()->back()->setTerm(taMenu->getTerm()->get_active_text());
+	students->getApplications()->back()->getAssisted()->back()->setYear(taMenu->getYear()->get_text());
+	students->getApplications()->back()->getAssisted()->back()->setSupervisor(taMenu->getSupervisor()->get_text());
 }
 
 //Applies given info to work experience
 void Controller::applyWorkExperience()	{
-	WorkExperience work;
-	students->applications.getTail()->workExperiences.pushBack(&work);
-	students->applications.getTail()->workExperiences.getTail()->setTitle(workMenu->getTitle()->get_text());
-	students->applications.getTail()->workExperiences.getTail()->setDuration(workMenu->getDuration()->get_active_text());
-	students->applications.getTail()->workExperiences.getTail()->setDuties(workMenu->getDutiesText());	
-	students->applications.getTail()->workExperiences.getTail()->setStart(workMenu->getStartDate());
-	students->applications.getTail()->workExperiences.getTail()->setEnd(workMenu->getEndDate());
+	students->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+	students->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
+	students->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
+	students->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
+	students->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
+	students->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
 }
 
 

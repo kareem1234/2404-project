@@ -8,10 +8,10 @@ LoginMenu::LoginMenu()	{
 
 	//Create neccessary buttons
 	studentB = new Gtk::Button("STUDENT", false);
-	studentB->set_size_request(150, 90);
+	studentB->set_size_request(300, 90);
 
 	teacherB = new Gtk::Button("TEACHER", false);
-	teacherB->set_size_request(150, 90); 
+	teacherB->set_size_request(300, 90); 
 
 	//Add buttons to the box
 	box->pack_start(*studentB, Gtk::PACK_SHRINK, 15);

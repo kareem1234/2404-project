@@ -9,11 +9,6 @@ Course::Course(string name, string t, string y)
 	: courseName(name), term(t), year(y)
 {	}
 
-//Default destructor
-Course::~Course()	{
-
-}
-
 //Returns the title of the course
 string Course::getCourseName()	{
 	return courseName;
@@ -46,7 +41,9 @@ void Course::setYear(string y)	{
 
 //Save data to output file
 void Course::save()	{
-	
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog << getCourseName() << "$" << getTerm() << "$" << getYear() << "$";
+	saveLog.close();
 }
 
 //Checks given year

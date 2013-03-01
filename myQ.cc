@@ -3,165 +3,173 @@
 
 #include <iostream>
 using namespace std;
+
 template <class T> class myQ {
 	
-	 public:
+	public:
 		// inner node class
-		 class Node{
+		class Node	{
 			public:
-				T data;
+				T* data;
 				Node* next;
-				Node(){
-				  next = 0;
-				}
-				~Node(){
-				  						
+				
+				Node() {
+					next = 0;
+					data = 0;
 				}	
 		};
 		// instance variables
 		Node *head;
 		Node *tail;
-		int l;
 
 		// constructor
-		myQ(){  
+		myQ() {  
 		        head = 0;
 			tail = 0;
-			l=0;
 		};
 
 		// destructor
-		~myQ(){
-			Node* currentNode = 0;
-			while(head != 0)  {
-				currentNode = head;
-				head = head->next;
-				//delete currentNode;
+		~myQ()	{
+			cout << "queue dtor called" << endl;
+			Node *currNode, *nextNode;
+
+			currNode = head;
+			while (currNode != 0) {
+				nextNode = currNode->next;
+				delete currNode;
+				currNode = nextNode;
 			}
 		};
 
 		// queue methods
-		bool pushBack(T* element);
-		bool popFront(T* element);
-		bool front(T* element);
-		bool isEmpty();
+		void pushBack(T*); //adds to tail
+    		void popFront(); //removes from head
+		T* front();
+		T* back();
+		bool isEmpty(); 
 		int length();
-		void deleteTail();	
-		T* getTail();
+		void deleteTail();
+		void clear();	
+		void save();
 
 };
 
 template <class T>
- bool myQ<T>::isEmpty(){
-
-	if(l == 0) return false;
-
-
-	return true;
+ bool myQ<T>::isEmpty()	{
+	return (head == 0);
 }
 
 template<class T>
-int myQ<T>::length(){
-	return l;
+int myQ<T>::length()	{
+	int counter = 0;
+	Node* curr = 0;
 
-}
-
-template <class T>
-bool myQ<T>::front(T* element){
-	if(l == 0)return false;
-
-	else *element = head->data;
-	return true;
-	
-
-}
-template<class T>
-bool myQ<T>::pushBack(T* ele){
-		if(head == 0){ // empty list
-			head = new Node;
-			head->data = *ele;
-			l++;
-			return true;
-		}else if(tail == 0){ // tail not initialised
-			tail = new Node;
-			tail->data = *ele;
-			head->next = tail;
-			l++;
-			return true;
-			
-		}else{ // add to back
-			Node* newTail = new Node;
-			newTail->data = *ele;
-			tail->next = newTail;
-			tail= newTail;
-			l++;
-			return true;
-
-		}
-	 return false;	
-}
-
-//
-template <class T>
-bool myQ<T>::popFront(T* element){
-	if(head != 0){
-		Node *de = head;
-		*element = head->data;
-		head = head->next;
-		delete(de);
-		de = 0;
-		l--;
-		if(l == 0){
-			head = 0;
-			tail = 0;
-		}
-		if(l==1){
-			tail = 0;
-			head->next = tail;
-		}
-		return true;
+	curr = head;
+	while(curr != 0)	{
+		counter++;
+		curr = curr->next;
 	}
-	return false;
+
+	return counter;
+}
+
+template <class T>
+T* myQ<T>::front()	{
+	if (isEmpty())
+		return 0;
+	return (head->data);
+}
+
+template<class T>
+void myQ<T>::pushBack(T* ele)	{
+	Node* tmpNode = new Node;
+  	tmpNode->data = ele;
+
+	if (isEmpty())	{
+		head = tmpNode;
+	} else {
+	  tail->next = tmpNode;
+	}
+
+	tail = tmpNode;
+}
+
+template <class T>
+void myQ<T>::popFront(){
+	if (isEmpty()) {
+		return;
+	}
+	Node* newHead = head;
+	head = head->next;
+	delete newHead;
 }
 
 template<class T>
 void myQ<T>::deleteTail()	{
-	Node *current = 0;
+	Node *curr = 0;
 	Node *prev = 0;
 
-	if(l == 0)	return;
-
-	current = head;
-	while(current->next != 0)	{
-		prev = current;
-		current = current->next;
-	}
-	
-	if(prev == 0)	{
-		delete current;
-		l--;
+	cout << "Seggy queue 1" << endl;
+	if(isEmpty()) return;
+	cout << "Seggy queue 2" << endl;
+	cout << length() << endl;
+	if(length() == 1)	{
+		delete head->data;
+		delete head;
 		head = 0;
 		tail = 0;
-	} else	{
-		delete current;
-		l--;
-		prev->next = 0;
-		if(l >= 2)	tail = prev;
-		else	tail = 0;
+		return;
+	}
+	cout << "Seggy queue 3" << endl;
+	curr = head;
+	while(curr->next != 0)	{
+		prev = curr;
+		curr = curr->next;
 	}
 	
+	cout << "Seggy queue 3" << endl;
+	delete curr->data;
+	cout << "Seggy queue 4" << endl;
+	delete curr;
+	cout << "Seggy queue 5" << endl;
+	prev->next = 0;
+	tail = prev;	
 }
 
 template<class T>
-T* myQ<T>::getTail()	{
-	if(tail != 0){
-		return &(tail->data);
-	}else if(head != 0 ){
-			return &(head->data);
-	}
-	
+T* myQ<T>::back()	{
+	if(!isEmpty())	return tail->data;
 	return 0;
+}
 
+template<class T>
+void myQ<T>::clear()	{
+	Node* curr = 0;
+	
+	curr = head;
+	while(curr != 0)	{
+		delete curr->data;
+		curr->data = 0;
+		curr = curr->next;
+	}
+}
+
+template<class T>
+void myQ<T>::save()	{
+	Node* curr = 0;
+
+	curr = head;
+	while(curr != 0)	{
+		curr->data->save();
+		curr = curr->next;
+	}
 }
 
 #endif
+
+
+
+
+
+
+

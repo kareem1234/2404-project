@@ -8,19 +8,18 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-extern ofstream saveLog;
 using namespace std;
 
 //AssistantCourse class declaration
 class AssistantCourse : public Course	{
 	//Private data members
 	private:
+		ofstream saveLog;
 		string supervisor;
 
 	//Public data members
 	public:
 		AssistantCourse(string = "", string = "", string = "", string = "");
-		~AssistantCourse();
 		string getSupervisor();
 		void setSupervisor(string);
 		void save();

@@ -3,6 +3,7 @@
 #define COURSE_H
 
 //Include statements
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 class Course	{
 	//Private data members
 	private:
+		ofstream saveLog;
 		string 	courseName;
 		string 	term;
 		string 	year;
@@ -17,7 +19,6 @@ class Course	{
 	//Public data members
 	public:	
 		Course(string = "", string = "", string = "");
-		~Course();
 		string getCourseName();
 		string getTerm();
 		string getYear();

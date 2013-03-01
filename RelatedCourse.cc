@@ -11,11 +11,6 @@ RelatedCourse::RelatedCourse(string name, string t, string y, string final)
 
 }
 
-//Default destructor
-RelatedCourse::~RelatedCourse()	{
-
-}
-
 //Returns final grade of the students course
 string RelatedCourse::getFinalGrade()	{
 	return finalGrade;
@@ -28,5 +23,7 @@ void RelatedCourse::setFinalGrade(string final)	{
 
 //Saves necessary info to file
 void RelatedCourse::save()	{
-	saveLog<< "Rel" << "$" << getCourseName() << "$" << getTerm() << "$" << getYear() << "$" << getFinalGrade() << "$";	
+	saveLog.open("saveLog.txt", ios::app);
+	saveLog << "Rel" << "$" << getCourseName() << "$" << getTerm() << "$" << getYear() << "$" << getFinalGrade() << "$";
+	saveLog.close();	
 }
