@@ -3,7 +3,6 @@
 #define CONTROLLER_H
 
 //Include statements
-#include "Student.h"
 #include "CourseListMenu.h"
 #include "StudentMenu.h"
 #include "LoginMenu.h"
@@ -14,6 +13,8 @@
 #include "TACourseMenu.h"
 #include "WorkExperienceMenu.h"
 #include "RelatedCourseMenu.h"
+#include "Grad.h"
+#include "Undergrad.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -30,7 +31,8 @@ class Controller : public Gtk::Window 	{
 		RelatedCourseMenu *relMenu;
 		TACourseMenu *taMenu;
 		WorkExperienceMenu *workMenu;
-		Student *students;
+		Undergrad *undergrad;
+		Grad *grad;
 		void setLoginMenu();
 		void setTypeMenu();
 		void setGenInfoMenu();

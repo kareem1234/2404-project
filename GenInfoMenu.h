@@ -4,7 +4,7 @@
 #define GENINFOMENU_H
 
 //Include statements
-#include "Student.h"
+#include "Undergrad.h"
 #include <iostream>
 #include <gtkmm.h>
 #include <string>
@@ -56,7 +56,7 @@ class GenInfoMenu : public Gtk::Frame 	{
 		void setGpa(string g);
 		void setCgpa(string g);
 		bool checkInfo();
-		void setStudentInfo(Student*);
+		void setUndergradInfo(Undergrad*);
 };
 
 #endif

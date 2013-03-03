@@ -208,49 +208,49 @@ bool GenInfoMenu::checkInfo()	{
 	bool result = true;
 	
 	//Checks first name
-	if(!Student::checkName(firstNameT->get_text()))	{
+	if(!Undergrad::checkName(firstNameT->get_text()))	{
 		firstNameT->set_text("");
 		result = false;
 	}
 
 	//Checks last name
-	if(!Student::checkName(lastNameT->get_text()))	{
+	if(!Undergrad::checkName(lastNameT->get_text()))	{
 		lastNameT->set_text("");
 		result = false;
 	}
 
 	//Checks student number
-	if(!Student::checkStuNum(stuNumT->get_text()))	{
+	if(!Undergrad::checkStuNum(stuNumT->get_text()))	{
 		stuNumT->set_text("");
 		result = false;
 	}
 
 	//Checks email address
-	if(!Student::checkEmail(emailT->get_text()))	{
+	if(!Undergrad::checkEmail(emailT->get_text()))	{
 		emailT->set_text("");
 		result = false;
 	}
 
 	//Checks major
-	if(!Student::checkMajor(majorT->get_text()))	{
+	if(!Undergrad::checkMajor(majorT->get_text()))	{
 		majorT->set_text("");
 		result = false;
 	}
 
 	//Checks year of standing
-	if(!Student::checkStanding(yearT->get_text()))	{
+	if(!Undergrad::checkStanding(yearT->get_text()))	{
 		yearT->set_text("");
 		result = false;
 	}
 
 	//Checks cgpa value
-	if(!Student::checkCgpa(cgpaT->get_text()))	{
+	if(!Undergrad::checkCgpa(cgpaT->get_text()))	{
 		cgpaT->set_text("");
 		result = false;
 	}
 
 	//Checks gpa value
-	if(!Student::checkGpa(gpaT->get_text()))	{
+	if(!Undergrad::checkGpa(gpaT->get_text()))	{
 		gpaT->set_text("");
 		result = false;
 	}
@@ -261,7 +261,7 @@ bool GenInfoMenu::checkInfo()	{
 }
 
 //Sets the incoming student values from form currently displayed
-void GenInfoMenu::setStudentInfo(Student* s)	{
+void GenInfoMenu::setUndergradInfo(Undergrad* s)	{
 	if(s == 0)	return;	
 	
 	stringstream l;
