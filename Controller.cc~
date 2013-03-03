@@ -407,12 +407,12 @@ void Controller::applyTACourse()	{
 
 //Applies given info to work experience
 void Controller::applyWorkExperience()	{
-	//undergrad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
-	//undergrad->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
-	//undergrad->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
-	//undergrad->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
-	//undergrad->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
-	//undergrad->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
+	undergrad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+	undergrad->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
+	undergrad->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
+	undergrad->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
+	undergrad->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
+	undergrad->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
 }
 
 

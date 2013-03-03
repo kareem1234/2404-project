@@ -4,16 +4,10 @@
 
 #include <iostream>
 using namespace std;
-
 #include <stdlib.h>
-#include <string>
 
 //Default constructor
-Student::Student()	{
-	year = -1;
-	cgpa = -1;
-	gpa = -1;
-}
+Student::Student()	{	}
 
 //Destructor
 Student::~Student()	{
@@ -25,6 +19,8 @@ Student::~Student()	{
 string Student::getFirstName()	{
 	return (firstName);
 }
+
+//Returns last name when called
 string Student::getLastName()	{
 	return (lastName);
 }
@@ -37,26 +33,6 @@ string Student::getStuNum()	{
 //Returns email when called
 string Student::getEmail()	{
 	return email;
-}
-
-//Returns major when called
-string Student::getMajor()	{
-	return major;
-}
-
-//Returns year of standing when called
-int Student::getStanding()	{
-	return year;
-}
-
-//Returns cgpa when called
-float Student::getCgpa()	{
-	return cgpa;
-}
-
-//Returns gpa when called
-float Student::getGpa()	{
-	return gpa;
 }
 
 //Returns head of list of applications
@@ -80,40 +56,12 @@ void Student::setEmail(string emailAdd)	{
 	email = emailAdd;
 }
 
-//Sets major to given string
-void Student::setMajor(string study)	{
-	major = study;
-}
-
-//Sets year of standing to given integer
-void Student::setStanding(string standing)	{
-	int newYear;
-	newYear = atoi(standing.c_str());
-	year = newYear;
-}
-
-//Sets cgpa to given float
-void Student::setCgpa(string mark)	{
-	float newMark;
-	newMark = atof(mark.c_str());
-	cgpa = newMark;
-}
-
-//Sets gpa to given float
-void Student::setGpa(string mark)	{
-	float newMark;
-	newMark = atof(mark.c_str());
-	gpa = newMark;
-}
-
 //Save function saves all application under the student
 void Student::save()	{
 	saveLog.open("saveLog.txt", ios::app);
-	saveLog << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$" << major << "$" << cgpa << "$" << gpa << "$"<< year << "$";
+	saveLog << "Stu" << "$" << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$";
 	saveLog.close();
 	applications.save();
-
-	saveLog.open("saveLog.txt", ios::app);
 	saveLog << endl;
 	saveLog.close();
 }
@@ -152,57 +100,9 @@ bool Student::checkEmail(string emAdd)	{
  	return false;
 }
 
-//Checks major has no weird values
-bool Student::checkMajor(string study)	{
-	//Check theres no characters except letters
-	if(!validString(study))	{
-		return false;
-	}
- 	return true;
-}
-
-//Checks standing is a number and is in the range 1-4
-bool Student::checkStanding(string standing)	{
-	int check;
-	if(!validInt(standing))	{ 
-		return false;
-	}
-	check = atof(standing.c_str());
-	if(check > 4 || check < 1)	{
-		return false;
-	}
-	return true;
-}
-
-//Checks cgpa is a number and is the range 0-12
-bool Student::checkCgpa(string mark)	{
-	float check;
-	if(!validFloat(mark))	{
-		return false;
-	}
-	check = atof(mark.c_str());
-	if(check > 12 || check < 0)	{
-		return false;
-	}
-	return true;
-}
-
-//Checks gpa is a number and is the range 0-12
-bool Student::checkGpa(string mark)	{
-	float check;
-	if(!validFloat(mark)) 	{
-		return false;
-	}
-	check = atof(mark.c_str());
-	if(check > 12 || check < 0)	{
-		return false;
-	}
-	return true;
-}
-
 //Checks string has no funny characters or numbers
 bool Student::validString(string s)	{
-	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]+~`;:'") != string::npos || s == "")	{
+	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,.{}[]~`;:'") != string::npos || s == "")	{
 		return false;
 	}
  	return true;
@@ -219,7 +119,6 @@ bool Student::validInt(string s)		{
 //Checks string is a valid float with no spaces or characters except '.'
 bool Student::validFloat(string s)		{
 	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{
-		printf("Found something\n");
 		return false;
 	}
 
