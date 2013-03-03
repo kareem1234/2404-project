@@ -29,7 +29,7 @@ CourseListMenu::CourseListMenu(int Type){
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		m_refTextBuffer = Gtk::TextBuffer::create();
 		m_TextView->set_buffer(m_refTextBuffer);
-		m_ScrolledWindow2.set_size_request(80,200);
+		m_ScrolledWindow2.set_size_request(80,100);
 	}
 
 	cancel->set_size_request(70,30);
@@ -42,10 +42,12 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
 	}else if(type == 1){
-		grid->attach(m_ScrolledWindow,0,0,2,2);
-		grid->attach(m_ScrolledWindow2,0,2,3,3);
-		grid->attach(*select,0,5,2,1);		
-		grid->attach(*cancel,0,6,2,1);
+		options = new Gtk::CheckButton("View all aplications");
+		grid->attach(*options,0,0,2,1);
+		grid->attach(m_ScrolledWindow,0,1,2,2);
+		grid->attach(m_ScrolledWindow2,0,3,2,1);
+		grid->attach(*select,0,4,2,1);		
+		grid->attach(*cancel,0,5,2,1);
 	} else if (type == 3 || type == 4)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);
@@ -143,7 +145,6 @@ void CourseListMenu:: findApp(){
 				output<<"---------------------------"<<endl;
 				found = true;
 				totalApps++;
-			
 			}	
 		}
 	}
@@ -161,13 +162,18 @@ void CourseListMenu:: findApp(){
 				getline(output,toSort[i],'\n');	
 				// extract gpa's
 				if(toSort[i].at(0) =='G'){
-					istringstream buffer(toSort[i]);
-					buffer>>intSort[pos];
+					stringstream buffer;
+					//cout<<"string actualy is: "<<toSort[i]<<endl;
+					buffer<<toSort[i];
+					buffer.ignore(256,' ');
+					//cout<<"buffer is"<<buffer<<endl;
+					buffer>> intSort[pos];
+					//cout<<"buffer sent: "<<intSort[pos]<<endl;
 					pos++;
 				}
 			}
 			// loop through intSort
-			bool done = false;
+			bool done = false;	
 			while(done == false){
 				done = true;
 				int highest= -1;
@@ -176,30 +182,21 @@ void CourseListMenu:: findApp(){
 					if(intSort[i] != -1 && intSort[i] >= highest){
 						highest = intSort[i];
 						index = i;
-						//intSort[i]=-1;
 						done = false;
 					}
 				}
 				if(!done){
 					intSort[index] = -1;
-					//find the associated gpa and send it to the new output buffer				
+					highest= -1;			
 					int start = index*9;
 					int stop = start+9;
 					for(start;start<stop;start++){
 						newOutput<<toSort[start]<<endl;						
-						
-						
 					}					
 				}				
 			}
 			setString(newOutput.str());
 		}
-
-
-
-
-
-
 
 	}	
 	else		setString("NO APPLICATION FOUND");

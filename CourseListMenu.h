@@ -10,22 +10,26 @@
 #include <sstream>
 #include <string>
 using namespace std;
-extern ofstream saveLog;
+
 
 //Define CourseList class
 class CourseListMenu : public Gtk::Frame {
 	//private members
 	private:
-		int type;
 		Gtk::Grid* grid;
 		Gtk::TreeView *m_TreeView;
 		Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
-		Gtk::Button* cancel;
 		Gtk::Button* skip;
-		Gtk::Button* select;
 		Gtk::TextView *m_TextView;
 		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
+		//Gtk::CheckButton* options;
 		int loadCourseList();
+
+	protected:
+		 Gtk::CheckButton* options;
+		 int type;
+		 Gtk::Button* select;
+		 Gtk::Button* cancel;
 
 	//public members
 	public:
