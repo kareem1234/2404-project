@@ -30,7 +30,6 @@ template <class T> class myQ {
 
 		// destructor
 		~myQ()	{
-			cout << "queue dtor called" << endl;
 			Node *currNode, *nextNode;
 
 			currNode = head;
@@ -109,9 +108,7 @@ void myQ<T>::deleteTail()	{
 	Node *curr = 0;
 	Node *prev = 0;
 
-	cout << "Seggy queue 1" << endl;
 	if(isEmpty()) return;
-	cout << "Seggy queue 2" << endl;
 	cout << length() << endl;
 	if(length() == 1)	{
 		delete head->data;
@@ -120,18 +117,14 @@ void myQ<T>::deleteTail()	{
 		tail = 0;
 		return;
 	}
-	cout << "Seggy queue 3" << endl;
 	curr = head;
 	while(curr->next != 0)	{
 		prev = curr;
 		curr = curr->next;
 	}
 	
-	cout << "Seggy queue 3" << endl;
 	delete curr->data;
-	cout << "Seggy queue 4" << endl;
 	delete curr;
-	cout << "Seggy queue 5" << endl;
 	prev->next = 0;
 	tail = prev;	
 }

@@ -31,7 +31,6 @@ int WorkExperience::setDuration(string Duration){
 
 void WorkExperience:: setDuties(string Duties){
 	duties = Duties;
-
 }
 void WorkExperience:: setStart(string Start){
 	start = Start;
@@ -72,7 +71,7 @@ bool WorkExperience::checkTitle(string s)	{
 		return false;
 	}
 	unsigned found = s.find("..");
-	if (found!=string::npos) return false;
+	if (found != string::npos) return false;
  	return true;
 }
 

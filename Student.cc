@@ -123,7 +123,7 @@ bool Student::validFloat(string s)		{
 	}
 
 	unsigned found = s.find("..");
-	if (found!=string::npos) return false;
+	if (found != string::npos) return false;
+	
 	return true;
-
 }
