@@ -11,25 +11,23 @@ TeacherMenu::TeacherMenu(){
 	
 
 	viewApp = new Gtk::Button("VIEW AN APPLICATION", false);
-	viewApp->set_size_request(70, 30); 
+	viewApp->set_size_request(300, 60); 
 	viewApp->set_sensitive(false);
 
 	viewSummary = new Gtk::Button("VIEW  PENDING APPLICATIONS", false);
-	viewSummary->set_size_request(70, 30); 
+	viewSummary->set_size_request(300, 60); 
 	
 
 	editTa = new Gtk::Button("EDIT A TA EVALUATION", false);
-	editTa->set_size_request(70, 30); 
+	editTa->set_size_request(300, 60); 
 	editTa->set_sensitive(false);
 
 	viewAssigned = new Gtk::Button("VIEW SUCCESSFUL APPLICATIONS", false);
-	viewAssigned->set_size_request(70, 30); 
+	viewAssigned->set_size_request(300, 60); 
 	viewAssigned->set_sensitive(false);
 
 	cancelB = new Gtk::Button("CANCEL", false);
-	cancelB->set_size_request(70, 30); 
-
-	
+	cancelB->set_size_request(300, 60); 
 
 	//Add buttons to the frame
 	box->pack_start(*viewApp);

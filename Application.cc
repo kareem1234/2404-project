@@ -18,7 +18,6 @@ Application::~Application()	{
 	assistedCourses.clear();
 	relatedCourses.clear();
 	workExperiences.clear();
-	cout << "Application #" << applicationNum << " cleared" << endl;
 }
 
 //Get methods defined

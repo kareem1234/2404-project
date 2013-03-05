@@ -6,10 +6,9 @@
 using namespace std;
 
 //Default constructor
-Controller::Controller(){
+Controller::Controller()	{
 		
-	// create window 
-	Gtk:Window window;
+	// create window 	
 	studentMenu = 0;
 	courseList = 0;
 	loginMenu = 0;
@@ -44,12 +43,12 @@ void Controller::setLoginMenu()  {
 	// allocated new loginMenu
 	loginMenu = new LoginMenu;
 	add(*loginMenu);
-	loginMenu->show_all();
+	resize(loginMenu->getBox()->get_width(), loginMenu->getBox()->get_height());
+	show_all();
 
 	// connect signal handlers
 	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_student_button_clicked));
-
-	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));	
+	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));
 }
 
 //Sets student type menu
@@ -58,7 +57,8 @@ void Controller::setTypeMenu()	{
 	// allocate new StudentType
 	typeMenu = new StudentTypeMenu;
 	add(*typeMenu);
-	typeMenu->show_all();
+	resize(typeMenu->getBox()->get_width(), typeMenu->getBox()->get_height());
+	show_all();
 
 	// connect signal handlers
 	typeMenu->getUndergrad()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::typeMenu_undergrad_button_clicked));
@@ -79,7 +79,8 @@ void Controller::setGenInfoMenu()	{
 	}
 
 	add(*genInfoMenu);
-	genInfoMenu->show_all();
+	resize(genInfoMenu->getGrid()->get_width(), genInfoMenu->getGrid()->get_height());
+	show_all();
 
 	// connect signal handlers
 	genInfoMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_next_button_clicked));
@@ -90,7 +91,8 @@ void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu
 	courseList = new CourseListMenu(type);
 	add(*courseList);
-	courseList->show_all();
+	resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
+	show_all();
 
 	//connect signal handlers
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
@@ -108,7 +110,8 @@ void Controller::setStudentMenu(){
 	studentMenu = new StudentMenu();
 	
 	add(*studentMenu);
-	studentMenu->show_all();
+	resize(studentMenu->getBox()->get_width(), studentMenu->getBox()->get_height());
+	show_all();
 	
 	//connnect signal handlers
 	studentMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::student_cancel_button_clicked));
@@ -120,7 +123,8 @@ void Controller::setTeacherMenu(){
 	//allocate a new TeacherMenu
 	teacherMenu = new TeacherMenu();
 	add(*teacherMenu);
-	teacherMenu->show_all();
+	resize(teacherMenu->getBox()->get_width(), teacherMenu->getBox()->get_height());
+	show_all();
 
 	//connect signal handlers
 	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
@@ -131,6 +135,7 @@ void Controller::setTeacherMenu(){
 void Controller::setRelatedCourseMenu()	{
 	relMenu = new RelatedCourseMenu();
 	add(*relMenu);
+	resize(relMenu->getGrid()->get_width(), relMenu->getGrid()->get_height());
 	show_all();
 
 	relMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_next_button_clicked));
@@ -141,6 +146,7 @@ void Controller::setRelatedCourseMenu()	{
 void Controller::setTACourseMenu()	{
 	taMenu = new TACourseMenu();
 	add(*taMenu);
+	resize(taMenu->getGrid()->get_width(), taMenu->getGrid()->get_height());
 	show_all();
 
 	taMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_next_button_clicked));
@@ -151,6 +157,7 @@ void Controller::setTACourseMenu()	{
 void Controller::setExperienceMenu()	{
 	workMenu = new WorkExperienceMenu();
 	add(*workMenu);
+	resize(workMenu->getGrid()->get_width(), workMenu->getGrid()->get_height());
 	show_all();
 
 	workMenu->getSkipButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_skip_button_clicked));
@@ -196,17 +203,13 @@ void Controller::typeMenu_grad_button_clicked()	{
 
 void Controller::student_cancel_button_clicked()	{
 
-	if(undergrad != 0 && !undergrad->getApplications()->isEmpty())	{
-		undergrad->save();
-		delete(undergrad);
-		undergrad = 0;
-	}
-
-	if(grad != 0 && !grad->getApplications()->isEmpty())	{
-		grad->save();
-		delete(grad);
-		grad = 0;
-	}
+	if(undergrad != 0 && !undergrad->getApplications()->isEmpty())	undergrad->save();
+	if(grad != 0 && !grad->getApplications()->isEmpty())	grad->save();
+	
+	delete(undergrad);
+	delete(grad);
+	undergrad = 0;
+	grad = 0;
 
 	remove();
 	delete (studentMenu);
@@ -251,9 +254,7 @@ void Controller::courselist_select_button_clicked(){
 		remove();
 		delete (courseList);
 		courseList = 0;
-		cout << "I'm here 0" << endl;
 		setGenInfoMenu();
-		cout << "I'm here 1" << endl;
 		return;
 	} else if(type == 3)	{
 		remove();
@@ -280,9 +281,8 @@ void Controller::courselist_cancel_button_clicked(){
 	int type = courseList->getType();
 	remove();
 	delete (courseList);
-	courseList=0;
-	if(type == 0 )
-	setStudentMenu();
+	courseList = 0;
+	if(type == 0)	setStudentMenu();
 	else setTeacherMenu();
 }
 
@@ -301,13 +301,11 @@ void Controller::courselist_skip_button_clicked()	{
 	}
 }
 
-void Controller::genInfo_next_button_clicked(){
+void Controller::genInfo_next_button_clicked()	{
 	if(undergrad != 0 && !genInfoMenu->checkInfo("Undergrad"))	return;
 	if(grad != 0 && !genInfoMenu->checkInfo("Grad"))	return;
 
-	cout << "testing 1" << endl;
 	applyStudentInfo();
-	cout << "testing 2" << endl;
 	remove();
 	delete (genInfoMenu);
 	genInfoMenu = 0;
@@ -395,11 +393,8 @@ void Controller::workExperience_cancel_button_clicked()	{
 void Controller::createProfile(string s)	{
 
 	Application* app = new Application(s);
-	cout << "Hello 1" << endl;
 	if(undergrad != 0)	undergrad->getApplications()->pushBack(app);
-	cout << "Hello 2" << endl;
 	if(grad != 0)		grad->getApplications()->pushBack(app);
-	cout << "Hello 3" << endl;
 }
 
 //Applies given info to student

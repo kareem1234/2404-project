@@ -2,7 +2,8 @@
 
 #ifndef STUDENT_H
 #define STUDENT_H
-// include que class for data storage
+
+//Include statements
 #include "myQ.cc"
 #include "Application.h"
 #include <fstream>
@@ -28,7 +29,7 @@ class Student 	{
 
 	//Public members
 	public:
-		Student();
+		Student(string f = "", string l = "", string s = "", string e = "");
 		~Student();
 		string getFirstName();
 		string getLastName();
