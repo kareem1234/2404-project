@@ -6,10 +6,9 @@
 using namespace std;
 
 //Default constructor
-Controller::Controller(){
+Controller::Controller()	{
 		
-	// create window 
-	Gtk:Window window;
+	// create window 	
 	studentMenu = 0;
 	courseList = 0;
 	loginMenu = 0;
@@ -18,7 +17,8 @@ Controller::Controller(){
 	relMenu = 0;
 	taMenu = 0;
 	workMenu = 0;
-	//undergrad = 0;
+	undergrad = 0;
+	grad = 0;
 	setLoginMenu();
 }
 
@@ -33,7 +33,8 @@ Controller::~Controller()	{
 	delete(relMenu);
 	delete(taMenu);
 	delete(workMenu);
-	//delete(undergrad);
+	delete(undergrad);
+	delete(grad);
 }
 
 //Sets the login menu
@@ -42,12 +43,12 @@ void Controller::setLoginMenu()  {
 	// allocated new loginMenu
 	loginMenu = new LoginMenu;
 	add(*loginMenu);
-	loginMenu->show_all();
+	resize(loginMenu->getBox()->get_width(), loginMenu->getBox()->get_height());
+	show_all();
 
 	// connect signal handlers
 	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_student_button_clicked));
-
-	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));	
+	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));
 }
 
 //Sets student type menu
@@ -56,7 +57,8 @@ void Controller::setTypeMenu()	{
 	// allocate new StudentType
 	typeMenu = new StudentTypeMenu;
 	add(*typeMenu);
-	typeMenu->show_all();
+	resize(typeMenu->getBox()->get_width(), typeMenu->getBox()->get_height());
+	show_all();
 
 	// connect signal handlers
 	typeMenu->getUndergrad()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::typeMenu_undergrad_button_clicked));
@@ -64,18 +66,24 @@ void Controller::setTypeMenu()	{
 }
 
 //Sets general info menu
-void Controller::setGenInfoMenu(){
+void Controller::setGenInfoMenu()	{
 
 	// allocate new GenInfoMenu
-	genInfoMenu = new GenInfoMenu;
-	//genInfoMenu->setUndergradInfo(undergrad);
+	if(undergrad != 0)	{
+		genInfoMenu = new GenInfoMenu("Undergrad");
+		genInfoMenu->setUndergradInfo(undergrad);
+	}
+	if(grad != 0)	{		
+		genInfoMenu = new GenInfoMenu("Grad");
+		genInfoMenu->setGradInfo(grad);
+	}
+
 	add(*genInfoMenu);
-	genInfoMenu->show_all();
+	resize(genInfoMenu->getGrid()->get_width(), genInfoMenu->getGrid()->get_height());
+	show_all();
 
 	// connect signal handlers
 	genInfoMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_next_button_clicked));
-
-	set_default_size(genInfoMenu->get_width(), genInfoMenu->get_height());
 }
 
 //Sets the course list menu
@@ -83,7 +91,8 @@ void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu
 	courseList = new CourseListMenu(type);
 	add(*courseList);
-	courseList->show_all();
+	resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
+	show_all();
 
 	//connect signal handlers
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
@@ -101,7 +110,8 @@ void Controller::setStudentMenu(){
 	studentMenu = new StudentMenu();
 	
 	add(*studentMenu);
-	studentMenu->show_all();
+	resize(studentMenu->getBox()->get_width(), studentMenu->getBox()->get_height());
+	show_all();
 	
 	//connnect signal handlers
 	studentMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::student_cancel_button_clicked));
@@ -113,7 +123,8 @@ void Controller::setTeacherMenu(){
 	//allocate a new TeacherMenu
 	teacherMenu = new TeacherMenu();
 	add(*teacherMenu);
-	teacherMenu->show_all();
+	resize(teacherMenu->getBox()->get_width(), teacherMenu->getBox()->get_height());
+	show_all();
 
 	//connect signal handlers
 	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
@@ -124,6 +135,7 @@ void Controller::setTeacherMenu(){
 void Controller::setRelatedCourseMenu()	{
 	relMenu = new RelatedCourseMenu();
 	add(*relMenu);
+	resize(relMenu->getGrid()->get_width(), relMenu->getGrid()->get_height());
 	show_all();
 
 	relMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_next_button_clicked));
@@ -134,6 +146,7 @@ void Controller::setRelatedCourseMenu()	{
 void Controller::setTACourseMenu()	{
 	taMenu = new TACourseMenu();
 	add(*taMenu);
+	resize(taMenu->getGrid()->get_width(), taMenu->getGrid()->get_height());
 	show_all();
 
 	taMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_next_button_clicked));
@@ -144,6 +157,7 @@ void Controller::setTACourseMenu()	{
 void Controller::setExperienceMenu()	{
 	workMenu = new WorkExperienceMenu();
 	add(*workMenu);
+	resize(workMenu->getGrid()->get_width(), workMenu->getGrid()->get_height());
 	show_all();
 
 	workMenu->getSkipButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_skip_button_clicked));
@@ -171,6 +185,7 @@ void Controller::login_student_button_clicked(){
 
 void Controller::typeMenu_undergrad_button_clicked()	{
 	
+	undergrad = new Undergrad();
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
@@ -179,17 +194,23 @@ void Controller::typeMenu_undergrad_button_clicked()	{
 
 void Controller::typeMenu_grad_button_clicked()	{
 
+	grad = new Grad();
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
 	setStudentMenu();
 }
 
-void Controller::student_cancel_button_clicked(){
+void Controller::student_cancel_button_clicked()	{
 
-	//if(undergrad != 0)	undergrad->save();
-	//delete(undergrad);
-	//undergrad = 0;
+	if(undergrad != 0 && !undergrad->getApplications()->isEmpty())	undergrad->save();
+	if(grad != 0 && !grad->getApplications()->isEmpty())	grad->save();
+	
+	delete(undergrad);
+	delete(grad);
+	undergrad = 0;
+	grad = 0;
+
 	remove();
 	delete (studentMenu);
 	studentMenu = 0;
@@ -228,25 +249,27 @@ void Controller::courselist_select_button_clicked(){
 	
 	string course(courseList->getString());
 	int type;
-	if( (type = courseList->getType()) == 0  ){
+	if((type = courseList->getType()) == 0){
 		createProfile(course);
 		remove();
 		delete (courseList);
-		courseList=0;
+		courseList = 0;
 		setGenInfoMenu();
 		return;
 	} else if(type == 3)	{
 		remove();
 		delete(courseList);
 		courseList = 0;
-		//undergrad->getApplications()->back()->getRelated()->pushBack(new RelatedCourse(course));
+		if(undergrad != 0)	undergrad->getApplications()->back()->getRelated()->pushBack(new RelatedCourse(course));
+		if(grad != 0)		grad->getApplications()->back()->getRelated()->pushBack(new RelatedCourse(course));
 		setRelatedCourseMenu();
 		return;
 	} else if(type == 4)	{
 		remove();
 		delete(courseList);
 		courseList = 0;
-		//->getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course));
+		if(undergrad != 0)	undergrad->getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course));
+		if(grad != 0)		grad->getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course));
 		setTACourseMenu();
 		return;
 	} else if(type == 1 ){
@@ -258,9 +281,8 @@ void Controller::courselist_cancel_button_clicked(){
 	int type = courseList->getType();
 	remove();
 	delete (courseList);
-	courseList=0;
-	if(type == 0 )
-	setStudentMenu();
+	courseList = 0;
+	if(type == 0)	setStudentMenu();
 	else setTeacherMenu();
 }
 
@@ -279,14 +301,15 @@ void Controller::courselist_skip_button_clicked()	{
 	}
 }
 
-void Controller::genInfo_next_button_clicked(){
-	if(genInfoMenu->checkInfo()){
-		applyStudentInfo();
-		remove();
-		delete (genInfoMenu);
-		genInfoMenu = 0;
-		setCourseListMenu(3);
-	}
+void Controller::genInfo_next_button_clicked()	{
+	if(undergrad != 0 && !genInfoMenu->checkInfo("Undergrad"))	return;
+	if(grad != 0 && !genInfoMenu->checkInfo("Grad"))	return;
+
+	applyStudentInfo();
+	remove();
+	delete (genInfoMenu);
+	genInfoMenu = 0;
+	setCourseListMenu(3);
 }
 
 void Controller::relMenu_next_button_clicked()	{
@@ -357,9 +380,9 @@ void Controller::workExperience_skip_button_clicked()	{
 void Controller::workExperience_cancel_button_clicked()	{
 	
 	//Delete application
-	cout << "Seggy 1" << endl;
-	//undergrad->getApplications()->deleteTail();
-	cout << "Seggy 2" << endl;
+	if(undergrad != 0)	undergrad->getApplications()->deleteTail();
+	if(grad != 0)		grad->getApplications()->deleteTail();
+
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -370,49 +393,86 @@ void Controller::workExperience_cancel_button_clicked()	{
 void Controller::createProfile(string s)	{
 
 	Application* app = new Application(s);
-
-	/*if(undergrad == 0)	{
-		undergrad = new Undergrad();
-		undergrad->getApplications()->pushBack(app);
-	} else	{
-		undergrad->getApplications()->pushBack(app);
-	}*/
+	if(undergrad != 0)	undergrad->getApplications()->pushBack(app);
+	if(grad != 0)		grad->getApplications()->pushBack(app);
 }
 
 //Applies given info to student
 void Controller::applyStudentInfo()	{ 
-	//undergrad->setName(genInfoMenu->getFirstName()->get_text(), genInfoMenu->getLastName()->get_text());
-	//undergrad->setStuNum(genInfoMenu->getStuNum()->get_text());
-	//undergrad->setEmail(genInfoMenu->getEmail()->get_text());
-	//undergrad->setMajor(genInfoMenu->getMajor()->get_text());
-	//undergrad->setStanding(genInfoMenu->getYear()->get_text());
-	//undergrad->setCgpa(genInfoMenu->getCgpa()->get_text());
-	//undergrad->setGpa(genInfoMenu->getGpa()->get_text());
-	//undergrad->getApplications()->back()->setStatus("pending");
+	if(undergrad != 0)	{
+		undergrad->setName(genInfoMenu->getFirstName()->get_text(), genInfoMenu->getLastName()->get_text());
+		undergrad->setStuNum(genInfoMenu->getStuNum()->get_text());
+		undergrad->setEmail(genInfoMenu->getEmail()->get_text());
+		undergrad->setMajor(genInfoMenu->getMajor()->get_text());
+		undergrad->setStanding(genInfoMenu->getYear()->get_text());
+		undergrad->setCgpa(genInfoMenu->getCgpa()->get_text());
+		undergrad->setGpa(genInfoMenu->getGpa()->get_text());
+		undergrad->getApplications()->back()->setStatus("pending");
+	}
+
+	if(grad != 0)	{
+		grad->setName(genInfoMenu->getFirstName()->get_text(), genInfoMenu->getLastName()->get_text());
+		grad->setStuNum(genInfoMenu->getStuNum()->get_text());
+		grad->setEmail(genInfoMenu->getEmail()->get_text());
+		grad->setResearch(genInfoMenu->getResearch()->get_active_text());
+		grad->setProgram(genInfoMenu->getProgram()->get_active_text());
+		grad->setSupervisor(genInfoMenu->getSupervisor()->get_text());
+		grad->getApplications()->back()->setStatus("pending");
+	}
+	
 }
 
 //Applies given info to related course
 void Controller::applyRelatedCourse()	{
-	//undergrad->getApplications()->back()->getRelated()->back()->setTerm(relMenu->getTerm()->get_active_text());
-	//undergrad->getApplications()->back()->getRelated()->back()->setYear(relMenu->getYear()->get_text());
-	//undergrad->getApplications()->back()->getRelated()->back()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
+
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getRelated()->back()->setTerm(relMenu->getTerm()->get_active_text());
+		undergrad->getApplications()->back()->getRelated()->back()->setYear(relMenu->getYear()->get_text());
+		undergrad->getApplications()->back()->getRelated()->back()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
+	}
+
+	if(grad != 0)	{
+		grad->getApplications()->back()->getRelated()->back()->setTerm(relMenu->getTerm()->get_active_text());
+		grad->getApplications()->back()->getRelated()->back()->setYear(relMenu->getYear()->get_text());
+		grad->getApplications()->back()->getRelated()->back()->setFinalGrade(relMenu->getFinalGrade()->get_active_text());
+	}
 }
 
 //Applies given info to ta course
 void Controller::applyTACourse()	{
-	//undergrad->getApplications()->back()->getAssisted()->back()->setTerm(taMenu->getTerm()->get_active_text());
-	//undergrad->getApplications()->back()->getAssisted()->back()->setYear(taMenu->getYear()->get_text());
-	//undergrad->getApplications()->back()->getAssisted()->back()->setSupervisor(taMenu->getSupervisor()->get_text());
+	
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getAssisted()->back()->setTerm(taMenu->getTerm()->get_active_text());
+		undergrad->getApplications()->back()->getAssisted()->back()->setYear(taMenu->getYear()->get_text());
+		undergrad->getApplications()->back()->getAssisted()->back()->setSupervisor(taMenu->getSupervisor()->get_text());
+	}
+
+	if(grad != 0)	{
+		grad->getApplications()->back()->getAssisted()->back()->setTerm(taMenu->getTerm()->get_active_text());
+		grad->getApplications()->back()->getAssisted()->back()->setYear(taMenu->getYear()->get_text());
+		grad->getApplications()->back()->getAssisted()->back()->setSupervisor(taMenu->getSupervisor()->get_text());
+	}
 }
 
 //Applies given info to work experience
 void Controller::applyWorkExperience()	{
-	//undergrad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
-	//undergrad->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
-	//undergrad->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
-	//undergrad->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
-	//undergrad->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
-	//undergrad->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+		undergrad->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
+		undergrad->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
+		undergrad->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
+		undergrad->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
+		undergrad->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
+	}
+
+	if(grad != 0)	{
+		grad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+		grad->getApplications()->back()->getExperience()->back()->setTitle(workMenu->getTitle()->get_text());
+		grad->getApplications()->back()->getExperience()->back()->setDuration(workMenu->getDuration()->get_active_text());
+		grad->getApplications()->back()->getExperience()->back()->setDuties(workMenu->getDutiesText());	
+		grad->getApplications()->back()->getExperience()->back()->setStart(workMenu->getStartDate());
+		grad->getApplications()->back()->getExperience()->back()->setEnd(workMenu->getEndDate());
+	}
 }
 
 

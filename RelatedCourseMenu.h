@@ -13,10 +13,10 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 	private:
 		
 		class ModelColumns : public Gtk::TreeModel::ColumnRecord	{
-		public:
-			ModelColumns()	{	add(m_col_value);	}
+			public:
+				ModelColumns()	{	add(m_col_value);	}
 
-			Gtk::TreeModelColumn<Glib::ustring> m_col_value;
+				Gtk::TreeModelColumn<Glib::ustring> m_col_value;
 		};
 
 		Gtk::Grid* grid;

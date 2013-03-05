@@ -191,6 +191,7 @@ Gtk::ComboBoxText* WorkExperienceMenu::getEndYear()	{
 
 void WorkExperienceMenu::setDuties(string t)	{
 	Glib::RefPtr<Gtk::TextBuffer> buffer;
+	buffer = dutiesT->get_buffer();
 	buffer->set_text(t);	
 	dutiesT->set_buffer(buffer);
 }

@@ -14,7 +14,7 @@ class Grad : public Student		{
 
 	//Public members
 	public:
-		Grad();
+		Grad(string f = "", string l = "", string s = "", string e = "", string r = "", string p = "", string sup = "");
 		~Grad();
 		string getResearch();
 		string getProgram();
@@ -22,8 +22,6 @@ class Grad : public Student		{
 		void setResearch(string res);
 		void setProgram(string pro);
 		void setSupervisor(string sup);
-		static bool checkResearch(string res);
-		static bool checkProgram(string pro);
 		static bool checkSupervisor(string sup);
 		void save();
 };

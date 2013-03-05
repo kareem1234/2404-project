@@ -7,12 +7,13 @@ using namespace std;
 #include <stdlib.h>
 
 //Default constructor
-Student::Student()	{	}
+Student::Student(string f, string l, string s, string e)
+	: firstName(f), lastName(l), stuNum(s), email(e)
+{	}
 
 //Destructor
 Student::~Student()	{
 	applications.clear();
-	cout << "Applications cleared" << endl;
 }
 
 //Returns complete name when called
@@ -123,7 +124,7 @@ bool Student::validFloat(string s)		{
 	}
 
 	unsigned found = s.find("..");
-	if (found!=string::npos) return false;
+	if (found != string::npos) return false;
+	
 	return true;
-
 }
