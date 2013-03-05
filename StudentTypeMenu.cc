@@ -9,10 +9,10 @@ StudentTypeMenu::StudentTypeMenu()	{
 
 	//Create neccessary buttons
 	undergrad = new Gtk::Button("UNDERGRADUATE", false);
-	undergrad->set_size_request(300, 90);
+	undergrad->set_size_request(300, 60);
 
 	grad = new Gtk::Button("GRADUATE", false);
-	grad->set_size_request(300, 90); 
+	grad->set_size_request(300, 60); 
 
 	//Add buttons to the box
 	box->pack_start(*undergrad, Gtk::PACK_SHRINK, 15);

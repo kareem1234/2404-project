@@ -4,11 +4,9 @@
 #include "Grad.h"
 
 //Default constructor
-Grad::Grad()	
-	: Student()
-{
-
-}
+Grad::Grad(string f, string l, string s, string e, string r, string p, string sup)
+	: Student(f,l,s,e), research(r), program(p), supervisor(sup)
+{	}
 
 //Default destructor
 Grad::~Grad()	{

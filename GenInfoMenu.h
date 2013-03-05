@@ -50,6 +50,7 @@ class GenInfoMenu : public Gtk::Frame 	{
 		ModelColumns program_Columns;
 		Glib::RefPtr<Gtk::ListStore> research_refTreeModel;
 		Glib::RefPtr<Gtk::ListStore> program_refTreeModel;
+
 	//Public members
 	public:
 		GenInfoMenu(string type);
