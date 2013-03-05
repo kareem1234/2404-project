@@ -22,8 +22,6 @@ class Grad : public Student		{
 		void setResearch(string res);
 		void setProgram(string pro);
 		void setSupervisor(string sup);
-		static bool checkResearch(string res);
-		static bool checkProgram(string pro);
 		static bool checkSupervisor(string sup);
 		void save();
 };

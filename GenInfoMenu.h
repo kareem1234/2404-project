@@ -5,6 +5,7 @@
 
 //Include statements
 #include "Undergrad.h"
+#include "Grad.h"
 #include <iostream>
 #include <gtkmm.h>
 #include <string>
@@ -14,6 +15,12 @@ using namespace std;
 class GenInfoMenu : public Gtk::Frame 	{
 	//Private members
 	private:
+		class ModelColumns : public Gtk::TreeModel::ColumnRecord	{
+			public:
+				ModelColumns()	{	add(m_col_value);	}
+
+				Gtk::TreeModelColumn<Glib::ustring> m_col_value;
+		};
 		Gtk::Grid* grid;
 		Gtk::Button* nextB;
 		Gtk::Label* genInfoL;
@@ -24,6 +31,9 @@ class GenInfoMenu : public Gtk::Frame 	{
 		Gtk::Entry* yearT;
 		Gtk::Entry* emailT;
 		Gtk::Entry* gpaT;
+		Gtk::ComboBoxText* researchT;
+		Gtk::ComboBoxText* programT;
+		Gtk::Entry* supervisorT;
 		Gtk::Entry* cgpaT;
 		Gtk::Label* firstNameL;
 		Gtk::Label* lastNameL;
@@ -33,9 +43,16 @@ class GenInfoMenu : public Gtk::Frame 	{
 		Gtk::Label* emailL;
 		Gtk::Label* gpaL;
 		Gtk::Label* cgpaL;
+		Gtk::Label* researchL;
+		Gtk::Label* programL;
+		Gtk::Label* supervisorL;
+		ModelColumns research_Columns;
+		ModelColumns program_Columns;
+		Glib::RefPtr<Gtk::ListStore> research_refTreeModel;
+		Glib::RefPtr<Gtk::ListStore> program_refTreeModel;
 	//Public members
 	public:
-		GenInfoMenu();
+		GenInfoMenu(string type);
 		~GenInfoMenu();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getNext();
@@ -47,6 +64,9 @@ class GenInfoMenu : public Gtk::Frame 	{
 		Gtk::Entry* getEmail();
 		Gtk::Entry* getGpa();
 		Gtk::Entry* getCgpa();
+		Gtk::ComboBoxText* getResearch();
+		Gtk::ComboBoxText* getProgram();
+		Gtk::Entry* getSupervisor();
 		void setFirstName(string name);
 		void setLastName(string name);
 		void setStuNum(string num);
@@ -55,8 +75,12 @@ class GenInfoMenu : public Gtk::Frame 	{
 		void setEmail(string r);
 		void setGpa(string g);
 		void setCgpa(string g);
-		bool checkInfo();
+		void setResearch(string r);
+		void setProgram(string p);
+		void setSupervisor(string s);
+		bool checkInfo(string type);
 		void setUndergradInfo(Undergrad*);
+		void setGradInfo(Grad*);
 };
 
 #endif
