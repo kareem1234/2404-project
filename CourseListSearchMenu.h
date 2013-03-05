@@ -15,7 +15,7 @@ class CourseListSearchMenu : public CourseListMenu {
 		void findApp();
 		void checked();
 	private:
-		string sortByGpa(int totalApps, stringstream& output, stringstream& newOutput);
+		string sort(int totalApps, stringstream& output, int sortType);
 
 
 };
