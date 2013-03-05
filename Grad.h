@@ -14,7 +14,7 @@ class Grad : public Student		{
 
 	//Public members
 	public:
-		Grad();
+		Grad(string f = "", string l = "", string s = "", string e = "", string r = "", string p = "", string sup = "");
 		~Grad();
 		string getResearch();
 		string getProgram();

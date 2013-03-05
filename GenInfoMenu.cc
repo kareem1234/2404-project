@@ -185,20 +185,17 @@ GenInfoMenu::~GenInfoMenu()	{
 	delete(firstNameL);
 	delete(lastNameL);
 	delete(stuNumL);
-	cout << "Deleted general info" << endl;
+	delete(emailL);
 	delete(majorL);
 	delete(yearL);
-	delete(emailL);
 	delete(gpaL);
 	delete(cgpaL);
-	cout << "Deleted undergrad info" << endl;
 	delete(researchL);
 	delete(researchT);
 	delete(programL);
 	delete(programT);
 	delete(supervisorL);
 	delete(supervisorT);
-	cout << "Finished dtor" << endl;
 }
 
 //Returns frame if called
@@ -391,11 +388,8 @@ bool GenInfoMenu::checkInfo(string type)	{
 		}
 	}
 
-	cout << "Result is: " << result << endl;
-
 	//Returns result
 	return result;
-
 }
 
 //Sets the incoming student values from form currently displayed

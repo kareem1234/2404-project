@@ -9,13 +9,9 @@ using namespace std;
 #include <string>
 
 //Default constructor
-Undergrad::Undergrad()
-	: Student()	
-{
-	year = -1;
-	cgpa = -1;
-	gpa = -1;
-}
+Undergrad::Undergrad(string f, string l, string s, string e, string m, int y, float c, float g)	
+	: Student(f,l,s,e), maj(m), year(y), cgpa(c), gpa(g)
+{	}
 
 //Default destructor
 Undergrad::~Undergrad()	{
@@ -24,7 +20,7 @@ Undergrad::~Undergrad()	{
 
 //Returns major when called
 string Undergrad::getMajor()	{
-	return major;
+	return maj;
 }
 
 //Returns year of standing when called
@@ -44,7 +40,7 @@ float Undergrad::getGpa()	{
 
 //Sets major to given string
 void Undergrad::setMajor(string study)	{
-	major = study;
+	maj = study;
 }
 
 //Sets year of standing to given integer
@@ -71,7 +67,7 @@ void Undergrad::setGpa(string mark)	{
 //Save function saves all application under the student
 void Undergrad::save()	{
 	saveLog.open("saveLog.txt", ios::app);
-	saveLog << "Und" << "$" << getFirstName() << "$" << getLastName() << "$" << getStuNum() << "$" << getEmail() << "$" << major << "$" << cgpa << "$" << gpa << "$"<< year << "$";
+	saveLog << "Und" << "$" << getFirstName() << "$" << getLastName() << "$" << getStuNum() << "$" << getEmail() << "$" << maj << "$" << cgpa << "$" << gpa << "$"<< year << "$";
 	saveLog.close();
 	getApplications()->save();
 
