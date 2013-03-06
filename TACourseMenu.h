@@ -6,6 +6,8 @@
 #include <gtkmm.h>
 #include <string>
 using namespace std;
+#include "Undergrad.h"
+#include "Grad.h"
 
 //Define TACourseMenu class
 class TACourseMenu : public Gtk::Frame 	{
@@ -45,6 +47,8 @@ class TACourseMenu : public Gtk::Frame 	{
 		void setYear(string);
 		void setSupervisor(string);
 		int checkInput();
+		void applyUnderTACourse(Undergrad*);
+		void applyGradTACourse(Grad*);
 };
 
 #endif

@@ -6,6 +6,8 @@
 #include <gtkmm.h>
 #include <string>
 using namespace std;
+#include "Undergrad.h"
+#include "Grad.h"
 
 //Define RelatedCourseMenu class
 class RelatedCourseMenu : public Gtk::Frame 	{
@@ -46,6 +48,8 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 		Gtk::ComboBoxText* getFinalGrade();
 		void setYear(string);
 		bool checkInput();
+		void applyUnderRelatedCourse(Undergrad*);
+		void applyGradRelatedCourse(Grad*);
 };
 
 #endif

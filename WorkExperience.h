@@ -1,10 +1,15 @@
+//WorkExperience header file
+
+#ifndef WORKEXPERIENCE_H
+#define WORKEXPERIENCE_H
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 using namespace std;
 
-class WorkExperience{
+class WorkExperience	{
 	
 	private:
 		ofstream saveLog;
@@ -33,3 +38,5 @@ class WorkExperience{
 		static bool checkDuties(string);
 		static bool checkTitle(string);	
 };
+
+#endif

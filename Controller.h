@@ -67,10 +67,6 @@ class Controller : public Gtk::Window 	{
 		void courselist_skip_button_clicked();
 		void searchMenu_option_clicked();
 		void createProfile(string s);
-		void applyStudentInfo();
-		void applyRelatedCourse();
-		void applyTACourse();
-		void applyWorkExperience();
 	//Public members
 	public:
 		Controller();

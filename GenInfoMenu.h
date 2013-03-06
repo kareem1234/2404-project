@@ -82,6 +82,8 @@ class GenInfoMenu : public Gtk::Frame 	{
 		bool checkInfo(string type);
 		void setUndergradInfo(Undergrad*);
 		void setGradInfo(Grad*);
+		void applyUnderInfo(Undergrad*);
+		void applyGradInfo(Grad*);
 };
 
 #endif

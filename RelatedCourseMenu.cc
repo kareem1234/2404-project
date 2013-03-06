@@ -145,3 +145,21 @@ bool RelatedCourseMenu::checkInput()	{
 
 	return result;
 }
+
+//Applies info to given undergrad
+void RelatedCourseMenu::applyUnderRelatedCourse(Undergrad *undergrad)	{
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getRelated()->back()->setTerm(getTerm()->get_active_text());
+		undergrad->getApplications()->back()->getRelated()->back()->setYear(getYear()->get_text());
+		undergrad->getApplications()->back()->getRelated()->back()->setFinalGrade(getFinalGrade()->get_active_text());
+	}
+}
+
+//Applies given info to given grad
+void RelatedCourseMenu::applyGradRelatedCourse(Grad *grad)	{
+	if(grad != 0)	{
+		grad->getApplications()->back()->getRelated()->back()->setTerm(getTerm()->get_active_text());
+		grad->getApplications()->back()->getRelated()->back()->setYear(getYear()->get_text());
+		grad->getApplications()->back()->getRelated()->back()->setFinalGrade(getFinalGrade()->get_active_text());
+	}
+}

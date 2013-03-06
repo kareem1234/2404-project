@@ -121,3 +121,21 @@ int TACourseMenu::checkInput()	{
 	//Returns result
 	return result;
 }
+
+//Applies menu info to undergrad
+void TACourseMenu::applyUnderTACourse(Undergrad *undergrad)	{
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getAssisted()->back()->setTerm(getTerm()->get_active_text());
+		undergrad->getApplications()->back()->getAssisted()->back()->setYear(getYear()->get_text());
+		undergrad->getApplications()->back()->getAssisted()->back()->setSupervisor(getSupervisor()->get_text());
+	}
+}
+
+//Applies menu info to grad
+void TACourseMenu::applyGradTACourse(Grad *grad)	{
+	if(grad != 0)	{
+		grad->getApplications()->back()->getAssisted()->back()->setTerm(getTerm()->get_active_text());
+		grad->getApplications()->back()->getAssisted()->back()->setYear(getYear()->get_text());
+		grad->getApplications()->back()->getAssisted()->back()->setSupervisor(getSupervisor()->get_text());
+	}
+}

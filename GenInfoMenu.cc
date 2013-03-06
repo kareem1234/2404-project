@@ -431,3 +431,31 @@ void GenInfoMenu::setGradInfo(Grad* s)	{
 	setProgram(s->getProgram());
 	setSupervisor(s->getSupervisor());
 }
+
+//Applies menu info to given undergrad
+void GenInfoMenu::applyUnderInfo(Undergrad *undergrad)	{ 
+	if(undergrad != 0)	{
+		undergrad->setName(getFirstName()->get_text(), getLastName()->get_text());
+		undergrad->setStuNum(getStuNum()->get_text());
+		undergrad->setEmail(getEmail()->get_text());
+		undergrad->setMajor(getMajor()->get_text());
+		undergrad->setStanding(getYear()->get_text());
+		undergrad->setCgpa(getCgpa()->get_text());
+		undergrad->setGpa(getGpa()->get_text());
+		undergrad->getApplications()->back()->setStatus("pending");
+	}
+}
+
+//Applies menu info to given grad
+void GenInfoMenu::applyGradInfo(Grad *grad)	{ 
+	if(grad != 0)	{
+		grad->setName(getFirstName()->get_text(), getLastName()->get_text());
+		grad->setStuNum(getStuNum()->get_text());
+		grad->setEmail(getEmail()->get_text());
+		grad->setResearch(getResearch()->get_active_text());
+		grad->setProgram(getProgram()->get_active_text());
+		grad->setSupervisor(getSupervisor()->get_text());
+		grad->getApplications()->back()->setStatus("pending");
+	}
+}
+

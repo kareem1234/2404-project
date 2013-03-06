@@ -252,3 +252,27 @@ int WorkExperienceMenu::checkInput()	{
 	//Returns result
 	return result;
 }
+
+//Applies menu info to given undergrad student
+void WorkExperienceMenu::applyUnderWorkExperience(Undergrad *undergrad)	{
+	if(undergrad != 0)	{
+		undergrad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+		undergrad->getApplications()->back()->getExperience()->back()->setTitle(getTitle()->get_text());
+		undergrad->getApplications()->back()->getExperience()->back()->setDuration(getDuration()->get_active_text());
+		undergrad->getApplications()->back()->getExperience()->back()->setDuties(getDutiesText());	
+		undergrad->getApplications()->back()->getExperience()->back()->setStart(getStartDate());
+		undergrad->getApplications()->back()->getExperience()->back()->setEnd(getEndDate());
+	}
+}
+
+//Applies menu info to given grad student
+void WorkExperienceMenu::applyGradWorkExperience(Grad *grad)	{
+	if(grad != 0)	{
+		grad->getApplications()->back()->getExperience()->pushBack(new WorkExperience());
+		grad->getApplications()->back()->getExperience()->back()->setTitle(getTitle()->get_text());
+		grad->getApplications()->back()->getExperience()->back()->setDuration(getDuration()->get_active_text());
+		grad->getApplications()->back()->getExperience()->back()->setDuties(getDutiesText());	
+		grad->getApplications()->back()->getExperience()->back()->setStart(getStartDate());
+		grad->getApplications()->back()->getExperience()->back()->setEnd(getEndDate());
+	}
+}
