@@ -10,6 +10,7 @@ Controller::Controller()	{
 		
 	// create window 	
 	studentMenu = 0;
+	searchMenu= 0;
 	courseList = 0;
 	loginMenu = 0;
 	typeMenu = 0;
@@ -24,7 +25,7 @@ Controller::Controller()	{
 
 //Default destructor
 Controller::~Controller()	{
-			
+	delete(searchMenu);		
 	delete(studentMenu);
 	delete(courseList);
 	delete(loginMenu);
@@ -89,18 +90,33 @@ void Controller::setGenInfoMenu()	{
 //Sets the course list menu
 void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu
-	courseList = new CourseListMenu(type);
-	add(*courseList);
-	resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
-	show_all();
+	if(type == 1){
+		 searchMenu = new CourseListSearchMenu(type);
+		 add(*searchMenu);
+		 resize(searchMenu->getGrid()->get_width(), searchMenu->getGrid()->get_height());
+		 show_all();
+		 Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = searchMenu->getTreeView()->get_selection();
+		 refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
+		searchMenu->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
+		searchMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
+		searchMenu->getOptions();
+		searchMenu->getOptions()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_option_clicked));
+	
 
-	//connect signal handlers
-	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
-	refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
+	}
+	else{ 
+		courseList = new CourseListMenu(type);
+		add(*courseList);
+		resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
+		show_all();
 
-	courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
-	courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
-	courseList->getSkip()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_skip_button_clicked));
+		//connect signal handlers
+		Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = courseList->getTreeView()->get_selection();
+		refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
+		courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
+		courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
+		courseList->getSkip()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_skip_button_clicked));
+	}
 }
 
 //Sets the student menu
@@ -242,11 +258,19 @@ void Controller::student_create_button_clicked(){
 }
 
 void Controller::courselist_treeview_row_selected(){
+	if(searchMenu !=0 ){
+		searchMenu->getSelect()->set_sensitive(true);
+		return;
+	}
 	courseList->getSelect()->set_sensitive(true);
 }
 
 void Controller::courselist_select_button_clicked(){
 	
+	if(searchMenu != 0){
+		searchMenu->findApp();
+		return;		
+	}
 	string course(courseList->getString());
 	int type;
 	if((type = courseList->getType()) == 0){
@@ -272,12 +296,21 @@ void Controller::courselist_select_button_clicked(){
 		if(grad != 0)		grad->getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course));
 		setTACourseMenu();
 		return;
-	} else if(type == 1 ){
-		courseList->findApp();
-	}
+	} 
+}
+void Controller::searchMenu_option_clicked(){
+	searchMenu->checked();
+
 }
 
 void Controller::courselist_cancel_button_clicked(){
+	if(searchMenu != 0){
+		remove();
+		delete(searchMenu);
+		searchMenu=0;
+		setTeacherMenu();
+		return;
+	}
 	int type = courseList->getType();
 	remove();
 	delete (courseList);

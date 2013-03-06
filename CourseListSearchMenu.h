@@ -14,6 +14,7 @@ class CourseListSearchMenu : public CourseListMenu {
 		CourseListSearchMenu(int type);
 		void findApp();
 		void checked();
+		Gtk::CheckButton* getOptions();
 	private:
 		string sort(int totalApps, stringstream& output, int sortType);
 

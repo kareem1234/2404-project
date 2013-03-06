@@ -6,9 +6,11 @@ using namespace std;
 
 #include <fstream>
 #include <cstdlib>
+#include <iostream>
 
 //Default constructor
 CourseListMenu::CourseListMenu(int Type){
+	options=0;
 	type = Type;
 	grid = new Gtk::Grid();
 	cancel = new Gtk::Button("CANCEL");
@@ -103,104 +105,6 @@ int CourseListMenu::loadCourseList(){
 	return 1;
 }
 
-//Finds applications
-void CourseListMenu:: findApp(){
-	string line;
-	stringstream output;
-	stringstream newOutput;
-	bool found = false;
-	int totalApps = 0;
-
-	ifstream myfile("saveLog.txt");
-	while(getline(myfile,line)){
-		istringstream toParse (line, istringstream::in);
-		string firstName, lastName, stuNum , email, major, standing, cgpa ,gpa;
-		getline(toParse,firstName,'$');
-		getline(toParse,lastName,'$');
-		getline(toParse,stuNum,'$');
-		getline(toParse,email,'$');
-		getline(toParse,major,'$');
-		getline(toParse,cgpa,'$');
-		getline(toParse,gpa,'$');
-		getline(toParse,standing,'$');
-		
-		string symbol = "";
-		bool done = false;
-		while(!done &&  (symbol.compare("Ap") != 0) ){
-			if(!getline(toParse,symbol,'$')) 
-				done = true;
-			string appNum, status, course;
-			getline(toParse, appNum, '$');
-			getline(toParse, status,'$');
-			getline(toParse,course,'$');
-			if(course.compare(getString()) == 0){
-				output<<"Name: "<<firstName<<" "<<lastName<<endl;
-				output<<"Student Number: "<<stuNum<<endl;
-				output<<"Email: "<<email<<endl;
-				output<<"Major: "<<major<<endl;
-				output<<"Year Standing: "<<standing<<endl;
-				output<<"Cgpa: "<<cgpa<<endl;
-				output<<"Gpa: "<<gpa<<endl;
-				output<<"Applied to TA: "<<course<<endl;
-				output<<"---------------------------"<<endl;
-				found = true;
-				totalApps++;
-			}	
-		}
-	}
-	if(found){
-		if(totalApps == 1 ){
-			setString(output.str());
-			return;
-		}else{
-			int length = 9*totalApps;
-			string toSort[length];
-			int    pos = 0;
-			int    intSort[totalApps];
-			//int count = 0;
-			for(int i=0;i<length;i++){
-				getline(output,toSort[i],'\n');	
-				// extract gpa's
-				if(toSort[i].at(0) =='G'){
-					stringstream buffer;
-					//cout<<"string actualy is: "<<toSort[i]<<endl;
-					buffer<<toSort[i];
-					buffer.ignore(256,' ');
-					//cout<<"buffer is"<<buffer<<endl;
-					buffer>> intSort[pos];
-					//cout<<"buffer sent: "<<intSort[pos]<<endl;
-					pos++;
-				}
-			}
-			// loop through intSort
-			bool done = false;	
-			while(done == false){
-				done = true;
-				int highest= -1;
-				int index = -1;
-				for(int i = 0; i<pos; i++){
-					if(intSort[i] != -1 && intSort[i] >= highest){
-						highest = intSort[i];
-						index = i;
-						done = false;
-					}
-				}
-				if(!done){
-					intSort[index] = -1;
-					highest= -1;			
-					int start = index*9;
-					int stop = start+9;
-					for(start;start<stop;start++){
-						newOutput<<toSort[start]<<endl;						
-					}					
-				}				
-			}
-			setString(newOutput.str());
-		}
-
-	}	
-	else		setString("NO APPLICATION FOUND");
-}
 
 //Returns frame when called
 Gtk::Grid* CourseListMenu::getGrid()  {
@@ -224,6 +128,8 @@ Gtk::Button* CourseListMenu::getSelect(){
 
 //Returns the current selection
 string CourseListMenu::getString(){
+	if(options != 0) 
+		if(options->get_active()) return "";
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView->get_selection();
 	Gtk::TreeModel::iterator iter = refTreeSelection->get_selected();
 	if(iter)  {

@@ -8,10 +8,10 @@ using namespace std;
 #include <cstdlib>
 
 //Default constructor
-CourseListSearchMenu::CourseListSearchMenu(int Type) 
-	: CourseListMenu(type)
+CourseListSearchMenu::CourseListSearchMenu(int T) 
+	: CourseListMenu(T)
 {
-	
+
 }
 
 //Finds applications
@@ -51,9 +51,10 @@ void CourseListSearchMenu :: findApp(){
 		}
 		string symbol = "";
 		bool done = false;
-		while(!done &&  (symbol.compare("Ap") != 0) ){
+		while(!done &&  (symbol.compare("App") != 0) ){
 			if(!getline(toParse,symbol,'$')) 
 				done = true;
+
 			string appNum, status, course;
 			getline(toParse, appNum, '$');
 			getline(toParse, status,'$');
@@ -78,12 +79,12 @@ void CourseListSearchMenu :: findApp(){
 				output1<<"Email: "<<email<<endl;
 				output1<<"Research Area: "<<research<<endl;
 				output1<<"Program: "<<program<<endl;
-				output1<<"Supervisor"<<supervisor<<endl;
+				output1<<"Supervisor: "<<supervisor<<endl;
 				output1<<"Applied to TA: "<<course<<endl;
 				output1<<"---------------------------"<<endl;
 				found = true;
 				totalGradApps++;
-		
+
 			}	
 		}
 	}
@@ -91,6 +92,7 @@ void CourseListSearchMenu :: findApp(){
 		//string undergrad = sortByGpa(totalStuApps,output);
 		stringstream returnString;
 		returnString<<"UNDERGRADS----------------"<<endl<<sort(totalStuApps,output,10)<<endl;
+		returnString<<"GRADS---------------------"<<endl<<sort(totalGradApps,output1,9)<<endl;
 		setString(returnString.str());
 	}	
 	else		setString("NO APPLICATION FOUND");
@@ -121,10 +123,11 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 					buffer>>stringSort[pos2++];
 				}
 				// extract course numbers
-				if(toSort[i].at(0)=='C' && toSort[i].at(1)=='O'){
-					string courseNumber = toSort[i].substr(5,5);
-					stringstream buffer(courseNumber);
-					buffer>>intSort1[pos1++];
+				if(toSort[i].at(0)=='A')
+					if(toSort[i].at(6)=='d'){
+						string courseNumber = toSort[i].substr(toSort[i].length()-5,5);
+						stringstream buffer(courseNumber);
+						buffer>>intSort1[pos1++];
 				}
 			}
 			// loop through intSort
@@ -172,10 +175,10 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 						for(int i=0; i<pos1;i++){
 							if(intSort1[i] != -1 && intSort1[i] > highest ){
 								highest = intSort1[i];
-								index = i;							
+								index = i;					
 								done=false;
 							}else if(intSort1[i] != -1 && intSort1[i] == highest){
-								if(stringSort[i] != "" && stringSort[i].compare(higher)<=0 ){
+								if(stringSort[i] != "" && stringSort[i].compare(stringSort[index])<=0 ){
 									higher= stringSort[i];
 									index = i;
 									done = false;								
@@ -194,6 +197,7 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 					int start = index*sortType;
 					int stop = start+sortType;
 					for(start;start<stop;start++){
+						//cout<<"start is"<<start<<endl;
 						newOutput<<toSort[start]<<endl;						
 
 					}					
@@ -206,16 +210,19 @@ void CourseListSearchMenu::checked(){
 	if(options->get_active()){
 		select->set_sensitive(true);
 		select->set_label("View All Aplications");
-		m_ScrolledWindow2.set_sensitive(false);
+		m_ScrolledWindow.set_sensitive(false);
 
 	}else{
 		select->set_sensitive(false);
 		select->set_label("Select");
-		m_ScrolledWindow2.set_sensitive(true);
-		
-	
+		m_ScrolledWindow.set_sensitive(true);
+
+
 	}
 
 
+}
+Gtk::CheckButton* CourseListSearchMenu:: getOptions(){
+	return options;
 }
 

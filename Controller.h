@@ -18,6 +18,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "CourseListSearchMenu.h"
 
 class Controller : public Gtk::Window 	{
 	//Private members
@@ -25,6 +26,7 @@ class Controller : public Gtk::Window 	{
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
 		CourseListMenu *courseList;
+		CourseListSearchMenu *searchMenu;
 		LoginMenu *loginMenu;
 		StudentTypeMenu *typeMenu;
 		GenInfoMenu *genInfoMenu;
@@ -63,6 +65,7 @@ class Controller : public Gtk::Window 	{
 		void courselist_select_button_clicked();
 		void courselist_cancel_button_clicked();
 		void courselist_skip_button_clicked();
+		void searchMenu_option_clicked();
 		void createProfile(string s);
 		void applyStudentInfo();
 		void applyRelatedCourse();

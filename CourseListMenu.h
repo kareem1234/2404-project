@@ -24,6 +24,7 @@ class CourseListMenu : public Gtk::Frame {
 		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
 		//Gtk::CheckButton* options;
 		int loadCourseList();
+		string sort(int totalApps, stringstream& output, int sortType);
 
 	protected:
 		 Gtk::CheckButton* options;
@@ -41,7 +42,6 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::Button*   getSelect();
 		Gtk::TreeView* getTreeView();
 		string getString();
-		void findApp();
 		void setString(string app);
 		int getType();
 
