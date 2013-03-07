@@ -91,7 +91,7 @@ int CourseListMenu::getType(){
 //Loads list of courses into GUI list
 int CourseListMenu::loadCourseList(){
 	
-	ifstream loadFile("courseList.txt", ios::in);
+	ifstream loadFile("courseList", ios::in);
 	
 	if(!loadFile){
 		return 0;

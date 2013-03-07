@@ -230,7 +230,7 @@ void CourseListSearchMenu::print(){
 	ofstream toSave;
 	string s = m_refTextBuffer->get_text();
 	if(!options->get_active()){
-		string newFile = getString()+".txt";
+		string newFile = getString() + ".txt";
 		std::remove(newFile.c_str());
 		toSave.open(newFile.c_str());
 	}else{
