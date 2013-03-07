@@ -14,7 +14,6 @@ using namespace std;
 class AssistantCourse : public Course	{
 	//Private data members
 	private:
-		ofstream saveLog;
 		string supervisor;
 
 	//Public data members
