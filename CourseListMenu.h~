@@ -21,11 +21,11 @@ class CourseListMenu : public Gtk::Frame {
 		Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
 		Gtk::Button* skip;
 		Gtk::TextView *m_TextView;
+		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
 		int loadCourseList();
 		string sort(int totalApps, stringstream& output, int sortType);
 
 	protected:
-		 Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
 		 Gtk::CheckButton* options;
 		 int type;
 		 Gtk::Button* select;

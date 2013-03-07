@@ -228,6 +228,7 @@ void CourseListSearchMenu::checked(){
 
 }
 void CourseListSearchMenu::print(){
+	cout<<"was called"<<endl;
 	ofstream toSave;
 	string s = m_refTextBuffer->get_text();
 	if(!options->get_active()){

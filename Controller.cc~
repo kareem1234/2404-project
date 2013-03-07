@@ -101,7 +101,6 @@ void Controller::setCourseListMenu(int type){
 		 searchMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
 		 searchMenu->getOptions();
 		 searchMenu->getOptions()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_option_clicked));
-		 searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
 	
 
 	}
@@ -302,9 +301,6 @@ void Controller::courselist_select_button_clicked(){
 void Controller::searchMenu_option_clicked(){
 	searchMenu->checked();
 
-}
-void Controller::searchMenu_saveB_clicked(){
-	searchMenu->print();
 }
 
 void Controller::courselist_cancel_button_clicked(){
