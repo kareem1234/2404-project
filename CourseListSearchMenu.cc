@@ -230,12 +230,12 @@ void CourseListSearchMenu::print(){
 	ofstream toSave;
 	string s = m_refTextBuffer->get_text();
 	if(!options->get_active()){
-		string newFile = getString() + ".txt";
-		std::remove(newFile.c_str());
-		toSave.open(newFile.c_str());
+		string fileName = getString();
+		std::remove(fileName.c_str());
+		toSave.open(fileName.c_str());
 	}else{
-		std::remove("All applications.txt");
-		toSave.open("All applications.txt");
+		std::remove("All Applications.txt");
+		toSave.open("All Applications.txt");
 	}
 	toSave<<s.c_str();
 	toSave.close();
