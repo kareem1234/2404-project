@@ -239,6 +239,7 @@ void CourseListSearchMenu::print(){
 	}
 	toSave<<s.c_str();
 	toSave.close();
+	saveB->set_sensitive(false);
 
 }
 Gtk::Button* CourseListSearchMenu:: getSave(){
