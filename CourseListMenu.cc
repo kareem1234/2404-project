@@ -44,7 +44,7 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
 	}else if(type == 1){
-		options = new Gtk::CheckButton("View all aplications");
+		options = new Gtk::CheckButton("View all applications");
 		grid->attach(*options,0,0,2,1);
 		grid->attach(m_ScrolledWindow,0,1,2,2);
 		grid->attach(m_ScrolledWindow2,0,3,2,1);

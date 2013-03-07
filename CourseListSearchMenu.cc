@@ -90,8 +90,8 @@ void CourseListSearchMenu :: findApp(){
 	}
 	if(found)	{
 		stringstream returnString;
-		returnString<<"--------------*UNDERGRADS*--------------"<<endl<<sort(totalStuApps,output,10)<<endl;
-		returnString<<"-----------------*GRADS*----------------"<<endl<<sort(totalGradApps,output1,9)<<endl;
+		returnString<<"-----------------*UNDERGRADS*-----------------"<<endl<<sort(totalStuApps,output,10)<<endl;
+		returnString<<"----------------------*GRADS*-------------------"<<endl<<sort(totalGradApps,output1,9)<<endl;
 		setString(returnString.str());
 	}	
 	else		setString("NO APPLICATION FOUND");
@@ -195,8 +195,7 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 					//find the associated gpa and send it to the new output buffer				
 					int start = index*sortType;
 					int stop = start+sortType;
-					for(start;start<stop;start++){
-						//cout<<"start is"<<start<<endl;
+					for(start;start<stop;start++){;
 						newOutput<<toSort[start]<<endl;						
 
 					}					
@@ -208,7 +207,7 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 void CourseListSearchMenu::checked(){
 	if(options->get_active()){
 		select->set_sensitive(true);
-		select->set_label("View All Aplications");
+		select->set_label("View All Applications");
 		m_ScrolledWindow.set_sensitive(false);
 		setString("");
 
