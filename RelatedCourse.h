@@ -14,7 +14,6 @@ using namespace std;
 class RelatedCourse : public Course 	{
 	//Private data members
 	private:
-		ofstream saveLog;
 		string finalGrade;
 
 	//Public data members
