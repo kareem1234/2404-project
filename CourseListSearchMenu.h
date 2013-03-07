@@ -1,3 +1,5 @@
+#ifndef COURSELISTSEARCHMENU_H
+#define COURSELISTSEARCHMENU_H
 
 #include <gtkmm.h>
 #include <fstream>
@@ -22,3 +24,5 @@ class CourseListSearchMenu : public CourseListMenu {
 
 
 };
+
+#endif
