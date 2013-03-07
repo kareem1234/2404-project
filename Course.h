@@ -11,11 +11,13 @@ using namespace std;
 class Course	{
 	//Private data members
 	private:
-		ofstream saveLog;
 		string 	courseName;
 		string 	term;
 		string 	year;
 
+	//Protected data mambers
+	protected:
+		ofstream saveLog;
 	//Public data members
 	public:	
 		Course(string = "", string = "", string = "");
