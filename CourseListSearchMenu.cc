@@ -49,50 +49,49 @@ void CourseListSearchMenu :: findApp(){
 			getline(toParse,program,'$');
 			getline(toParse,supervisor,'$');
 		}
+		
 		string symbol = "";
-		bool done = false;
-		while(!done &&  (symbol.compare("App") != 0) ){
-			if(!getline(toParse,symbol,'$')) 
-				done = true;
+		while(getline(toParse,symbol,'$'))	{
+			
+			if(symbol.compare("App") == 0)	{
+				string appNum, status, course;
+				getline(toParse, appNum, '$');
+				getline(toParse, status,'$');
+				getline(toParse,course,'$');
 
-			string appNum, status, course;
-			getline(toParse, appNum, '$');
-			getline(toParse, status,'$');
-			getline(toParse,course,'$');
-			if( (course.compare(getString()) == 0 || options->get_active()) && type.compare("Und") ==0 ){
-				output<<"Applicant type: "<<"Undergraduate"<<endl;
-				output<<"Name: "<<firstName<<" "<<lastName<<endl;
-				output<<"Student Number: "<<stuNum<<endl;
-				output<<"Email: "<<email<<endl;
-				output<<"Major: "<<major<<endl;
-				output<<"Year Standing: "<<standing<<endl;
-				output<<"Cgpa: "<<cgpa<<endl;
-				output<<"Gpa: "<<gpa<<endl;
-				output<<"Applied to TA: "<<course<<endl;
-				output<<"---------------------------"<<endl;
-				found = true;
-				totalStuApps++;
-			}else if( (course.compare(getString())==0 || options->get_active()) && type.compare("Gra") == 0 ){
-				output1<<"Applicant type: "<<"Graduate"<<endl;
-				output1<<"Name: "<<firstName<<" "<<lastName<<endl;
-				output1<<"Student Number: "<<stuNum<<endl;
-				output1<<"Email: "<<email<<endl;
-				output1<<"Research Area: "<<research<<endl;
-				output1<<"Program: "<<program<<endl;
-				output1<<"Supervisor: "<<supervisor<<endl;
-				output1<<"Applied to TA: "<<course<<endl;
-				output1<<"---------------------------"<<endl;
-				found = true;
-				totalGradApps++;
-
-			}	
+				if( (course.compare(getString()) == 0 || options->get_active()) && type.compare("Und") ==0 ){
+					output<<"Applicant type: "<<"Undergraduate"<<endl;
+					output<<"Name: "<<firstName<<" "<<lastName<<endl;
+					output<<"Student Number: "<<stuNum<<endl;
+					output<<"Email: "<<email<<endl;
+					output<<"Major: "<<major<<endl;
+					output<<"Year Standing: "<<standing<<endl;
+					output<<"Cgpa: "<<cgpa<<endl;
+					output<<"Gpa: "<<gpa<<endl;
+					output<<"Applied to TA: "<<course<<endl;
+					output<<"---------------------------"<<endl;
+					found = true;
+					totalStuApps++;
+				}else if( (course.compare(getString())==0 || options->get_active()) && type.compare("Gra") == 0 ){
+					output1<<"Applicant type: "<<"Graduate"<<endl;
+					output1<<"Name: "<<firstName<<" "<<lastName<<endl;
+					output1<<"Student Number: "<<stuNum<<endl;
+					output1<<"Email: "<<email<<endl;
+					output1<<"Research Area: "<<research<<endl;
+					output1<<"Program: "<<program<<endl;
+					output1<<"Supervisor: "<<supervisor<<endl;
+					output1<<"Applied to TA: "<<course<<endl;
+					output1<<"---------------------------"<<endl;
+					found = true;
+					totalGradApps++;
+				}
+			}
 		}
 	}
-	if(found){
-		//string undergrad = sortByGpa(totalStuApps,output);
+	if(found)	{
 		stringstream returnString;
-		returnString<<"		*UNDERGRADS*"<<endl<<sort(totalStuApps,output,10)<<endl;
-		returnString<<"		*GRADS*"<<endl<<sort(totalGradApps,output1,9)<<endl;
+		returnString<<"--------------*UNDERGRADS*--------------"<<endl<<sort(totalStuApps,output,10)<<endl;
+		returnString<<"-----------------*GRADS*----------------"<<endl<<sort(totalGradApps,output1,9)<<endl;
 		setString(returnString.str());
 	}	
 	else		setString("NO APPLICATION FOUND");
