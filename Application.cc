@@ -70,7 +70,14 @@ void Application::save()	{
 	workExperiences.save();
 }
 
+//Updates status to assigned
+Application& Application::operator + ()	{
+	setStatus("assigned");
+	return *this;
+}
 
-
-
-
+//Updates status to closed
+Application& Application::operator - ()	{
+	setStatus("closed");
+	return *this;
+}

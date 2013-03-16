@@ -37,6 +37,8 @@ class Application {
 		void setStatus(string stat);
 		void setCourse(string c);
 		void save();
+		Application& operator + ();
+		Application& operator - ();
 };
 
 #endif
