@@ -6,6 +6,7 @@
 #include "CourseListMenu.h"
 #include "StudentMenu.h"
 #include "LoginMenu.h"
+#include "VerificationMenu.h"
 #include "StudentTypeMenu.h"
 #include "GenInfoMenu.h"
 #include "TeacherMenu.h"
@@ -28,6 +29,7 @@ class Controller : public Gtk::Window 	{
 		CourseListMenu *courseList;
 		CourseListSearchMenu *searchMenu;
 		LoginMenu *loginMenu;
+		VerificationMenu *verifyMenu;
 		StudentTypeMenu *typeMenu;
 		GenInfoMenu *genInfoMenu;
 		RelatedCourseMenu *relMenu;

@@ -13,6 +13,7 @@ Controller::Controller()	{
 	searchMenu= 0;
 	courseList = 0;
 	loginMenu = 0;
+	verifyMenu = 0;
 	typeMenu = 0;
 	genInfoMenu = 0;
 	relMenu = 0;
@@ -29,6 +30,7 @@ Controller::~Controller()	{
 	delete(studentMenu);
 	delete(courseList);
 	delete(loginMenu);
+	delete(verifyMenu);
 	delete(typeMenu);
 	delete(genInfoMenu);
 	delete(relMenu);
