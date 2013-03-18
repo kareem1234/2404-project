@@ -126,12 +126,12 @@ Gtk::Button* CourseListMenu::getSkip()	{
 }
 
 //Returns select button when called
-Gtk::Button* CourseListMenu::getSelect(){
+Gtk::Button* CourseListMenu::getSelect()	{
 	return select;
 }
 
 //Returns the current selection
-string CourseListMenu::getString(){
+string CourseListMenu::getString()	{
 	if(options != 0) 
 		if(options->get_active()) return "";
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView->get_selection();

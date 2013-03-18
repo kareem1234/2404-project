@@ -5,6 +5,8 @@
 
 //Include statements
 #include <gtkmm.h>
+#include "Undergrad.h"
+#include "Grad.h"
 
 class VerificationMenu : public Gtk::Frame	{
 	//Private data members
@@ -22,6 +24,8 @@ class VerificationMenu : public Gtk::Frame	{
 		Gtk::Entry* getNumber();
 		Gtk::Button* getSubmit();
 		bool checkInput();
+		bool loadStudent(string, Undergrad**, Grad**);
+		void loadStudentInfo(istringstream &toParse, Student &stu);
 };
 
 #endif

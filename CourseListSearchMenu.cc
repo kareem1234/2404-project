@@ -16,7 +16,7 @@ CourseListSearchMenu::CourseListSearchMenu(int T)
 }
 
 //Finds applications
-void CourseListSearchMenu :: findApp(){
+void CourseListSearchMenu::findApp(){
 	saveB->set_sensitive(true);
 	string line;
 	stringstream output;
@@ -33,7 +33,7 @@ void CourseListSearchMenu :: findApp(){
 	        string  major, standing, cgpa ,gpa;
 		string research, program, supervisor; 
 		getline(toParse,type,'$');
-		if(type.compare("Und")==0){
+		if(type.compare("Und") == 0){
 			getline(toParse,firstName,'$');
 			getline(toParse,lastName,'$');
 			getline(toParse,stuNum,'$');

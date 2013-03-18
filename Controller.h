@@ -38,6 +38,7 @@ class Controller : public Gtk::Window 	{
 		Undergrad *undergrad;
 		Grad *grad;
 		void setLoginMenu();
+		void setVerifyMenu();
 		void setTypeMenu();
 		void setGenInfoMenu();
 		void setCourseListMenu(int type);
@@ -48,6 +49,7 @@ class Controller : public Gtk::Window 	{
 		void setExperienceMenu();
 		void login_teacher_button_clicked();
 		void login_student_button_clicked();
+		void verify_submit_button_clicked();
 		void typeMenu_grad_button_clicked();
 		void typeMenu_undergrad_button_clicked();
 		void teacher_cancel_button_clicked();
