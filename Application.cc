@@ -8,9 +8,11 @@
 int Application::totalApplications = 0;
 
 //Default constructor
-Application::Application(string c)	{
+Application::Application(string c, string stat, int num)	{
 	course = c;
-	applicationNum = ++totalApplications;
+	status = stat;
+	if(num == 0)	applicationNum = ++totalApplications;
+	else	applicationNum = num;
 } 
 
 //Default destructor
@@ -70,7 +72,14 @@ void Application::save()	{
 	workExperiences.save();
 }
 
+//Updates status to assigned
+Application& Application::operator + ()	{
+	setStatus("assigned");
+	return *this;
+}
 
-
-
-
+//Updates status to closed
+Application& Application::operator - ()	{
+	setStatus("closed");
+	return *this;
+}

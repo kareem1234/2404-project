@@ -8,6 +8,7 @@
 using namespace std;
 #include "Undergrad.h"
 #include "Grad.h"
+#include "AssistantCourse.h"
 
 //Define TACourseMenu class
 class TACourseMenu : public Gtk::Frame 	{
@@ -44,8 +45,10 @@ class TACourseMenu : public Gtk::Frame 	{
 		Gtk::ComboBoxText* getTerm();
 		Gtk::Entry* getYear();
 		Gtk::Entry* getSupervisor();
+		void setTerm(string t);
 		void setYear(string);
 		void setSupervisor(string);
+		void loadCourse(AssistantCourse&);
 		int checkInput();
 		void applyUnderTACourse(Undergrad*);
 		void applyGradTACourse(Grad*);

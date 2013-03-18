@@ -9,7 +9,7 @@ using namespace std;
 #include <string>
 
 //Default constructor
-Undergrad::Undergrad(string f, string l, string s, string e, string m, int y, float c, float g)	
+Undergrad::Undergrad(string f, string l, string s, string e, string m, string y, string c, string g)	
 	: Student(f,l,s,e), maj(m), year(y), cgpa(c), gpa(g)
 {	}
 
@@ -24,17 +24,17 @@ string Undergrad::getMajor()	{
 }
 
 //Returns year of standing when called
-int Undergrad::getStanding()	{
+string Undergrad::getStanding()	{
 	return year;
 }
 
 //Returns cgpa when called
-float Undergrad::getCgpa()	{
+string Undergrad::getCgpa()	{
 	return cgpa;
 }
 
 //Returns gpa when called
-float Undergrad::getGpa()	{
+string Undergrad::getGpa()	{
 	return gpa;
 }
 
@@ -45,28 +45,23 @@ void Undergrad::setMajor(string study)	{
 
 //Sets year of standing to given integer
 void Undergrad::setStanding(string standing)	{
-	int newYear;
-	newYear = atoi(standing.c_str());
-	year = newYear;
+	year = standing;
 }
 
 //Sets cgpa to given float
 void Undergrad::setCgpa(string mark)	{
-	float newMark;
-	newMark = atof(mark.c_str());
-	cgpa = newMark;
+	cgpa = mark;
 }
 
 //Sets gpa to given float
 void Undergrad::setGpa(string mark)	{
-	float newMark;
-	newMark = atof(mark.c_str());
-	gpa = newMark;
+	gpa = mark;
 }
 
 //Save function saves all application under the student
 void Undergrad::save()	{
 	saveLog.open("saveLog.txt", ios::app);
+	cout << cgpa << " " << gpa << " " << year << endl;
 	saveLog << "Und" << "$" << getFirstName() << "$" << getLastName() << "$" << getStuNum() << "$" << getEmail() << "$" << maj << "$" << cgpa << "$" << gpa << "$"<< year << "$";
 	saveLog.close();
 	getApplications()->save();
