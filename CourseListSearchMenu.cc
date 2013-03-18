@@ -17,6 +17,7 @@ CourseListSearchMenu::CourseListSearchMenu(int T)
 
 //Finds applications
 void CourseListSearchMenu :: findApp(){
+	cout<<"finding app"<<endl;
 	saveB->set_sensitive(true);
 	string line;
 	stringstream output;
@@ -60,7 +61,10 @@ void CourseListSearchMenu :: findApp(){
 				getline(toParse, appNum, '$');
 				getline(toParse, status,'$');
 				getline(toParse,course,'$');
-
+				
+				cout<<"checking status"<<endl;
+				if(settings(status)){
+				cout<<"status checked"<<endl;
 				if( (course.compare(getString()) == 0 || options->get_active()) && type.compare("Und") ==0 ){
 					output<<"Applicant type: "<<"Undergraduate"<<endl;
 					output<<"Name: "<<firstName<<" "<<lastName<<endl;
@@ -83,17 +87,22 @@ void CourseListSearchMenu :: findApp(){
 					output1<<"Program: "<<program<<endl;
 					output1<<"Supervisor: "<<supervisor<<endl;
 					output1<<"Applied to TA: "<<course<<endl;
-					output1<<"---------------------------"<<endl;
+					output1<<"----------------------------"<<endl;
 					found = true;
 					totalGradApps++;
 				}
 			}
 		}
 	}
-	if(found)	{
+	}
+	if(found){
 		stringstream returnString;
-		returnString<<"-----------------*UNDERGRADS*-----------------"<<endl<<sort(totalStuApps,output,10)<<endl;
-		returnString<<"----------------------*GRADS*-------------------"<<endl<<sort(totalGradApps,output1,9)<<endl;
+		string fix(sort(totalStuApps,output,10));
+		if(type == 2)stringFix(fix);
+		returnString<<"             *UNDERGRADS*           "<<endl<<fix<<endl;
+		fix= sort(totalGradApps,output1,9);
+		if(type == 2)stringFix(fix);
+		returnString<<"             *GRADS*                "<<endl<<fix<<endl;
 		setString(returnString.str());
 	}	
 	else		setString("NO APPLICATION FOUND");
@@ -205,6 +214,24 @@ string CourseListSearchMenu::sort(int totalApps, stringstream& output, int sortT
 			}
 			return newOutput.str();
 }
+void CourseListSearchMenu::stringFix(string &output){
+	size_t start = 0;
+	while( (start = output.find("\n",start)) != string::npos ){
+		output.replace(start,1,"-");		
+		start+=3;
+	}
+
+	start = 0;
+	string l ="---------------------------";
+	while( (start = output.find(l,start)) != string::npos ){
+		output.replace(start,l.length(),"\n");		
+		start++;
+	}
+
+
+
+
+}
 
 void CourseListSearchMenu::checked(){
 	if(options->get_active()){
@@ -226,6 +253,21 @@ void CourseListSearchMenu::checked(){
 
 
 }
+bool CourseListSearchMenu:: settings(string status){
+	if(type == 1){
+		if(status.compare("pending")==0)	
+		return true;
+	}
+	else if(type == 2){
+		if(status.compare("assigned")==0)
+			return true;
+
+		return false;
+	
+	}
+	return false;
+}
+
 void CourseListSearchMenu::print(){
 	ofstream toSave;
 	string s = m_refTextBuffer->get_text();

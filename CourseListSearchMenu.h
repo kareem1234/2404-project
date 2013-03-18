@@ -17,6 +17,8 @@ class CourseListSearchMenu : public CourseListMenu {
 		void findApp();
 		void checked();
 		void print();
+		bool settings(string status);
+		void stringFix(string& output);
 		Gtk::CheckButton* getOptions();
 		Gtk::Button* getSave();
 	private:

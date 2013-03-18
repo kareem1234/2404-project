@@ -19,12 +19,16 @@
 #include <sstream>
 #include <string>
 #include "CourseListSearchMenu.h"
+#include "RelatedCourse.h"
+#include "AssistantCourse.h"
+#include "AppListMenu.h"
 
 class Controller : public Gtk::Window 	{
 	//Private members
 	private:
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
+		AppListMenu *appList;
 		CourseListMenu *courseList;
 		CourseListSearchMenu *searchMenu;
 		LoginMenu *loginMenu;
@@ -44,12 +48,15 @@ class Controller : public Gtk::Window 	{
 		void setRelatedCourseMenu();
 		void setTACourseMenu();	
 		void setExperienceMenu();
+		void  setAppListMenu();
 		void login_teacher_button_clicked();
 		void login_student_button_clicked();
 		void typeMenu_grad_button_clicked();
 		void typeMenu_undergrad_button_clicked();
 		void teacher_cancel_button_clicked();
 		void teacher_summary_button_clicked();
+		void teacher_viewAssigned_button_clicked();
+		void  teacher_viewApps_button_clicked();
 		void genInfo_next_button_clicked();
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();
@@ -62,6 +69,9 @@ class Controller : public Gtk::Window 	{
 		void student_cancel_button_clicked();
 		void student_create_button_clicked();
 		void courselist_treeview_row_selected();
+		void appList_treeeview_row_selected();
+		void appList_cancel_button_clicked();
+		void appList_select_button_clicked();
 		void courselist_select_button_clicked();
 		void courselist_cancel_button_clicked();
 		void courselist_skip_button_clicked();

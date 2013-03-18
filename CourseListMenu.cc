@@ -26,7 +26,7 @@ CourseListMenu::CourseListMenu(int Type){
 	m_ScrolledWindow.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		
 	//Depending on the type the list looks different and has different behaviour
-	if(type == 1){
+	if(type == 1 || type ==2){
 		m_ScrolledWindow2.add(*m_TextView);
 		m_TextView->set_editable(false);
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
@@ -44,7 +44,7 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
-	}else if(type == 1){
+	}else if(type == 1 || type ==2){
 		saveB = new Gtk::Button("Save Applications");
 		saveB->set_sensitive(false);
 		options = new Gtk::CheckButton("View all applications");
@@ -54,7 +54,7 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*select,0,4,2,1);		
 		grid->attach(*cancel,0,5,2,1);
 		grid->attach(*saveB,0,6,2,1);
-	} else if (type == 3 || type == 4)	{
+	} else if (type >= 3)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);
 		grid->attach(*skip,0,4,2,1);
@@ -63,7 +63,7 @@ CourseListMenu::CourseListMenu(int Type){
 	//Setup courseList
 	m_refTreeModel = Gtk::ListStore::create(m_Columns);
 	m_TreeView->set_model(m_refTreeModel);
-	loadCourseList();
+	if(type != 5)loadCourseList();
 	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
 	else if (type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
 	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
@@ -107,6 +107,10 @@ int CourseListMenu::loadCourseList(){
 	}
 
 	return 1;
+}
+
+void loadApplist(){
+
 }
 
 

@@ -1,6 +1,6 @@
 #include "LoginMenu.h"
 //LoginMenu source file
-
+#include <iostream>
 //Default constructor
 LoginMenu::LoginMenu()	{
 	//Create box	
@@ -18,6 +18,7 @@ LoginMenu::LoginMenu()	{
 	box->pack_start(*teacherB, Gtk::PACK_SHRINK, 15);
 
 	add(*box);
+
 }
 
 // destructor 

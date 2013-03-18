@@ -10,9 +10,8 @@ TeacherMenu::TeacherMenu(){
 	//Create neccessary buttons
 	
 
-	viewApp = new Gtk::Button("VIEW AN APPLICATION", false);
+	viewApp = new Gtk::Button("ASSIGN A SUCCESFUL APPLICATION", false);
 	viewApp->set_size_request(300, 60); 
-	viewApp->set_sensitive(false);
 
 	viewSummary = new Gtk::Button("VIEW  PENDING APPLICATIONS", false);
 	viewSummary->set_size_request(300, 60); 
@@ -24,7 +23,7 @@ TeacherMenu::TeacherMenu(){
 
 	viewAssigned = new Gtk::Button("VIEW SUCCESSFUL APPLICATIONS", false);
 	viewAssigned->set_size_request(300, 60); 
-	viewAssigned->set_sensitive(false);
+
 
 	cancelB = new Gtk::Button("CANCEL", false);
 	cancelB->set_size_request(300, 60); 

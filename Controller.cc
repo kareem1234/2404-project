@@ -1,6 +1,4 @@
 #include "Controller.h"
-#include "RelatedCourse.h"
-#include "AssistantCourse.h"
 
 #include <iostream>
 using namespace std;
@@ -20,6 +18,7 @@ Controller::Controller()	{
 	workMenu = 0;
 	undergrad = 0;
 	grad = 0;
+	appList=0;
 	setLoginMenu();
 }
 
@@ -40,16 +39,15 @@ Controller::~Controller()	{
 
 //Sets the login menu
 void Controller::setLoginMenu()  {
-
 	// allocated new loginMenu
 	loginMenu = new LoginMenu;
 	add(*loginMenu);
 	resize(loginMenu->getBox()->get_width(), loginMenu->getBox()->get_height());
 	show_all();
-
 	// connect signal handlers
 	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_student_button_clicked));
 	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));
+	
 }
 
 //Sets student type menu
@@ -86,11 +84,10 @@ void Controller::setGenInfoMenu()	{
 	// connect signal handlers
 	genInfoMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::genInfo_next_button_clicked));
 }
-
 //Sets the course list menu
 void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu
-	if(type == 1)	{
+	if(type == 1 || type == 2)	{
 		 searchMenu = new CourseListSearchMenu(type);
 		 add(*searchMenu);
 		 resize(searchMenu->getGrid()->get_width(), searchMenu->getGrid()->get_height());
@@ -136,6 +133,18 @@ void Controller::setStudentMenu(){
 }
 
 //Set the teacher menu
+void Controller:: setAppListMenu(){
+	appList = new AppListMenu();
+	add(*appList);
+	resize(appList->getGrid()->get_width(), appList->getGrid()->get_height());
+	show_all();
+
+	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = appList->getTreeView()->get_selection();
+	refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::appList_treeeview_row_selected));
+	appList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::appList_cancel_button_clicked));
+	appList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::appList_select_button_clicked));
+
+}
 void Controller::setTeacherMenu(){
 	//allocate a new TeacherMenu
 	teacherMenu = new TeacherMenu();
@@ -146,6 +155,8 @@ void Controller::setTeacherMenu(){
 	//connect signal handlers
 	teacherMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_cancel_button_clicked));
 	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
+	teacherMenu->getAssignedButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_viewAssigned_button_clicked));
+	teacherMenu->getAppButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_viewApps_button_clicked));
 }
 
 //Sets the related course menu, waiting for input
@@ -249,7 +260,21 @@ void Controller::teacher_summary_button_clicked(){
 	teacherMenu = 0;
 	setCourseListMenu(1);
 }
+void Controller:: teacher_viewAssigned_button_clicked(){
+	remove();
+	delete (teacherMenu);
+	teacherMenu = 0;
+	setCourseListMenu(2);
 
+}
+void Controller:: teacher_viewApps_button_clicked(){
+	remove();
+	delete(teacherMenu);
+	teacherMenu= 0;
+	setAppListMenu();
+
+
+}
 void Controller::student_create_button_clicked(){
 
 	remove();
@@ -265,7 +290,24 @@ void Controller::courselist_treeview_row_selected(){
 	}
 	courseList->getSelect()->set_sensitive(true);
 }
+void Controller::appList_treeeview_row_selected(){
+	appList->getSelect()->set_sensitive(true);
 
+}
+void Controller::appList_cancel_button_clicked(){
+	remove();
+	delete(appList);
+	appList=0;
+	setTeacherMenu();
+
+}
+void Controller::appList_select_button_clicked(){
+	appList->assignApp();
+	remove();
+	delete(appList);
+	appList=0;
+	setAppListMenu();
+}
 void Controller::courselist_select_button_clicked(){
 	
 	if(searchMenu != 0){
