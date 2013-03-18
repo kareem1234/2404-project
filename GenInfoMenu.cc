@@ -336,7 +336,7 @@ bool GenInfoMenu::checkInfo(string type)	{
 	}
 
 	//Checks student number
-	if(!Student::checkStuNum(stuNumT->get_text()))	{
+	if(!Student::checkStuNum(stuNumT->get_text()) || duplicates(stuNumT->get_text()))	{
 		stuNumT->set_text("");
 		result = false;
 	}
@@ -388,39 +388,53 @@ bool GenInfoMenu::checkInfo(string type)	{
 		}
 	}
 
+	if(!result)	{
+		Gtk::MessageDialog error("DATA NOT ENTERED CORRECTLY!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, false);
+		error.set_secondary_text("Names must be characters. Student number must exactly 9 characters long and all numerals. Email must end in @carleton.ca or @cmail.carleton.ca. CGPA and GPA must be between 0 and 12. Year of standing must be between 0 and 4.");
+		error.run();
+	}
+
 	//Returns result
 	return result;
 }
 
+//Returns boolean representing if any identical student numbers
+//are already in file
+bool GenInfoMenu::duplicates(string num)	{
+	string line;
+	string data;	
+	int i;
+	
+	ifstream myfile("saveLog.txt");
+	if(!myfile.is_open())	return false;
+
+	while(myfile.good() && getline(myfile, line))	{
+		istringstream toParse (line, istringstream::in);
+	        
+		for(i = 0; i < 4; i++)	{
+			getline(toParse, data, '$');
+		}
+		if(data == num)	return true;
+	}
+	return false;
+}
+
 //Sets the incoming student values from form currently displayed
-void GenInfoMenu::setUndergradInfo(Undergrad* s)	{
+void GenInfoMenu::setUndergradInfo(Undergrad *s)	{
 	if(s == 0)	return;	
 	
-	stringstream l;
 	setFirstName(s->getFirstName());
 	setLastName(s->getLastName());
 	setStuNum(s->getStuNum());
 	setMajor(s->getMajor());
-	if(s->getStanding() != -1)	{
-		l.str("");
-		l << s->getStanding();
-		setYear(l.str());
-	}
+	setYear(s->getStanding());
 	setEmail(s->getEmail());
-	if(s->getCgpa() != -1)	{
-		l.str("");
-		l << s->getCgpa();
-		setCgpa(l.str());
-	}
-	if(s->getGpa() != -1)	{
-		l.str("");
-		l << s->getGpa();
-		setGpa(l.str());
-	}
+	setCgpa(s->getCgpa());
+	setGpa(s->getGpa());
 }
 
 //Sets the incoming student values from form currently displayed
-void GenInfoMenu::setGradInfo(Grad* s)	{
+void GenInfoMenu::setGradInfo(Grad *s)	{
 	if(s == 0)	return;	
 
 	setFirstName(s->getFirstName());

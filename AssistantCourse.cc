@@ -26,18 +26,6 @@ void AssistantCourse::save()	{
 	saveLog.close();	
 }
 
-//Checks the given year
-bool AssistantCourse::checkYear(string s)	{
-	int check = 0;
-	check = atoi(s.c_str());
-	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{
-		return false;
-	}
-	if(check < 0 || check > 2013)	return false;
-
-	return true;
-}
-
 //Checks the give supervisor
 bool AssistantCourse::checkSupervisor(string s)	{
 	if(s.find_first_of("0123456789!@#$%^&*()-_+=|/\\?><,{}[]+~`") != string::npos || s == "")	{

@@ -9,18 +9,18 @@ class Undergrad : public Student	{
 	//Private members
 	private:
 		string maj;
-		int year;
-		float cgpa;
-		float gpa;
+		string year;
+		string cgpa;
+		string gpa;
 
 	//Public members
 	public:
-		Undergrad(string f = "", string l = "", string s = "", string e = "", string m = "", int y = -1, float c = -1, float g = -1);
+		Undergrad(string f = "", string l = "", string s = "", string e = "", string m = "", string y = "", string c = "", string g = "");
 		~Undergrad();
 		string getMajor();
-		int getStanding();
-		float getCgpa();
-		float getGpa();
+		string getStanding();
+		string getCgpa();
+		string getGpa();
 		void setMajor(string study);
 		void setStanding(string standing);
 		void setCgpa(string mark);

@@ -1,5 +1,5 @@
-Assignment3:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o
-		g++ -o Assignment3 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
+Assignment3:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o VerificationMenu.o
+		g++ -o Assignment3 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o VerificationMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
 
 Main.o:		Main.h Main.cc 
 		g++ -c Main.cc `pkg-config gtkmm-3.0 --cflags --libs`
@@ -27,6 +27,9 @@ StudentMenu.o:	StudentMenu.h StudentMenu.cc
 
 LoginMenu.o:	LoginMenu.h LoginMenu.cc
 		g++ -c LoginMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+VerificationMenu.o:	VerificationMenu.h VerificationMenu.cc
+			g++ -c VerificationMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
 StudentTypeMenu.o:	StudentTypeMenu.h StudentTypeMenu.cc
 			g++ -c StudentTypeMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
