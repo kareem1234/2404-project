@@ -47,7 +47,7 @@ void Course::save()	{
 }
 
 //Checks given year
-int Course::checkYear(string s)	{
+bool Course::checkYear(string s)	{
 	float check;	
 	
 	if(s.find_first_of(" abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_+=|/\\?><,.{}[]+~`") != string::npos || s == "")	{

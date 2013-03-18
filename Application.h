@@ -26,7 +26,7 @@ class Application {
 
 	//Public members
 	public:
-		Application(string c = "");
+		Application(string c = "", string stat = "", int num = 0);
 		~Application();
 		int getApplicationNum();
 		string getStatus();
