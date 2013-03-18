@@ -92,12 +92,22 @@ Gtk::Entry* TACourseMenu::getSupervisor()	{
 	return supervisorT;
 }
 
+void TACourseMenu::setTerm(string t)	{
+	termD->set_active_text(t);
+}
+
 void TACourseMenu::setYear(string y)	{
 	yearT->set_text(y);
 }
 
 void TACourseMenu::setSupervisor(string name)	{
 	supervisorT->set_text(name);
+}
+
+void TACourseMenu::loadCourse(AssistantCourse &course)	{
+	setTerm(course.getTerm());
+	setYear(course.getYear());
+	setSupervisor(course.getSupervisor());
 }
 
 int TACourseMenu::checkInput()	{
@@ -108,7 +118,7 @@ int TACourseMenu::checkInput()	{
 		result = false;
 	}
 	//Checks duties
-	if(!AssistantCourse::checkYear(yearT->get_text()))	{
+	if(!Course::checkYear(yearT->get_text()))	{
 		setYear("");
 		result = false;
 	}
