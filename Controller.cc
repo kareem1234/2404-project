@@ -535,20 +535,23 @@ void Controller::createProfile(string s)	{
 }
 
 int  Controller::findHighestAppNum(){
+	cout<<"fidning highest"<<endl;
 	ifstream myfile("saveLog.txt");
 	string line;
 	string symbol;
 	string appNum;
 	while(getline(myfile,line)){
 		istringstream toParse (line, istringstream::in);
-		while(getline(toParse,symbol)){
+		while(getline(toParse,symbol,'$')){
 			if(symbol.compare("App")==0){
 				appNum="";
-				getline(toParse,appNum);
+				getline(toParse,appNum,'$');
+				cout<<"found app number: "<<appNum<<endl;
 			}			
 		}
 	}
+	cout<<"app num is "<<appNum<<endl;
 	if(appNum.length() > 0)
 		return 	0;
-	else return atoi(appNum.c_str());	
+	else return atoi(appNum.c_str()+1);	
 }
