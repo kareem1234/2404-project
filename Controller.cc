@@ -8,7 +8,8 @@ using namespace std;
 Controller::Controller()	{
 		
 	// create window
-	loginID = "";	
+	loginID = "";
+	appEdit = 0;	
 	studentMenu = 0;
 	searchMenu= 0;
 	courseList = 0;
@@ -21,7 +22,7 @@ Controller::Controller()	{
 	workMenu = 0;
 	undergrad = 0;
 	grad = 0;
-	appList=0;
+	appList = 0;
 	setLoginMenu();
 }
 
@@ -238,11 +239,8 @@ void Controller::login_student_button_clicked()	{
 void Controller::verify_submit_button_clicked()	{
 	
 	if(verifyMenu->checkInput())	{
-		cout << &undergrad << endl;
-		cout << &grad << endl;
-		cout << verifyMenu->getNumber()->get_text() << endl;
 		loginID = verifyMenu->getNumber()->get_text();
-		if(verifyMenu->loadStudent(verifyMenu->getNumber()->get_text(), &undergrad, &grad))	{
+		if(loadStudent(verifyMenu->getNumber()->get_text()))	{
 			remove();
 			delete (verifyMenu);
 			verifyMenu = 0;
@@ -278,9 +276,6 @@ void Controller::typeMenu_grad_button_clicked()	{
 
 void Controller::student_cancel_button_clicked()	{
 
-	if(undergrad != 0 && !undergrad->getApplications()->isEmpty())	undergrad->save();
-	if(grad != 0 && !grad->getApplications()->isEmpty())	grad->save();
-	
 	delete(undergrad);
 	delete(grad);
 	undergrad = 0;
@@ -471,6 +466,7 @@ void Controller::workExperience_submit_button_clicked(){
 	if(workMenu->checkInput())	{
 		if(undergrad != 0)	workMenu->applyUnderWorkExperience(undergrad);
 		if(grad != 0)	workMenu->applyGradWorkExperience(grad);
+		saveToFile();
 		remove();	
 		delete(workMenu);
 		workMenu=0;
@@ -512,6 +508,7 @@ void Controller::workExperience_add_button_clicked()	{
 }
 
 void Controller::workExperience_skip_button_clicked()	{
+	saveToFile();
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -539,7 +536,7 @@ void Controller::createProfile(string s)	{
 }
 
 int  Controller::findHighestAppNum(){
-	cout<<"fidning highest"<<endl;
+	cout<<"finding highest"<<endl;
 	ifstream myfile("saveLog.txt");
 	string line;
 	string symbol;
@@ -558,4 +555,137 @@ int  Controller::findHighestAppNum(){
 	if(appNum.length() > 0)
 		return 	0;
 	else return atoi(appNum.c_str()+1);	
+}
+
+
+void Controller::saveToFile()	{
+	
+	if(undergrad != 0)	{
+		removeStudentFromFile(undergrad->getStuNum());
+		undergrad->save();
+	}
+	if(grad != 0)	{
+		removeStudentFromFile(grad->getStuNum());
+		grad->save();
+	}
+}
+
+void Controller::removeStudentFromFile(string num)	{
+	int i;	
+	string deleteLine;
+	string line;
+
+	ifstream myfile("saveLog.txt");
+	ofstream newfile("temp.txt");
+	if(!myfile.is_open())	return;
+
+	while(myfile.good() && getline(myfile, line))	{
+		istringstream toParse (line, istringstream::in);
+		string stuNum;
+	        
+		for(i = 0; i < 4; i++)	{
+			getline(toParse, stuNum, '$');
+		}
+
+		if(stuNum == num)	deleteLine = line;
+		if(deleteLine != line)	newfile << line << endl;
+	}
+	myfile.close();
+	newfile.close();
+	std::remove("saveLog.txt");
+	std::rename("temp.txt", "saveLog.txt");
+}
+
+//Loads student with given student number
+bool Controller::loadStudent(string num)	{
+	string line;
+	bool loaded = false;
+
+	ifstream myfile("saveLog.txt");
+	if(!myfile.is_open())	return false;
+
+	while(myfile.good() && getline(myfile, line))	{
+		istringstream toParse (line, istringstream::in);
+		string  type, firstName, lastName, stuNum , email;
+	        
+		getline(toParse, type, '$');
+
+		if(type.compare("Und") == 0)	{
+			string  major, standing, cgpa, gpa;
+			getline(toParse,firstName,'$');
+			getline(toParse,lastName,'$');
+			getline(toParse,stuNum,'$');
+			getline(toParse,email,'$');
+			getline(toParse,major,'$');
+			getline(toParse,cgpa,'$');
+			getline(toParse,gpa,'$');
+			getline(toParse,standing,'$');
+			cout << standing << " " << cgpa << " " << gpa << endl;
+			if(stuNum == num)	{
+				loaded = true;
+				undergrad = new Undergrad(firstName, lastName, stuNum, email, major, standing, cgpa, gpa);
+				loadStudentInfo(toParse, *undergrad);
+			}
+		} else {
+			string research, program, supervisor; 
+			getline(toParse,firstName,'$');
+			getline(toParse,lastName,'$');
+			getline(toParse,stuNum,'$');
+			getline(toParse,email,'$');
+			getline(toParse,research,'$');
+			getline(toParse,program,'$');
+			getline(toParse,supervisor,'$');
+			if(stuNum == num)	{
+				loaded = true;
+				grad = new Grad(firstName, lastName, stuNum, email, research, program, supervisor);
+				loadStudentInfo(toParse, *grad);
+			}
+		}
+	}
+	myfile.close();;
+	return loaded;
+}
+
+//Loads all the information associated with the student
+void Controller::loadStudentInfo(istringstream &toParse, Student &stu)	{
+	string symbol;
+
+	while(getline(toParse, symbol,'$'))	{
+		if(symbol.compare("App") == 0)	{
+			string appNum, status, course;
+			getline(toParse, appNum, '$');
+			getline(toParse, status,'$');
+			getline(toParse, course,'$');
+		
+			stu.getApplications()->pushBack(new Application(course,-1, status, atoi(appNum.c_str())));
+		}
+		if(symbol.compare("Rel") == 0)	{
+			string course, term, year, grade;
+			getline(toParse, course, '$');
+			getline(toParse, term,'$');
+			getline(toParse, year,'$');
+			getline(toParse, grade,'$');
+		
+			stu.getApplications()->back()->getRelated()->pushBack(new RelatedCourse(course, term, year, grade));
+		}
+		if(symbol.compare("Ass") == 0)	{
+			string course, t, y, sup;
+			getline(toParse, course, '$');
+			getline(toParse, t,'$');
+			getline(toParse, y,'$');
+			getline(toParse, sup,'$');
+		
+			stu.getApplications()->back()->getAssisted()->pushBack(new AssistantCourse(course, t, y, sup));
+		}
+		if(symbol.compare("Wor") == 0)	{
+			string title, duties, duration, start, end;
+			getline(toParse, title, '$');
+			getline(toParse, duration,'$');
+			getline(toParse, start,'$');
+			getline(toParse, end,'$');
+			getline(toParse, duties,'$');
+		
+			stu.getApplications()->back()->getExperience()->pushBack(new WorkExperience(title, duties, duration, start, end));
+		}
+	}
 }

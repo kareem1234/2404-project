@@ -80,7 +80,6 @@ class GenInfoMenu : public Gtk::Frame 	{
 		void setProgram(string p);
 		void setSupervisor(string s);
 		bool checkInfo(string type);
-		bool duplicates(string num);
 		void setUndergradInfo(Undergrad*);
 		void setGradInfo(Grad*);
 		void applyUnderInfo(Undergrad*);

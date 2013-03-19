@@ -28,6 +28,7 @@ class Controller : public Gtk::Window 	{
 	//Private members
 	private:
 		string loginID;
+		Application *appEdit;
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
 		AppListMenu *appList;
@@ -61,7 +62,7 @@ class Controller : public Gtk::Window 	{
 		void teacher_cancel_button_clicked();
 		void teacher_summary_button_clicked();
 		void teacher_viewAssigned_button_clicked();
-		void  teacher_viewApps_button_clicked();
+		void teacher_viewApps_button_clicked();
 		void genInfo_next_button_clicked();
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();
@@ -83,7 +84,11 @@ class Controller : public Gtk::Window 	{
 		void searchMenu_option_clicked();
 		void searchMenu_saveB_clicked();
 		void createProfile(string s);
-		int  findHighestAppNum();
+		int findHighestAppNum();
+		void saveToFile();
+		void removeStudentFromFile(string num);
+		void loadStudentInfo(istringstream &toParse, Student &stu);
+		bool loadStudent(string);
 	//Public members
 	public:
 		Controller();

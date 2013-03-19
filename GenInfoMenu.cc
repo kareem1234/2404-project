@@ -336,7 +336,7 @@ bool GenInfoMenu::checkInfo(string type)	{
 	}
 
 	//Checks student number
-	if(!Student::checkStuNum(stuNumT->get_text()) || duplicates(stuNumT->get_text()))	{
+	if(!Student::checkStuNum(stuNumT->get_text()))	{
 		stuNumT->set_text("");
 		result = false;
 	}
@@ -398,27 +398,6 @@ bool GenInfoMenu::checkInfo(string type)	{
 	return result;
 }
 
-//Returns boolean representing if any identical student numbers
-//are already in file
-bool GenInfoMenu::duplicates(string num)	{
-	string line;
-	string data;	
-	int i;
-	
-	ifstream myfile("saveLog.txt");
-	if(!myfile.is_open())	return false;
-
-	while(myfile.good() && getline(myfile, line))	{
-		istringstream toParse (line, istringstream::in);
-	        
-		for(i = 0; i < 4; i++)	{
-			getline(toParse, data, '$');
-		}
-		if(data == num)	return true;
-	}
-	return false;
-}
-
 //Sets the incoming student values from form currently displayed
 void GenInfoMenu::setUndergradInfo(Undergrad *s)	{
 	if(s == 0)	return;	
@@ -426,7 +405,7 @@ void GenInfoMenu::setUndergradInfo(Undergrad *s)	{
 	setFirstName(s->getFirstName());
 	setLastName(s->getLastName());
 	setStuNum(s->getStuNum());
-	if(s->getStuNum() == "")	stuNumT->set_editable(false);
+	if(s->getStuNum() != "")	stuNumT->set_editable(false);
 	setMajor(s->getMajor());
 	setYear(s->getStanding());
 	setEmail(s->getEmail());
@@ -441,7 +420,7 @@ void GenInfoMenu::setGradInfo(Grad *s)	{
 	setFirstName(s->getFirstName());
 	setLastName(s->getLastName());
 	setStuNum(s->getStuNum());
-	if(s->getStuNum() == "")	stuNumT->set_editable(false);
+	if(s->getStuNum() != "")	stuNumT->set_editable(false);
 	setEmail(s->getEmail());
 	setResearch(s->getResearch());
 	setProgram(s->getProgram());

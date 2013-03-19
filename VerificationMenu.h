@@ -24,8 +24,6 @@ class VerificationMenu : public Gtk::Frame	{
 		Gtk::Entry* getNumber();
 		Gtk::Button* getSubmit();
 		bool checkInput();
-		bool loadStudent(string, Undergrad**, Grad**);
-		void loadStudentInfo(istringstream &toParse, Student &stu);
 };
 
 #endif
