@@ -272,12 +272,25 @@ void CourseListSearchMenu::print(){
 	ofstream toSave;
 	string s = m_refTextBuffer->get_text();
 	if(!options->get_active()){
-		string fileName = getString();
-		std::remove(fileName.c_str());
-		toSave.open(fileName.c_str());
+		if(type ==1){
+			string fileName = getString();
+			fileName+= " pending applications";
+			std::remove(fileName.c_str());
+			toSave.open(fileName.c_str());
+		}else if(type ==2){
+			string fileName = getString();
+			fileName+=" Succesfull applications";
+			std::remove(fileName.c_str());
+			toSave.open(fileName.c_str());		
+		}
 	}else{
-		std::remove("All Applications.txt");
-		toSave.open("All Applications.txt");
+		if(type ==1){
+			std::remove("All Pending Applications.txt");
+			toSave.open("All Pending Applications.txt");
+		}else if(type ==2){
+			std::remove("All Succesfull Applications.txt");
+			toSave.open("All Succesfull Applications.txt");
+		}
 	}
 	toSave<<s.c_str();
 	toSave.close();

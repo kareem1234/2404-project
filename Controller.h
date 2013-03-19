@@ -82,6 +82,7 @@ class Controller : public Gtk::Window 	{
 		void searchMenu_option_clicked();
 		void searchMenu_saveB_clicked();
 		void createProfile(string s);
+		int  findHighestAppNum();
 	//Public members
 	public:
 		Controller();

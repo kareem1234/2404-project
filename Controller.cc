@@ -1,6 +1,7 @@
 #include "Controller.h"
 
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 //Default constructor
@@ -527,8 +528,27 @@ void Controller::workExperience_cancel_button_clicked()	{
 
 //Create the new application and assigns it to the student created // not updated
 void Controller::createProfile(string s)	{
-
-	Application* app = new Application(s);
+	int total = findHighestAppNum();
+	Application* app = new Application(s,total);
 	if(undergrad != 0)	undergrad->getApplications()->pushBack(app);
 	if(grad != 0)		grad->getApplications()->pushBack(app);
+}
+
+int  Controller::findHighestAppNum(){
+	ifstream myfile("saveLog.txt");
+	string line;
+	string symbol;
+	string appNum;
+	while(getline(myfile,line)){
+		istringstream toParse (line, istringstream::in);
+		while(getline(toParse,symbol)){
+			if(symbol.compare("App")==0){
+				appNum="";
+				getline(toParse,appNum);
+			}			
+		}
+	}
+	if(appNum.length() > 0)
+		return 	0;
+	else return atoi(appNum.c_str());	
 }

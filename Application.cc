@@ -8,7 +8,8 @@
 int Application::totalApplications = 0;
 
 //Default constructor
-Application::Application(string c, string stat, int num)	{
+Application::Application(string c,int total, string stat, int num)	{
+	if(total != -1 )totalApplications = total;
 	course = c;
 	status = stat;
 	if(num == 0)	applicationNum = ++totalApplications;
@@ -21,7 +22,10 @@ Application::~Application()	{
 	relatedCourses.clear();
 	workExperiences.clear();
 }
+void Application::setTotalApplications(int i){
+	totalApplications = i;
 
+}
 //Get methods defined
 int Application::getApplicationNum(){
 	return applicationNum;

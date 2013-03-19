@@ -26,10 +26,11 @@ class Application {
 
 	//Public members
 	public:
-		Application(string c = "", string stat = "", int num = 0);
+		Application(string c = "", int total = 0 ,string stat = "", int num = 0);
 		~Application();
 		int getApplicationNum();
 		string getStatus();
+		void setTotalApplications(int i);
 		string getCourse();
 		myQ<AssistantCourse>* getAssisted();
 		myQ<RelatedCourse>* getRelated();

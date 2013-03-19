@@ -126,7 +126,7 @@ void VerificationMenu::loadStudentInfo(istringstream &toParse, Student &stu)	{
 			getline(toParse, status,'$');
 			getline(toParse, course,'$');
 		
-			stu.getApplications()->pushBack(new Application(course, status, atoi(appNum.c_str())));
+			stu.getApplications()->pushBack(new Application(course,-1, status, atoi(appNum.c_str())));
 		}
 		if(symbol.compare("Rel") == 0)	{
 			string course, term, year, grade;
