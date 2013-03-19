@@ -1,11 +1,3 @@
-all : 	Qtest Assignment4
-
-Qtest:	Qtest.o
-	g++ -o Qtest Qtest.o
-
-Qtest.o:	Qtest.cc
-		g++ -c Qtest.cc
-
 Assignment4:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o AppListMenu.o VerificationMenu.o
 		g++ -o Assignment4 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o AppListMenu.o VerificationMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
 

@@ -21,7 +21,6 @@ class CourseListMenu : public Gtk::Frame {
 		Glib::RefPtr<Gtk::ListStore> m_refTreeModel;
 		Gtk::Button* skip;
 		Gtk::TextView *m_TextView;
-		int loadCourseList();
 		string sort(int totalApps, stringstream& output, int sortType);
 
 	protected:
@@ -44,6 +43,7 @@ class CourseListMenu : public Gtk::Frame {
 		string getString();
 		void setString(string app);
 		int getType();
+		void loadCourseList();
 
 		class ModelColumns : public Gtk::TreeModel:: ColumnRecord	{
 			public:

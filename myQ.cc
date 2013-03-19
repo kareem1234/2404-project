@@ -40,9 +40,7 @@ template <class T> class myQ {
 			}
 		};
 		
-		
-			// queue methods
-				
+		// queue methods		
 		// operator overloads
 		bool operator==(myQ<T> * other);
 		T* operator[](int index);
@@ -74,9 +72,7 @@ template <class T> class myQ {
 
 		// que test methods
 		void  testFunc();
-
 };
-
 
 template<class T>
 void myQ<T>:: testFunc(){
@@ -90,7 +86,6 @@ void myQ<T>:: testFunc(){
 	}
 	intQ1.print();
 	
-
 	cout<<"adding 1-9 to q2 "<<endl;
 	for(int i=0; i<9;i+=3){
 		int* intptr1 = new int(i+1);
@@ -135,17 +130,13 @@ void myQ<T>:: testFunc(){
 		intQ3 - intQ3.front();
 	cout<<"priting q3"<<endl;
 	intQ3.print();
-	
-
 }
-
-
-
 
 template <class T>
  bool myQ<T>::isEmpty()	{
 	return (head == 0);
 }
+
 template <class T>
 void myQ<T>:: print(){
 	cout<<"printing que: ";
@@ -232,9 +223,6 @@ void myQ<T>::deleteTail()	{
 	tail = prev;	
 }
 
-
-
-
 template<class T>
 T* myQ<T>::back()	{
 	if(!isEmpty())	return tail->data;
@@ -263,8 +251,6 @@ void myQ<T>::save()	{
 	}
 }
 
-
-
 //overloading the == operator
 template<class T>
 bool myQ<T>::operator==(  myQ<T> *other){
@@ -284,9 +270,6 @@ bool myQ<T>::operator==(  myQ<T> *other){
 	return true;
 }
 
-
-
-
 //overloading the [] operator
 template<class T>
 T* myQ<T>::operator[](int i)
@@ -295,7 +278,7 @@ T* myQ<T>::operator[](int i)
 	if(i < 0 ||i > length()){//Checking if the index i is within the bounds of the Queue
 		cout<<"Index out of bounds Exception"<<endl;
 		return 0;
-	
+
 	}
 	else{
 		int temp = 0;
@@ -360,19 +343,20 @@ template<class T>
 myQ<T>& myQ<T>::operator - (T* data){
 	*this	-= data;
 	return *this;
-
-
 }
+
 template<class T>
 myQ<T>& myQ<T>::operator - (myQ<T>& other){
 	*this	-= other;
 	return *this;
 }
+
 template<class T>
 void myQ<T>::operator!(){
 	while (! this->isEmpty())
 			this->popFront();
 }
+
 template<class T>
 void myQ<T>::operator-=(T* data){
 
@@ -384,12 +368,10 @@ void myQ<T>::operator-=(T* data){
 		return;
 	}
 	
-
 	Node *curr,*prev;
 	curr= head->next;
 
 	while(curr != 0){
-		
 		
 		if((curr->data) == data){
 			prev->next = curr->next; 
@@ -398,11 +380,9 @@ void myQ<T>::operator-=(T* data){
 		}
 		prev = curr;
 		curr = curr->next;				
-
 	}	
-	
-
 }
+
 template<class T>
 void myQ<T>::operator-=(myQ<T>& other){
 	if(other.head == 0) return;
@@ -412,11 +392,8 @@ void myQ<T>::operator-=(myQ<T>& other){
 		*this -= cNode->data;
 		cNode = cNode->next;
 	}	
-
-
-
-
 }
+
 template<class T>
 myQ<T>& myQ<T>::operator + (T* data){
 	*this += data;

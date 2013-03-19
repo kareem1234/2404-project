@@ -7,7 +7,8 @@ using namespace std;
 //Default constructor
 Controller::Controller()	{
 		
-	// create window 	
+	// create window
+	loginID = "";	
 	studentMenu = 0;
 	searchMenu= 0;
 	courseList = 0;
@@ -112,22 +113,21 @@ void Controller::setGenInfoMenu()	{
 void Controller::setCourseListMenu(int type){
 	// alllocate new CourseListMenu
 	if(type == 1 || type == 2)	{
-		 searchMenu = new CourseListSearchMenu(type);
-		 add(*searchMenu);
-		 resize(searchMenu->getGrid()->get_width(), searchMenu->getGrid()->get_height());
-		 show_all();
-		 Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = searchMenu->getTreeView()->get_selection();
-		 refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
-		 searchMenu->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
-		 searchMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
-		 searchMenu->getOptions();
-		 searchMenu->getOptions()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_option_clicked));
-		 searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
-	
-
-	}
-	else	{ 
+	 	searchMenu = new CourseListSearchMenu(type);
+		searchMenu->loadCourseList();
+		add(*searchMenu);
+		resize(searchMenu->getGrid()->get_width(), searchMenu->getGrid()->get_height());
+		show_all();
+		Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = searchMenu->getTreeView()->get_selection();
+		refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
+		searchMenu->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
+		searchMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
+		searchMenu->getOptions();
+		searchMenu->getOptions()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_option_clicked));
+		searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
+	} else { 
 		courseList = new CourseListMenu(type);
+		courseList->loadCourseList();
 		add(*courseList);
 		resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
 		show_all();
@@ -241,6 +241,7 @@ void Controller::verify_submit_button_clicked()	{
 		cout << &undergrad << endl;
 		cout << &grad << endl;
 		cout << verifyMenu->getNumber()->get_text() << endl;
+		loginID = verifyMenu->getNumber()->get_text();
 		if(verifyMenu->loadStudent(verifyMenu->getNumber()->get_text(), &undergrad, &grad))	{
 			remove();
 			delete (verifyMenu);
@@ -258,6 +259,7 @@ void Controller::verify_submit_button_clicked()	{
 void Controller::typeMenu_undergrad_button_clicked()	{
 	
 	undergrad = new Undergrad();
+	undergrad->setStuNum(loginID);
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
@@ -267,6 +269,7 @@ void Controller::typeMenu_undergrad_button_clicked()	{
 void Controller::typeMenu_grad_button_clicked()	{
 
 	grad = new Grad();
+	grad->setStuNum(loginID);
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
@@ -282,6 +285,7 @@ void Controller::student_cancel_button_clicked()	{
 	delete(grad);
 	undergrad = 0;
 	grad = 0;
+	loginID = "";
 
 	remove();
 	delete (studentMenu);

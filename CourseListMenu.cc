@@ -63,7 +63,7 @@ CourseListMenu::CourseListMenu(int Type){
 	//Setup courseList
 	m_refTreeModel = Gtk::ListStore::create(m_Columns);
 	m_TreeView->set_model(m_refTreeModel);
-	if(type != 5)loadCourseList();
+
 	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
 	else if (type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
 	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
@@ -89,12 +89,12 @@ int CourseListMenu::getType(){
 }
 
 //Loads list of courses into GUI list
-int CourseListMenu::loadCourseList(){
+void CourseListMenu::loadCourseList(){
 	
 	ifstream loadFile("courseList.txt", ios::in);
 	
 	if(!loadFile){
-		return 0;
+		return;
 	}
 	
 	Gtk::TreeModel::Row row = *(m_refTreeModel->append());
@@ -105,14 +105,7 @@ int CourseListMenu::loadCourseList(){
 		row[m_Columns.m_col_name] = line;	
 		row = *(m_refTreeModel->append());
 	}
-
-	return 1;
 }
-
-void loadApplist(){
-
-}
-
 
 //Returns frame when called
 Gtk::Grid* CourseListMenu::getGrid()  {

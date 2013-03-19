@@ -27,6 +27,7 @@
 class Controller : public Gtk::Window 	{
 	//Private members
 	private:
+		string loginID;
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
 		AppListMenu *appList;

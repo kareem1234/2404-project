@@ -426,6 +426,7 @@ void GenInfoMenu::setUndergradInfo(Undergrad *s)	{
 	setFirstName(s->getFirstName());
 	setLastName(s->getLastName());
 	setStuNum(s->getStuNum());
+	if(s->getStuNum() == "")	stuNumT->set_editable(false);
 	setMajor(s->getMajor());
 	setYear(s->getStanding());
 	setEmail(s->getEmail());
@@ -440,6 +441,7 @@ void GenInfoMenu::setGradInfo(Grad *s)	{
 	setFirstName(s->getFirstName());
 	setLastName(s->getLastName());
 	setStuNum(s->getStuNum());
+	if(s->getStuNum() == "")	stuNumT->set_editable(false);
 	setEmail(s->getEmail());
 	setResearch(s->getResearch());
 	setProgram(s->getProgram());
