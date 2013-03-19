@@ -551,7 +551,15 @@ int  Controller::findHighestAppNum(){
 		}
 	}
 	cout<<"app num is "<<appNum<<endl;
-	if(appNum.length() > 0)
-		return 	0;
-	else return atoi(appNum.c_str()+1);	
+	int i = atoi(appNum.c_str());
+	if(i == 0){
+		cout<<"appNum is: "<<appNum<<endl;
+		cout<<"length of appnum is 0"<<endl;
+		return 	-1;
+	}
+	else {
+		i++;
+		cout<<"new appnum is: "<<i<<endl;
+		return i;
+	}	
 }
