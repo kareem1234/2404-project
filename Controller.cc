@@ -599,7 +599,7 @@ void Controller::relMenu_add_button_clicked()	{
 void Controller::relMenu_delete_button_clicked()	{
 	myQ<RelatedCourse> *queue = currApp->getRelated();
 
-	queue->deleteTail();
+	(*queue) -= (*queue)[queue->length()-1];
 	remove();
 	delete(relMenu);
 	relMenu = 0;
@@ -619,7 +619,7 @@ void Controller::taMenu_add_button_clicked()	{
 void Controller::taMenu_delete_button_clicked()	{
 	myQ<AssistantCourse> *queue = currApp->getAssisted();
 
-	queue->deleteTail();
+	(*queue) -= (*queue)[queue->length()-1];
 	remove();
 	delete(taMenu);
 	taMenu = 0;
@@ -648,7 +648,7 @@ void Controller::workExperience_add_button_clicked()	{
 void Controller::workExperience_delete_button_clicked()	{
 	myQ<WorkExperience> *queue = currApp->getExperience();
 
-	queue->deleteTail();
+	(*queue) -= (*queue)[queue->length()-1];
 	remove();
 	delete(workMenu);
 	workMenu = 0;
