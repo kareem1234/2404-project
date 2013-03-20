@@ -1,7 +1,7 @@
 all : 	Qtest Assignment4
 
-Qtest:	Qtest.o
-	g++ -o Qtest Qtest.o
+Qtest:	Qtest.o myQ.o
+	g++ -o Qtest Qtest.o myQ.o
 
 Qtest.o:	Qtest.cc
 		g++ -c Qtest.cc
@@ -77,5 +77,7 @@ Course.o:	Course.h Course.cc
 myQ.o:	myQ.cc 
 	g++ -c myQ.cc
 
+clean1:	
+	rm Qtest.o myQ.o Qtest
 clean: 		
-		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* saveLog.txt Makefile~ Assignment3
+		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* saveLog.txt Makefile~ Assignment3 Qtest

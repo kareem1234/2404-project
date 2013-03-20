@@ -61,7 +61,7 @@ template <class T> class myQ {
 
 
 		// que methods used by application
-		void  print();
+		void  print(int i);
 		void pushBack(T*); //adds to tail.
     		void popFront(); //removes from head.
 		T* front();
@@ -88,9 +88,7 @@ void myQ<T>:: testFunc(){
 		int * intptr = new int(i+1);
 		intQ1+=intptr;
 	}
-	intQ1.print();
-	
-
+	intQ1.print(1);
 	cout<<"adding 1-9 to q2 "<<endl;
 	for(int i=0; i<9;i+=3){
 		int* intptr1 = new int(i+1);
@@ -98,16 +96,16 @@ void myQ<T>:: testFunc(){
 		int* intptr3 = new int(i+3);
 		intQ2+intptr1+intptr2+intptr3;
 	}
-	intQ2.print();
+	intQ2.print(2);
 	cout<<"adding q2 to q1"<<endl;
 	intQ1+= intQ2;
-	intQ1.print();
+	intQ1.print(1);
 	cout<<"adding q2 to q3"<<endl;
 	intQ3+= intQ2;
-	intQ3.print();
+	intQ3.print(3);
 	cout<<"readding q2 to q1 and then adding q3"<<endl;
 	intQ1+intQ2+intQ3;
-	intQ1.print();
+	intQ1.print(1);
 	cout<<"checking subscript operator on q1"<<endl;
 	for(int i =0; i< intQ1.length();i++)
 		cout<<*intQ1[i]<<",";
@@ -115,26 +113,36 @@ void myQ<T>:: testFunc(){
 	
 	cout<<"removing 9 from q1"<<endl;
 	intQ1-= intQ1[intQ1.length()-1];
-	intQ1.print();
+	intQ1.print(1);
 	cout<<"removing q2 from q1"<<endl;
 	intQ1 -= intQ2;
-	intQ1.print();
+	intQ1.print(1);
 	cout<<"clearing q1 "<<endl;
 	!intQ1;
-	intQ1.print();
+	intQ1.print(1);
 	cout<<"printing q2"<<endl;
-	intQ2.print();
+	intQ2.print(2);
 	cout<<"subtracting q2 from itself and then attempting to substract q3 from q2"<<endl;
 	intQ2- intQ2 - intQ3;
 	cout<<"printing q2"<<endl;
-	intQ2.print();
+	intQ2.print(2);
 	cout<<"printing q3"<<endl;
-	intQ3.print();
+	intQ3.print(3);
 	cout<<"substracting every element in q3 from q3"<<endl;
 	while(!intQ3.isEmpty())
 		intQ3 - intQ3.front();
 	cout<<"priting q3"<<endl;
-	intQ3.print();
+	intQ3.print(3);
+	
+	!intQ1;
+	!intQ2;
+	!intQ3;
+	intQ1 - intQ2;
+	int one = 1;
+	intQ1+= &one;
+	intQ2+= &one;
+	intQ1-= intQ2;
+	intQ1.print(1);
 	
 
 }
@@ -147,14 +155,14 @@ template <class T>
 	return (head == 0);
 }
 template <class T>
-void myQ<T>:: print(){
-	cout<<"printing que: ";
+void myQ<T>:: print(int i){
+	cout<<"printing que:"<<i;
 	Node* dummy = head;
 	while(dummy != 0){
 		cout<<*(dummy->data)<<",";
 		dummy= dummy->next;
 	}
-	cout<<endl;
+	cout<<endl<<endl;
 }
 
 template<class T>
@@ -182,6 +190,7 @@ T* myQ<T>::front()	{
 template<class T>
 void myQ<T>::pushBack(T* ele)	
 {
+	if(ele == 0) return;
 	Node* tmpNode = new Node;
   	tmpNode->data = ele;
 
@@ -265,26 +274,6 @@ void myQ<T>::save()	{
 
 
 
-//overloading the == operator
-template<class T>
-bool myQ<T>::operator==(  myQ<T> *other){
- 
-	if(this->length() != other->length())return false; //returns false if the two queues are of different size.
-	
-	Node *dummyQ1,*dummyQ2;
-	dummyQ1 = this->head;
-	dummyQ2 = other->head;
-	
-	
-	while(dummyQ1 != 0){
-		if(dummyQ1 != dummyQ2) return false; //Cycling through the nodes to make sure that all nodes in the list are identical.
-		dummyQ1 = dummyQ1->next;
-		dummyQ2 = dummyQ2->next;	
-	}
-	return true;
-}
-
-
 
 
 //overloading the [] operator
@@ -310,43 +299,22 @@ T* myQ<T>::operator[](int i)
 	return dummyNode->data;
 }
 
-//overloading the = operator;
-template<class T>
-void myQ<T>::operator = (myQ<T> *copyQ)
-{	
-	T *dummy;
-	dummy = copyQ.head();
-	this->clear();// Clearing the queue which is beeing assigned to.
-	while(dummy != 0){
-		popBack(dummy);	
-		dummy = dummy->next;
-	}
-}
+
 
 
 template<class T>
-void myQ<T>::operator+=(T *newNode)
-{
-	pushBack(newNode);
+void myQ<T>::operator+=(T *data)
+{	if(data == 0) return;
+	pushBack(data);
 } 
 
-template<class T>
-bool myQ<T>::operator>( myQ<T> *newQ)
-{
-	if(length()>newQ->length()) return true;
-	else return false;
-}
 
-template<class T>
-bool myQ<T>::operator<( myQ<T> *newQ)
-{
-	if(length()<newQ->length()) return true;
-	else return false;
-}
+
 
 template<class T>
 void myQ<T>::operator+=(myQ<T>&  newQ){
-		
+	
+	if(newQ.isEmpty()) return;	
 	Node *temp;
 	temp = newQ.head;	
 
@@ -354,18 +322,19 @@ void myQ<T>::operator+=(myQ<T>&  newQ){
 		pushBack(temp->data);
 		temp= temp->next;	
 	}
-
 }
 template<class T>
 myQ<T>& myQ<T>::operator - (T* data){
-	*this	-= data;
+	if(data != 0 )
+		*this	-= data;
 	return *this;
 
 
 }
 template<class T>
 myQ<T>& myQ<T>::operator - (myQ<T>& other){
-	*this	-= other;
+	if(!other.isEmpty())
+		*this	-= other;
 	return *this;
 }
 template<class T>
@@ -375,11 +344,10 @@ void myQ<T>::operator!(){
 }
 template<class T>
 void myQ<T>::operator-=(T* data){
+	if(data == 0) return;
+	if(head == 0) return;
 
-	if(head == 0)
-		return;
-
-	if(*data == *(head->data)){
+	if(data == head->data){
 		popFront();		
 		return;
 	}
@@ -387,21 +355,17 @@ void myQ<T>::operator-=(T* data){
 
 	Node *curr,*prev;
 	curr= head->next;
+	prev = head;
 
 	while(curr != 0){
-		
-		
 		if((curr->data) == data){
 			prev->next = curr->next; 
 			delete curr;
 			return;
 		}
 		prev = curr;
-		curr = curr->next;				
-
+		curr = curr->next;			
 	}	
-	
-
 }
 template<class T>
 void myQ<T>::operator-=(myQ<T>& other){
@@ -412,20 +376,18 @@ void myQ<T>::operator-=(myQ<T>& other){
 		*this -= cNode->data;
 		cNode = cNode->next;
 	}	
-
-
-
-
 }
 template<class T>
 myQ<T>& myQ<T>::operator + (T* data){
-	*this += data;
+	if(data != 0)
+		*this += data;
 	return *this;
 }
 
 template<class T>
 myQ<T>& myQ<T>::operator + (myQ<T>& newQ){
-	*this += newQ;
+	if(!newQ.isEmpty())
+		*this += newQ;
 	return *this;
 }
 
