@@ -42,19 +42,19 @@ template <class T> class myQ {
 		
 		// queue methods		
 		// operator overloads
-		bool operator==(myQ<T> * other);
+		bool operator==(myQ<T> *other);
 		T* operator[](int index);
-		void operator = (myQ<T> * other);
-		void operator+=(T* data);
-		void operator-=(T* data);
-		void operator-=(myQ<T>& other);
-		myQ<T>& operator - (myQ<T>& other);
-		myQ<T>& operator - (T* data);
-		void operator+=(myQ<T>& other );
-		bool operator>( myQ<T> * other);		
-		bool operator<( myQ<T> * other);
-		myQ<T>& operator + (myQ<T>& other);
-		myQ<T>& operator + (T* data);
+		void operator = (myQ<T> *other);
+		void operator+=(T *data);
+		void operator-=(T *data);
+		void operator-=(myQ<T> &other);
+		myQ<T>& operator - (myQ<T> &other);
+		myQ<T>& operator - (T *data);
+		void operator+=(myQ<T> &other );
+		bool operator>( myQ<T> *other);		
+		bool operator<( myQ<T> *other);
+		myQ<T>& operator + (myQ<T> &other);
+		myQ<T>& operator + (T *data);
 		void operator!();
 
 

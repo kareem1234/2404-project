@@ -7,11 +7,12 @@ using namespace std;
 #include <fstream>
 #include <cstdlib>
 #include <iostream>
+#include <stdlib.h>
 
 //Default constructor
 CourseListMenu::CourseListMenu(int Type){
-	options=0;
-	saveB= 0;
+	options = 0;
+	saveB = 0;
 	type = Type;
 	grid = new Gtk::Grid();
 	cancel = new Gtk::Button("CANCEL");
@@ -26,7 +27,7 @@ CourseListMenu::CourseListMenu(int Type){
 	m_ScrolledWindow.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
 		
 	//Depending on the type the list looks different and has different behaviour
-	if(type == 1 || type ==2){
+	if(type == 1 || type == 2){
 		m_ScrolledWindow2.add(*m_TextView);
 		m_TextView->set_editable(false);
 		m_ScrolledWindow2.set_policy(Gtk:: POLICY_AUTOMATIC,Gtk:: POLICY_AUTOMATIC);
@@ -40,11 +41,11 @@ CourseListMenu::CourseListMenu(int Type){
 	skip->set_size_request(70,30);
 	m_ScrolledWindow.set_size_request(250,400);
 
-	if(type == 0){
+	if(type == 0 || type == 100)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
-	}else if(type == 1 || type ==2){
+	}else if(type == 1 || type == 2){
 		saveB = new Gtk::Button("Save Applications");
 		saveB->set_sensitive(false);
 		options = new Gtk::CheckButton("View all applications");
@@ -65,7 +66,8 @@ CourseListMenu::CourseListMenu(int Type){
 	m_TreeView->set_model(m_refTreeModel);
 
 	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
-	else if (type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
+	else if(type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
+	else if(type == 100)	m_TreeView->append_column("APPLICATIONS", m_Columns.m_col_name);
 	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
 
 	add(*grid);
@@ -107,6 +109,50 @@ void CourseListMenu::loadCourseList(){
 	}
 }
 
+void CourseListMenu::loadApplications(Student &stu)	{
+	int i;
+	myQ<Application> *queue = stu.getApplications();
+	Gtk::TreeModel::Row row;
+	
+	for(i = 0; i < queue->length(); i++)	{
+		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_name] = (*queue)[i]->getCourse();
+	}
+}
+
+void CourseListMenu::loadRelatedCourses(Application &app)	{
+	int i;
+	myQ<RelatedCourse> *queue = app.getRelated();
+	Gtk::TreeModel::Row row;
+	
+	for(i = 0; i < queue->length(); i++)	{
+		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_name] = (*queue)[i]->getCourseName();
+	}
+}
+
+void CourseListMenu::loadAssistedCourses(Application &app)	{
+	int i;
+	myQ<AssistantCourse> *queue = app.getAssisted();
+	Gtk::TreeModel::Row row;
+	
+	for(i = 0; i < queue->length(); i++)	{
+		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_name] = (*queue)[i]->getCourseName();
+	}
+}
+
+void CourseListMenu::loadWorkExperience(Application &app)	{
+	int i;
+	myQ<WorkExperience> *queue = app.getExperience();
+	Gtk::TreeModel::Row row;
+	
+	for(i = 0; i < queue->length(); i++)	{
+		row = *(m_refTreeModel->append());
+		row[m_Columns.m_col_name] = (*queue)[i]->getTitle();
+	}
+}
+
 //Returns frame when called
 Gtk::Grid* CourseListMenu::getGrid()  {
 	return grid;
@@ -143,7 +189,6 @@ string CourseListMenu::getString()	{
 //Sets the courseList textfield if visible
 void CourseListMenu::setString(string app){
 	m_refTextBuffer->set_text(app);
-
 }
 
 //Returns the tree view

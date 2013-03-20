@@ -13,7 +13,6 @@ StudentMenu::StudentMenu()	{
 
 	editB = new Gtk::Button("EDIT APPLICATION", false);
 	editB->set_size_request(300, 60); 
-	editB->set_sensitive(false);
 
 	cancelB = new Gtk::Button("CANCEL", false);
 	cancelB->set_size_request(300, 60);

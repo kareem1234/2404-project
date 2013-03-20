@@ -73,6 +73,7 @@ class Controller : public Gtk::Window 	{
 		void workExperience_skip_button_clicked();
 		void workExperience_cancel_button_clicked();
 		void student_cancel_button_clicked();
+		void student_edit_button_clicked();
 		void student_create_button_clicked();
 		void courselist_treeview_row_selected();
 		void appList_treeeview_row_selected();

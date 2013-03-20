@@ -10,6 +10,8 @@
 #include <sstream>
 #include <string>
 using namespace std;
+#include "Student.h"
+#include "Application.h"
 
 
 //Define CourseList class
@@ -43,9 +45,14 @@ class CourseListMenu : public Gtk::Frame {
 		string getString();
 		void setString(string app);
 		int getType();
+		int getSelectedIndex();
 		void loadCourseList();
+		void loadApplications(Student&);
+		void loadRelatedCourses(Application&);
+		void loadAssistedCourses(Application&);
+		void loadWorkExperience(Application&);
 
-		class ModelColumns : public Gtk::TreeModel:: ColumnRecord	{
+		class ModelColumns : public Gtk::TreeModel::ColumnRecord	{
 			public:
 				ModelColumns(){
 					add(m_col_name); 
