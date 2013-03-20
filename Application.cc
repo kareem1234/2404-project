@@ -76,6 +76,73 @@ void Application::save()	{
 	workExperiences.save();
 }
 
+//Returns whether there is an identical assistant course
+bool Application::duplicateAss(string course)	{
+	int i;
+
+	for(i = 0; i < assistedCourses.length(); i++)	{
+		if(assistedCourses[i]->getCourseName() == course)
+			return true;
+	}
+	return false;
+}
+
+//Returns whether there is an identical related course
+bool Application::duplicateRel(string course)	{
+	int i;
+
+	for(i = 0; i < relatedCourses.length(); i++)	{
+		if(relatedCourses[i]->getCourseName() == course)
+			return true;
+	}
+	return false;
+
+}
+
+//Returns whether there is an identical work experience
+bool Application::duplicateWor(string title)	{
+	int i;
+
+	for(i = 0; i < workExperiences.length(); i++)	{
+		if(workExperiences[i]->getTitle() == title)
+			return true;
+	}
+	return false;
+}
+
+//Returns assisted course with given course
+AssistantCourse* Application::findAss(string)	{
+	int i;
+
+	for(i = 0; i < assistedCourses.length(); i++)	{
+		if(assistedCourses[i]->getCourseName() == course)
+			return assistedCourses[i];
+	}
+	return 0;
+}
+
+//Returns assisted course with given course
+RelatedCourse* Application::findRel(string course)	{
+	int i;
+
+	for(i = 0; i < relatedCourses.length(); i++)	{
+		if(relatedCourses[i]->getCourseName() == course)
+			return relatedCourses[i];
+	}
+	return 0;
+}
+	
+//Returns work experience with given title	
+WorkExperience* Application::findWor(string title)	{
+	int i;
+
+	for(i = 0; i < workExperiences.length(); i++)	{
+		if(workExperiences[i]->getTitle() == title)
+			return workExperiences[i];
+	}
+	return 0;
+}
+
 //Updates status to assigned
 Application& Application::operator + ()	{
 	setStatus("assigned");

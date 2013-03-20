@@ -26,12 +26,13 @@ class CourseListMenu : public Gtk::Frame {
 		string sort(int totalApps, stringstream& output, int sortType);
 
 	protected:
-		 Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
-		 Gtk::CheckButton* options;
-		 int type;
-		 Gtk::Button* select;
-		 Gtk::Button* cancel;
-		 Gtk::Button* saveB;
+		Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
+		Gtk::CheckButton* options;
+		int type;
+		Gtk::Button* select;
+		Gtk::Button* cancel;
+		Gtk::Button* saveB;
+		Gtk::Button* deleteB;
 
 	//public members
 	public:
@@ -41,13 +42,14 @@ class CourseListMenu : public Gtk::Frame {
 		Gtk::Button*   getCancel();
 		Gtk::Button*   getSkip();
 		Gtk::Button*   getSelect();
+		Gtk::Button*   getDelete();
 		Gtk::TreeView* getTreeView();
 		string getString();
 		void setString(string app);
 		int getType();
 		int getSelectedIndex();
 		void loadCourseList();
-		void loadApplications(Student&);
+		void loadApplications(Student&, string);
 		void loadRelatedCourses(Application&);
 		void loadAssistedCourses(Application&);
 		void loadWorkExperience(Application&);

@@ -40,6 +40,8 @@ class Student 	{
 		void setName(string name1, string name2);
 		void setStuNum(string num);
 		void setEmail(string emailAdd);
+		bool duplicateApp(string);
+		Application* getApp(string);
 		static bool checkName(string name);
 		static bool checkStuNum(string num);
 		static bool checkEmail(string emailAdd);

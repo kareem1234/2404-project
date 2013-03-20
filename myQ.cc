@@ -363,16 +363,16 @@ void myQ<T>::operator-=(T* data){
 	if(head == 0)
 		return;
 
-	if(*data == *(head->data)){
+	if(data == head->data){
 		popFront();		
 		return;
 	}
 	
-	Node *curr,*prev;
+	Node *curr = 0,*prev = 0;
 	curr= head->next;
+	prev = head;
 
-	while(curr != 0){
-		
+	while(curr != 0){	
 		if((curr->data) == data){
 			prev->next = curr->next; 
 			delete curr;

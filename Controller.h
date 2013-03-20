@@ -28,7 +28,7 @@ class Controller : public Gtk::Window 	{
 	//Private members
 	private:
 		string loginID;
-		Application *appEdit;
+		Application *currApp;
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
 		AppListMenu *appList;
@@ -50,10 +50,10 @@ class Controller : public Gtk::Window 	{
 		void setCourseListMenu(int type);
 		void setStudentMenu();
 		void setTeacherMenu();
-		void setRelatedCourseMenu();
-		void setTACourseMenu();	
+		void setRelatedCourseMenu(RelatedCourse*);
+		void setTACourseMenu(AssistantCourse*);	
 		void setExperienceMenu();
-		void  setAppListMenu();
+		void setAppListMenu();
 		void login_teacher_button_clicked();
 		void login_student_button_clicked();
 		void verify_submit_button_clicked();

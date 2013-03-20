@@ -132,20 +132,18 @@ int TACourseMenu::checkInput()	{
 	return result;
 }
 
-//Applies menu info to undergrad
-void TACourseMenu::applyUnderTACourse(Undergrad *undergrad)	{
-	if(undergrad != 0)	{
-		undergrad->getApplications()->back()->getAssisted()->back()->setTerm(getTerm()->get_active_text());
-		undergrad->getApplications()->back()->getAssisted()->back()->setYear(getYear()->get_text());
-		undergrad->getApplications()->back()->getAssisted()->back()->setSupervisor(getSupervisor()->get_text());
-	}
+//Sets menu to information given by the course
+void TACourseMenu::loadCourse(AssistantCourse *course)	{
+	if(course == 0)	return;
+
+	termD->set_active_text(course->getTerm());
+	yearT->set_text(course->getYear());
+	supervisorT->set_text(course->getSupervisor());
 }
 
-//Applies menu info to grad
-void TACourseMenu::applyGradTACourse(Grad *grad)	{
-	if(grad != 0)	{
-		grad->getApplications()->back()->getAssisted()->back()->setTerm(getTerm()->get_active_text());
-		grad->getApplications()->back()->getAssisted()->back()->setYear(getYear()->get_text());
-		grad->getApplications()->back()->getAssisted()->back()->setSupervisor(getSupervisor()->get_text());
-	}
+//Applies menu info to application
+void TACourseMenu::applyTACourse(Application &app)	{
+	app.getAssisted()->back()->setTerm(getTerm()->get_active_text());
+	app.getAssisted()->back()->setYear(getYear()->get_text());
+	app.getAssisted()->back()->setSupervisor(getSupervisor()->get_text());
 }

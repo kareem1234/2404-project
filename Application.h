@@ -38,6 +38,12 @@ class Application {
 		void setStatus(string stat);
 		void setCourse(string c);
 		void save();
+		bool duplicateAss(string);
+		bool duplicateRel(string);
+		bool duplicateWor(string);
+		AssistantCourse* findAss(string);
+		RelatedCourse* findRel(string);
+		WorkExperience* findWor(string);
 		Application& operator + ();
 		Application& operator - ();
 };

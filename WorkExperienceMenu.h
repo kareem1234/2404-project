@@ -3,8 +3,7 @@
 #ifndef WORKEXPERIENCEMENU_H
 #define WORKEXPERIENCEMENU_H
 
-#include "Undergrad.h"
-#include "Grad.h"
+#include "Application.h"
 #include <gtkmm.h>
 #include <string>
 using namespace std;
@@ -70,8 +69,7 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 		void setDuties(string);
 		string getDutiesText();
 		int checkInput();
-		void applyUnderWorkExperience(Undergrad*);
-		void applyGradWorkExperience(Grad*);
+		void applyWorkExperience(Application&);
 };
 
 #endif

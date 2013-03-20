@@ -146,20 +146,18 @@ bool RelatedCourseMenu::checkInput()	{
 	return result;
 }
 
-//Applies info to given undergrad
-void RelatedCourseMenu::applyUnderRelatedCourse(Undergrad *undergrad)	{
-	if(undergrad != 0)	{
-		undergrad->getApplications()->back()->getRelated()->back()->setTerm(getTerm()->get_active_text());
-		undergrad->getApplications()->back()->getRelated()->back()->setYear(getYear()->get_text());
-		undergrad->getApplications()->back()->getRelated()->back()->setFinalGrade(getFinalGrade()->get_active_text());
-	}
+//Fill in menu with info from given course
+void RelatedCourseMenu::loadCourse(RelatedCourse *course)	{
+	if(course == 0)	return;
+
+	termD->set_active_text(course->getTerm());
+	yearT->set_text(course->getYear());
+	finalD->set_active_text(course->getFinalGrade());
 }
 
-//Applies given info to given grad
-void RelatedCourseMenu::applyGradRelatedCourse(Grad *grad)	{
-	if(grad != 0)	{
-		grad->getApplications()->back()->getRelated()->back()->setTerm(getTerm()->get_active_text());
-		grad->getApplications()->back()->getRelated()->back()->setYear(getYear()->get_text());
-		grad->getApplications()->back()->getRelated()->back()->setFinalGrade(getFinalGrade()->get_active_text());
-	}
+//Applies info to given application
+void RelatedCourseMenu::applyRelatedCourse(Application &app)	{
+	app.getRelated()->back()->setTerm(getTerm()->get_active_text());
+	app.getRelated()->back()->setYear(getYear()->get_text());
+	app.getRelated()->back()->setFinalGrade(getFinalGrade()->get_active_text());
 }

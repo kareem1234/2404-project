@@ -128,3 +128,25 @@ bool Student::validFloat(string s)		{
 	
 	return true;
 }
+
+//Returns whether there is another pending app for the same course
+bool Student::duplicateApp(string course)	{
+	int i;
+	
+	for(i = 0; i < applications.length(); i++)	{
+		if(applications[i]->getCourse() == course && applications[i]->getStatus() == "pending")
+			return true;
+	}
+	return false;
+}
+
+//Returns open application with course name given
+Application* Student::getApp(string course)	{
+	int i;
+	
+	for(i = 0; i < applications.length(); i++)		{
+		if(applications[i]->getCourse() == course && applications[i]->getStatus() == "pending")
+			return applications[i];
+	}
+	return 0;
+}
