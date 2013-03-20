@@ -4,11 +4,13 @@
 #include "RelatedCourseMenu.h"
 #include "Course.h"
 
-RelatedCourseMenu::RelatedCourseMenu()	{
+RelatedCourseMenu::RelatedCourseMenu(int t)	{
 	//Create grid
+	type = t;
 	grid = new Gtk::Grid();
 	addCourseB = new Gtk::Button("ADD ANOTHER COURSE");
 	nextB = new Gtk::Button("ADD AND CONTINUE");
+	deleteB = new Gtk::Button("DELETE COURSE");
 
 	//Create labels
 	relatedCourseL = new Gtk::Label("RELATED COURSE");
@@ -80,6 +82,7 @@ RelatedCourseMenu::RelatedCourseMenu()	{
 	grid->attach(*finalD,1,3,1,1);
 	grid->attach(*addCourseB,0,4,2,1);
 	grid->attach(*nextB,0,5,2,1);
+	if(type == 1)	grid->attach(*deleteB,0,6,2,1);
 
 	add(*grid);
 }
@@ -88,6 +91,7 @@ RelatedCourseMenu::~RelatedCourseMenu()	{
 	delete(grid);
 	delete(addCourseB);
 	delete(nextB);
+	delete(deleteB);
 	delete(relatedCourseL);
 	delete(termD);
 	delete(yearT);
@@ -95,6 +99,10 @@ RelatedCourseMenu::~RelatedCourseMenu()	{
 	delete(termL);
 	delete(yearL);
 	delete(finalL);
+}
+
+int RelatedCourseMenu::getType()	{
+	return type;
 }
 
 Gtk::Grid* RelatedCourseMenu::getGrid()	{
@@ -107,6 +115,10 @@ Gtk::Button* RelatedCourseMenu::getAddButton()	{
 
 Gtk::Button* RelatedCourseMenu::getNextButton()	{
 	return nextB;
+}
+
+Gtk::Button* RelatedCourseMenu::getDeleteButton()	{
+	return deleteB;
 }
 
 Gtk::ComboBoxText* RelatedCourseMenu::getTerm()	{

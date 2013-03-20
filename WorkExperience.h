@@ -15,7 +15,7 @@ class WorkExperience	{
 		ofstream saveLog;
 		string title;
 		string duties;
-		int duration;
+		string duration;
 		string start;
 		string end;
 		
@@ -28,12 +28,12 @@ class WorkExperience	{
 		void setTitle(string Title);
 		void setEnd(string End);
 		void setStart(string Start);
-		int setDuration(string Duration);
+		void setDuration(string Duration);
 		void setDuties(string Duties);
 		string getEnd();
 		string getTitle();
 		string getStart();
-		int    getDuration();
+		string getDuration();
 		string getDuties();
 		static bool checkDuties(string);
 		static bool checkTitle(string);	

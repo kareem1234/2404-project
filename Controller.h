@@ -29,6 +29,7 @@ class Controller : public Gtk::Window 	{
 	private:
 		string loginID;
 		Application *currApp;
+		bool editing;
 		TeacherMenu *teacherMenu;
 		StudentMenu *studentMenu;
 		AppListMenu *appList;
@@ -50,9 +51,9 @@ class Controller : public Gtk::Window 	{
 		void setCourseListMenu(int type);
 		void setStudentMenu();
 		void setTeacherMenu();
-		void setRelatedCourseMenu(RelatedCourse*);
-		void setTACourseMenu(AssistantCourse*);	
-		void setExperienceMenu();
+		void setRelatedCourseMenu(RelatedCourse*, int);
+		void setTACourseMenu(AssistantCourse*, int);	
+		void setExperienceMenu(WorkExperience*, int);
 		void setAppListMenu();
 		void login_teacher_button_clicked();
 		void login_student_button_clicked();
@@ -66,12 +67,15 @@ class Controller : public Gtk::Window 	{
 		void genInfo_next_button_clicked();
 		void relMenu_next_button_clicked();
 		void relMenu_add_button_clicked();
+		void relMenu_delete_button_clicked();
 		void taMenu_next_button_clicked();
 		void taMenu_add_button_clicked();
+		void taMenu_delete_button_clicked();
 		void workExperience_submit_button_clicked();
 		void workExperience_add_button_clicked();
 		void workExperience_skip_button_clicked();
 		void workExperience_cancel_button_clicked();
+		void workExperience_delete_button_clicked();
 		void student_cancel_button_clicked();
 		void student_edit_button_clicked();
 		void student_create_button_clicked();
@@ -81,7 +85,10 @@ class Controller : public Gtk::Window 	{
 		void appList_select_button_clicked();
 		void courselist_select_button_clicked();
 		void courselist_cancel_button_clicked();
+		void courselist_discard_button_clicked();
+		void courselist_add_button_clicked();
 		void courselist_skip_button_clicked();
+		void courselist_save_button_clicked();
 		void searchMenu_option_clicked();
 		void searchMenu_saveB_clicked();
 		void createProfile(string s);

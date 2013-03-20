@@ -20,10 +20,11 @@ class TACourseMenu : public Gtk::Frame 	{
 
 			Gtk::TreeModelColumn<Glib::ustring> m_col_value;
 		};
-
+		int type;
 		Gtk::Grid* grid;
 		Gtk::Button* addCourseB;
 		Gtk::Button* nextB;
+		Gtk::Button* deleteB;
 		Gtk::Label* relatedCourseL;
 		Gtk::ComboBoxText* termD;
 		Gtk::Entry* yearT;
@@ -36,11 +37,12 @@ class TACourseMenu : public Gtk::Frame 	{
 
 	//Public data members
 	public:
-		TACourseMenu();
+		TACourseMenu(int);
 		~TACourseMenu();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
 		Gtk::Button* getNextButton();
+		Gtk::Button* getDeleteButton();
 		Gtk::ComboBoxText* getTerm();
 		Gtk::Entry* getYear();
 		Gtk::Entry* getSupervisor();

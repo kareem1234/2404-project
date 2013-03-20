@@ -31,8 +31,9 @@ class CourseListMenu : public Gtk::Frame {
 		int type;
 		Gtk::Button* select;
 		Gtk::Button* cancel;
+		Gtk::Button* addB;
 		Gtk::Button* saveB;
-		Gtk::Button* deleteB;
+		Gtk::Button* discardB;
 
 	//public members
 	public:
@@ -40,14 +41,15 @@ class CourseListMenu : public Gtk::Frame {
 		~CourseListMenu();
 		Gtk::Grid*     getGrid();
 		Gtk::Button*   getCancel();
+		Gtk::Button*   getSave();
+		Gtk::Button*   getDiscard();
 		Gtk::Button*   getSkip();
 		Gtk::Button*   getSelect();
-		Gtk::Button*   getDelete();
+		Gtk::Button*   getAdd();
 		Gtk::TreeView* getTreeView();
 		string getString();
 		void setString(string app);
 		int getType();
-		int getSelectedIndex();
 		void loadCourseList();
 		void loadApplications(Student&, string);
 		void loadRelatedCourses(Application&);

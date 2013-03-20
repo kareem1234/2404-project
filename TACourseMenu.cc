@@ -5,11 +5,13 @@
 #include "AssistantCourse.h"
 #include <iostream>
 
-TACourseMenu::TACourseMenu()	{
+TACourseMenu::TACourseMenu(int t)	{
 	//Create grid
+	type = t;
 	grid = new Gtk::Grid();
 	addCourseB = new Gtk::Button("ADD ANOTHER COURSE");
 	nextB = new Gtk::Button("ADD AND CONTINUE");
+	deleteB = new Gtk::Button("DELETE COURSE");
 
 	//Create labels
 	relatedCourseL = new Gtk::Label("TA COURSE");
@@ -51,6 +53,7 @@ TACourseMenu::TACourseMenu()	{
 	grid->attach(*supervisorT,1,3,1,1);
 	grid->attach(*addCourseB,0,4,2,1);
 	grid->attach(*nextB,0,5,2,1);
+	if(type == 1)	grid->attach(*deleteB,0,6,2,1);
 
 	add(*grid);
 }
@@ -59,6 +62,7 @@ TACourseMenu::~TACourseMenu()	{
 	delete(grid);
 	delete(addCourseB);
 	delete(nextB);
+	delete(deleteB);
 	delete(relatedCourseL);
 	delete(termD);
 	delete(yearT);
@@ -78,6 +82,10 @@ Gtk::Button* TACourseMenu::getAddButton()	{
 
 Gtk::Button* TACourseMenu::getNextButton()	{
 	return nextB;
+}
+
+Gtk::Button* TACourseMenu::getDeleteButton()	{
+	return deleteB;
 }
 
 Gtk::ComboBoxText* TACourseMenu::getTerm()	{

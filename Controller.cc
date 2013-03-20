@@ -8,7 +8,8 @@ Controller::Controller()	{
 		
 	// create window
 	loginID = "";
-	currApp = 0;	
+	currApp = 0;
+	editing = false;
 	studentMenu = 0;
 	searchMenu= 0;
 	courseList = 0;
@@ -85,21 +86,14 @@ void Controller::setTypeMenu()	{
 //Sets general info menu
 void Controller::setGenInfoMenu()	{
 
-	cout << "Seg 7" << endl;
 	// allocate new GenInfoMenu
 	if(undergrad != 0)	{
-		cout << "Seg 8" << endl;
 		genInfoMenu = new GenInfoMenu("Undergrad");
-		cout << "Seg 9" << endl;
 		genInfoMenu->setUndergradInfo(undergrad);
-		cout << "Seg 10" << endl;
 	}
-	if(grad != 0)	{
-		cout << "Seg 11" << endl;		
+	if(grad != 0)	{		
 		genInfoMenu = new GenInfoMenu("Grad");
-		cout << "Seg 12" << endl;
 		genInfoMenu->setGradInfo(grad);
-		cout << "Seg 13" << endl;
 	}
 
 	add(*genInfoMenu);
@@ -127,14 +121,11 @@ void Controller::setCourseListMenu(int type){
 		searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
 	} else { 
 		courseList = new CourseListMenu(type);
-		if(undergrad != 0)	{
-			if(type == 111)	courseList->loadApplications(*undergrad, "pending");
-			else		courseList->loadCourseList();
-		}
-		if(grad != 0)	{
-			if(type == 111)	courseList->loadApplications(*grad, "pending");
-			else		courseList->loadCourseList();
-		}
+		if(type == 111)	{
+			if(undergrad != 0)	courseList->loadApplications(*undergrad, "pending");
+			if(grad != 0)		courseList->loadApplications(*grad, "pending");
+		} else if(type == 222)		courseList->loadWorkExperience(*currApp);
+		else				courseList->loadCourseList();
 		add(*courseList);
 		resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
 		show_all();
@@ -145,6 +136,11 @@ void Controller::setCourseListMenu(int type){
 		courseList->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
 		courseList->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
 		courseList->getSkip()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_skip_button_clicked));
+		if(type == 222)	{
+			courseList->getAdd()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_add_button_clicked));
+			courseList->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_save_button_clicked));
+			courseList->getDiscard()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_discard_button_clicked));
+		}
 	}
 }
 
@@ -165,7 +161,7 @@ void Controller::setStudentMenu(){
 }
 
 //Set the teacher menu
-void Controller:: setAppListMenu(){
+void Controller::setAppListMenu(){
 	appList = new AppListMenu();
 	add(*appList);
 	resize(appList->getGrid()->get_width(), appList->getGrid()->get_height());
@@ -192,8 +188,8 @@ void Controller::setTeacherMenu(){
 }
 
 //Sets the related course menu, waiting for input
-void Controller::setRelatedCourseMenu(RelatedCourse *course)	{
-	relMenu = new RelatedCourseMenu();
+void Controller::setRelatedCourseMenu(RelatedCourse *course, int type)	{
+	relMenu = new RelatedCourseMenu(type);
 	relMenu->loadCourse(course);
 	add(*relMenu);
 	resize(relMenu->getGrid()->get_width(), relMenu->getGrid()->get_height());
@@ -201,11 +197,12 @@ void Controller::setRelatedCourseMenu(RelatedCourse *course)	{
 
 	relMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_next_button_clicked));
 	relMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_add_button_clicked));
+	relMenu->getDeleteButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::relMenu_delete_button_clicked));
 }
 
 //Sets the ta course menu
-void Controller::setTACourseMenu(AssistantCourse *course)	{
-	taMenu = new TACourseMenu();
+void Controller::setTACourseMenu(AssistantCourse *course, int type)	{
+	taMenu = new TACourseMenu(type);
 	taMenu->loadCourse(course);
 	add(*taMenu);
 	resize(taMenu->getGrid()->get_width(), taMenu->getGrid()->get_height());
@@ -213,11 +210,13 @@ void Controller::setTACourseMenu(AssistantCourse *course)	{
 
 	taMenu->getNextButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_next_button_clicked));
 	taMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_add_button_clicked));
+	taMenu->getDeleteButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::taMenu_delete_button_clicked));
 }
 
 //Sets the work experience menu
-void Controller::setExperienceMenu()	{
-	workMenu = new WorkExperienceMenu();
+void Controller::setExperienceMenu(WorkExperience *work, int type)	{
+	workMenu = new WorkExperienceMenu(type);
+	workMenu->loadExperience(work);
 	add(*workMenu);
 	resize(workMenu->getGrid()->get_width(), workMenu->getGrid()->get_height());
 	show_all();
@@ -226,6 +225,7 @@ void Controller::setExperienceMenu()	{
 	workMenu->getCancelButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_cancel_button_clicked));
 	workMenu->getSubmitButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_submit_button_clicked));
 	workMenu->getAddButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_add_button_clicked));
+	workMenu->getDeleteButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::workExperience_delete_button_clicked));
 }
 
 //Action listener functions for all menus buttons
@@ -302,9 +302,7 @@ void Controller::student_edit_button_clicked()	{
 	remove();
 	delete (studentMenu);
 	studentMenu = 0;
-	cout << "Seg fault 3" << endl;
 	setCourseListMenu(111);
-	cout << "Seg fault 4" << endl;
 }
 
 void Controller::teacher_cancel_button_clicked(){
@@ -318,9 +316,7 @@ void Controller::teacher_summary_button_clicked(){
 	remove();
 	delete (teacherMenu);
 	teacherMenu = 0;
-	cout << "Seg 1" << endl;
 	setCourseListMenu(1);
-	cout << "Seg 2" << endl;
 }
 
 void Controller:: teacher_viewAssigned_button_clicked(){
@@ -366,13 +362,12 @@ void Controller::appList_select_button_clicked(){
 }
 
 void Controller::courselist_select_button_clicked()	{
-	int type = courseList->getType();
-	cout << "Type is: " << type << endl;
-
 	if(searchMenu != 0) {
 		searchMenu->findApp();
 		return;		
 	}
+
+	int type = courseList->getType();
 	string course(courseList->getString());
 	if(type == 0)	{
 		if(undergrad != 0 && undergrad->duplicateApp(course))	{
@@ -402,11 +397,11 @@ void Controller::courselist_select_button_clicked()	{
 			myQ<RelatedCourse> *queue = currApp->getRelated();
 			(*queue) -= temp;
 			(*queue) + temp;
-			setRelatedCourseMenu(temp);
+			setRelatedCourseMenu(temp, editing);
 			return;
 		}
 		*(currApp->getRelated()) + (new RelatedCourse(course));
-		setRelatedCourseMenu(0);
+		setRelatedCourseMenu(0, editing);
 	} else if(type == 4)	{
 		remove();
 		delete(courseList);
@@ -416,33 +411,66 @@ void Controller::courselist_select_button_clicked()	{
 			myQ<AssistantCourse> *queue = currApp->getAssisted();
 			(*queue) -= temp;
 			(*queue) + temp;
-			setTACourseMenu(temp);
+			setTACourseMenu(temp, editing);
 			return;
 		}
 		*(currApp->getAssisted()) + (new AssistantCourse(course));
-		setTACourseMenu(0);
+		setTACourseMenu(0, editing);
 	} else if(type == 111)	{
-		if(undergrad != 0)	currApp = undergrad->getApp(course);
-		if(grad != 0)		currApp = grad->getApp(course);
 		remove();
 		delete(courseList);
 		courseList = 0;
+		editing = true;
+		if(undergrad != 0)	currApp = undergrad->getApp(course);
+		if(grad != 0)		currApp = grad->getApp(course);
 		setGenInfoMenu();
 	} else if(type == 222)	{
 		remove();
 		delete(courseList);
 		courseList = 0;
-		if(currApp->duplicateRel(course))	{
-			RelatedCourse *temp = currApp->findRel(course);
-			myQ<RelatedCourse> *queue = currApp->getRelated();
-			(*queue) -= temp;
-			(*queue) + temp;
-			setRelatedCourseMenu(temp);
-		} else {
-			currApp->getRelated()->pushBack(new RelatedCourse(course));
-			setRelatedCourseMenu(0);
-		}
+		WorkExperience *temp = currApp->findWor(course);
+		myQ<WorkExperience> *queue = currApp->getExperience();
+		cout << "Queue length is: " << queue->length() << endl;
+		(*queue) -= temp;
+		cout << "Queue length is: " << queue->length() << endl;
+		(*queue) + temp;
+		cout << "Queue length is: " << queue->length() << endl;
+		setExperienceMenu(temp, editing);
 	}
+}
+
+void Controller::courselist_save_button_clicked()	{
+	saveToFile();
+	currApp = 0;
+	editing = false;
+
+	remove();
+	delete(courseList);
+	courseList = 0;
+	setStudentMenu();
+}
+
+void Controller::courselist_discard_button_clicked()	{
+	string stuNum;
+
+	currApp = 0;
+	editing = false;
+	
+	if(undergrad != 0)	{
+		stuNum = undergrad->getStuNum();
+		delete undergrad;
+	}
+	if(grad != 0)	{
+		stuNum = grad->getStuNum();
+		delete grad;
+	}
+	
+	remove();
+	delete(courseList);
+	courseList = 0;
+
+	loadStudent(stuNum);
+	setStudentMenu();
 }
 
 void Controller::searchMenu_option_clicked(){
@@ -453,39 +481,54 @@ void Controller::searchMenu_saveB_clicked(){
 	searchMenu->print();
 }
 
+void Controller::courselist_add_button_clicked()	{
+	cout << "Queue length is: " << currApp->getExperience()->length() << endl;
+	*(currApp->getExperience()) += (new WorkExperience());
+	cout << "Queue length is: " << currApp->getExperience()->length() << endl;
+	remove();
+	delete(courseList);
+	courseList = 0;
+	setExperienceMenu(0, editing);
+}
+
 void Controller::courselist_cancel_button_clicked(){
-	if(searchMenu != 0){
+	if(searchMenu != 0)	{
 		remove();
-		//cout<<"problem"<<endl;
 		delete(searchMenu);
-		//cout<<"problem here"<<endl;
-		searchMenu=0;
+		searchMenu = 0;
 		setTeacherMenu();
 		return;
 	}
 	int type = courseList->getType();
-	remove();
-	delete (courseList);
-	courseList = 0;
-	cout << "Seg fault 1" << endl;
-	if(type == 0 || type == 111)	setStudentMenu();
-	else setTeacherMenu();
-	cout << "Seg fault 2" << endl;
+	if(type == 0 || type == 111)	{
+		remove();
+		delete (courseList);
+		courseList = 0;
+		setStudentMenu();
+	} else if(type == 222)	{
+		-(*currApp);
+		cout << "Status: " << currApp->getStatus() << endl;
+		courseList->getSelect()->set_sensitive(false);
+		courseList->getAdd()->set_sensitive(false);
+		courseList->getCancel()->set_sensitive(false);
+		return;
+	} else	{
+		remove();
+		delete (courseList);
+		courseList = 0;
+		setTeacherMenu();
+	}
 }
 
 void Controller::courselist_skip_button_clicked()	{
 	int type(courseList->getType());
-	if(type == 3)	{
-		remove();
-		delete(courseList);
-		courseList = 0;
-		setCourseListMenu(4);
-	} else if(type == 4)	{
-		remove();
-		delete(courseList);
-		courseList = 0;
-		setExperienceMenu();
-	}
+	remove();
+	delete(courseList);
+	courseList = 0;
+	
+	if(type == 3)			setCourseListMenu(4);
+	else if(type == 4 && !editing)	setExperienceMenu(0, editing);
+	else				setCourseListMenu(222);
 }
 
 void Controller::genInfo_next_button_clicked()	{
@@ -498,8 +541,8 @@ void Controller::genInfo_next_button_clicked()	{
 	delete (genInfoMenu);
 	genInfoMenu = 0;
 
-	if(currApp == 0)	setCourseListMenu(3);
-	else			setCourseListMenu(222);
+	setCourseListMenu(3);
+
 }
 
 void Controller::relMenu_next_button_clicked()	{
@@ -518,7 +561,8 @@ void Controller::taMenu_next_button_clicked()	{
 		remove();
 		delete(taMenu);
 		taMenu = 0;
-		setExperienceMenu();
+		if(!editing)	setExperienceMenu(0, editing);
+		else		setCourseListMenu(222);
 	}
 }
 
@@ -531,7 +575,7 @@ void Controller::workExperience_submit_button_clicked(){
 			return;
 		}
 		*(currApp->getExperience()) += (new WorkExperience());
-		workMenu->applyWorkExperience(currApp);
+		workMenu->applyWorkExperience(*currApp);
 		if(undergrad != 0)	*(undergrad->getApplications()) += currApp;
 		if(grad != 0)		*(grad->getApplications()) += currApp;
 		saveToFile();
@@ -544,8 +588,7 @@ void Controller::workExperience_submit_button_clicked(){
 
 void Controller::relMenu_add_button_clicked()	{
 	if(relMenu->checkInput())	{
-		if(undergrad != 0)	relMenu->applyUnderRelatedCourse(undergrad);
-		if(grad != 0)	relMenu->applyGradRelatedCourse(grad);		
+		relMenu->applyRelatedCourse(*currApp);		
 		remove();
 		delete(relMenu);
 		relMenu = 0;
@@ -553,12 +596,19 @@ void Controller::relMenu_add_button_clicked()	{
 	}
 }
 
+void Controller::relMenu_delete_button_clicked()	{
+	myQ<RelatedCourse> *queue = currApp->getRelated();
+
+	queue->deleteTail();
+	remove();
+	delete(relMenu);
+	relMenu = 0;
+	setCourseListMenu(3);
+}
+
 void Controller::taMenu_add_button_clicked()	{
 	if(taMenu->checkInput())	{
-		cout << "HI" << endl;
-		if(undergrad != 0)	taMenu->applyUnderTACourse(undergrad);
-		cout << "Hello" << endl;
-		if(grad != 0)	taMenu->applyGradTACourse(grad);	
+		taMenu->applyTACourse(*currApp);	
 		remove();
 		delete(taMenu);
 		taMenu = 0;
@@ -566,7 +616,18 @@ void Controller::taMenu_add_button_clicked()	{
 	}
 }
 
+void Controller::taMenu_delete_button_clicked()	{
+	myQ<AssistantCourse> *queue = currApp->getAssisted();
+
+	queue->deleteTail();
+	remove();
+	delete(taMenu);
+	taMenu = 0;
+	setCourseListMenu(4);
+}
+
 void Controller::workExperience_add_button_clicked()	{
+	int type = workMenu->getType();
 	if(workMenu->checkInput())	{
 		if(currApp->duplicateWor(workMenu->getTitle()->get_text()))	{
 			Gtk::MessageDialog error("IDENTICAL WORK EXPERIENCE TITLE ALREADY SUBMITTED!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, false);
@@ -574,13 +635,24 @@ void Controller::workExperience_add_button_clicked()	{
 			error.run();
 			return;
 		}
-		*(currApp->getExperience()) += (new WorkExperience());
-		workMenu->applyWorkExperience(currApp);
+		if(workMenu->getType() == 0)	*(currApp->getExperience()) += (new WorkExperience());
+		workMenu->applyWorkExperience(*currApp);
 		remove();	
 		delete(workMenu);
 		workMenu = 0;
-		setStudentMenu();
+		if(type == 1)	setCourseListMenu(222);
+		else		setExperienceMenu(0, editing);
 	}
+}
+
+void Controller::workExperience_delete_button_clicked()	{
+	myQ<WorkExperience> *queue = currApp->getExperience();
+
+	queue->deleteTail();
+	remove();
+	delete(workMenu);
+	workMenu = 0;
+	setCourseListMenu(222);
 }
 
 void Controller::workExperience_skip_button_clicked()	{
@@ -596,8 +668,8 @@ void Controller::workExperience_skip_button_clicked()	{
 void Controller::workExperience_cancel_button_clicked()	{
 	
 	//Delete application
-	if(undergrad != 0)	undergrad->getApplications()->deleteTail();
-	if(grad != 0)		grad->getApplications()->deleteTail();
+	delete currApp;
+	currApp = 0;
 
 	remove();
 	delete(workMenu);
@@ -609,13 +681,12 @@ void Controller::workExperience_cancel_button_clicked()	{
 void Controller::createProfile(string s)	{
 	int total = findHighestAppNum();
 	Application* app = new Application(s,total);
+	app->setStatus("pending");
 	currApp = app;
-	//if(undergrad != 0)	undergrad->getApplications()->pushBack(app);
-	//if(grad != 0)		grad->getApplications()->pushBack(app);
 }
 
 int Controller::findHighestAppNum(){
-	cout<<"finding highest"<<endl;
+	cout<<"fidning highest"<<endl;
 	ifstream myfile("saveLog.txt");
 	string line;
 	string symbol;
@@ -631,9 +702,17 @@ int Controller::findHighestAppNum(){
 		}
 	}
 	cout<<"app num is "<<appNum<<endl;
-	if(appNum.length() > 0)
-		return 	0;
-	else return atoi(appNum.c_str()+1);	
+	int i = atoi(appNum.c_str());
+	if(i == 0){
+		cout<<"appNum is: "<<appNum<<endl;
+		cout<<"length of appnum is 0"<<endl;
+		return 	-1;
+	}
+	else {
+		i++;
+		cout<<"new appnum is: "<<i<<endl;
+		return i;
+	}		
 }
 
 void Controller::saveToFile()	{

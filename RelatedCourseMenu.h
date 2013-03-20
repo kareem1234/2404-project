@@ -20,7 +20,7 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 
 				Gtk::TreeModelColumn<Glib::ustring> m_col_value;
 		};
-
+		int type;
 		Gtk::Grid* grid;
 		Gtk::Button* addCourseB;
 		Gtk::Button* nextB;
@@ -28,6 +28,7 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 		Gtk::ComboBoxText* termD;
 		Gtk::Entry* yearT;
 		Gtk::ComboBoxText* finalD;
+		Gtk::Button* deleteB;
 		Gtk::Label* termL;
 		Gtk::Label* yearL;
 		Gtk::Label* finalL;
@@ -38,11 +39,13 @@ class RelatedCourseMenu : public Gtk::Frame 	{
 
 	//Public data members
 	public:
-		RelatedCourseMenu();
+		RelatedCourseMenu(int t);
 		~RelatedCourseMenu();
+		int getType();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
 		Gtk::Button* getNextButton();
+		Gtk::Button* getDeleteButton();
 		Gtk::ComboBoxText* getTerm();
 		Gtk::Entry* getYear();
 		Gtk::ComboBoxText* getFinalGrade();

@@ -6,13 +6,15 @@
 #include <sstream>
 #include <iostream>
 
-WorkExperienceMenu::WorkExperienceMenu()	{
+WorkExperienceMenu::WorkExperienceMenu(int t)	{
 	//Create grid
+	type = t;
 	grid = new Gtk::Grid();
 	addB = new Gtk::Button("ADD MORE EXPERIENCE");
 	cancelB = new Gtk::Button("CANCEL APPLICATION");
 	skipSubmitB = new Gtk::Button("SKIP AND SUBMIT APPLICATION");
 	submitB = new Gtk::Button("SUBMIT APPLICATION");
+	deleteB = new Gtk::Button("DELETE EXPERIENCE");
 
 	//Create labels
 	experienceL = new Gtk::Label("WORK EXPERIENCE");
@@ -113,9 +115,15 @@ WorkExperienceMenu::WorkExperienceMenu()	{
 	grid->attach(*endMonth,4,5,1,1);
 	grid->attach(*endYear,5,5,1,1);
 	grid->attach(*addB,0,6,6,1);
-	grid->attach(*cancelB,0,7,6,1);
-	grid->attach(*skipSubmitB,0,8,6,1);
-	grid->attach(*submitB,0,9,6,1);
+	if(type == 0)	{
+		grid->attach(*cancelB,0,7,6,1);
+		grid->attach(*skipSubmitB,0,8,6,1);
+		grid->attach(*submitB,0,9,6,1);
+	}
+	if(type == 1)	{
+		addB->set_label("ADD EXPERIENCE");
+		grid->attach(*deleteB,0,7,6,1);
+	}
 
 	add(*grid);
 }
@@ -126,6 +134,7 @@ WorkExperienceMenu::~WorkExperienceMenu()	{
 	delete cancelB;
 	delete skipSubmitB;
 	delete submitB;
+	delete deleteB;
 	delete experienceL;
 	delete titleL;
 	delete dutiesL;
@@ -139,6 +148,10 @@ WorkExperienceMenu::~WorkExperienceMenu()	{
 	delete startYear;
 	delete endMonth;
 	delete endYear;
+}
+
+int WorkExperienceMenu::getType()	{
+	return type;
 }
 
 Gtk::Grid* WorkExperienceMenu::getGrid()	{
@@ -159,6 +172,10 @@ Gtk::Button* WorkExperienceMenu::getSkipButton()	{
 
 Gtk::Button* WorkExperienceMenu::getSubmitButton()	{
 	return submitB;
+}
+
+Gtk::Button* WorkExperienceMenu::getDeleteButton()	{
+	return deleteB;
 }
 
 Gtk::Entry* WorkExperienceMenu::getTitle()	{
@@ -248,16 +265,41 @@ int WorkExperienceMenu::checkInput()	{
 		else if(startY == endY && startM > endM)	result = false;
 	}
 
-	
 	//Returns result
 	return result;
 }
 
 //Applies menu info to given application
 void WorkExperienceMenu::applyWorkExperience(Application &app)	{
-	app.->getExperience()->back()->setTitle(getTitle()->get_text());
-	app.->getExperience()->back()->setDuration(getDuration()->get_active_text());
-	app.->getExperience()->back()->setDuties(getDutiesText());	
+	app.getExperience()->back()->setTitle(getTitle()->get_text());
+	app.getExperience()->back()->setDuration(getDuration()->get_active_text());
+	app.getExperience()->back()->setDuties(getDutiesText());	
 	app.getExperience()->back()->setStart(getStartDate());
 	app.getExperience()->back()->setEnd(getEndDate());
+}
+
+//Loads information from given work experience to menu
+void WorkExperienceMenu::loadExperience(WorkExperience *wor)	{
+	if(wor == 0)	return;	
+
+	string sM, sY, eM, eY;
+	stringstream data;
+	
+	titleT->set_text(wor->getTitle());
+	titleT->set_editable(false);
+	setDuties(wor->getDuties());
+	durationD->set_active_text(wor->getDuration());
+	
+	data << wor->getStart() << endl;
+	
+	getline(data, sM, '/');
+	getline(data, sY);
+	data << wor->getEnd() << endl;
+	getline(data, eM, '/');
+	getline(data, eY);
+
+	startMonth->set_active_text(sM);
+	startYear->set_active_text(sY);
+	endMonth->set_active_text(eM);
+	endYear->set_active_text(eY);
 }

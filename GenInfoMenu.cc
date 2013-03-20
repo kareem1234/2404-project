@@ -437,7 +437,6 @@ void GenInfoMenu::applyUnderInfo(Undergrad *undergrad)	{
 		undergrad->setStanding(getYear()->get_text());
 		undergrad->setCgpa(getCgpa()->get_text());
 		undergrad->setGpa(getGpa()->get_text());
-		undergrad->getApplications()->back()->setStatus("pending");
 	}
 }
 
@@ -450,7 +449,6 @@ void GenInfoMenu::applyGradInfo(Grad *grad)	{
 		grad->setResearch(getResearch()->get_active_text());
 		grad->setProgram(getProgram()->get_active_text());
 		grad->setSupervisor(getSupervisor()->get_text());
-		grad->getApplications()->back()->setStatus("pending");
 	}
 }
 

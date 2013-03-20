@@ -19,12 +19,13 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 
 			Gtk::TreeModelColumn<Glib::ustring> m_col_value;
 		};
-
+		int type;
 		Gtk::Grid* grid;
 		Gtk::Button* addB;
 		Gtk::Button* cancelB;
 		Gtk::Button* skipSubmitB;
 		Gtk::Button* submitB;
+		Gtk::Button* deleteB;
 		Gtk::Label* experienceL;
 		Gtk::Label* titleL;
 		Gtk::Label* dutiesL;
@@ -50,13 +51,15 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 
 	//Public data members
 	public:
-		WorkExperienceMenu();
+		WorkExperienceMenu(int t);
 		~WorkExperienceMenu();
+		int getType();
 		Gtk::Grid* getGrid();
 		Gtk::Button* getAddButton();
 		Gtk::Button* getCancelButton();
 		Gtk::Button* getSkipButton();
 		Gtk::Button* getSubmitButton();
+		Gtk::Button* getDeleteButton();
 		Gtk::Entry* getTitle();
 		Gtk::TextView* getDuties();
 		Gtk::ComboBoxText* getDuration();
@@ -69,6 +72,7 @@ class WorkExperienceMenu : public Gtk::Frame 	{
 		void setDuties(string);
 		string getDutiesText();
 		int checkInput();
+		void loadExperience(WorkExperience*);
 		void applyWorkExperience(Application&);
 };
 

@@ -13,13 +13,15 @@ using namespace std;
 CourseListMenu::CourseListMenu(int Type){
 	options = 0;
 	saveB = 0;
+	discardB = 0;
+	addB = 0;
+	discardB = 0;
+
 	type = Type;
 	grid = new Gtk::Grid();
 	cancel = new Gtk::Button("CANCEL");
 	skip = new Gtk::Button("SKIP");
-	select= new Gtk::Button("SELECT");
-	deleteB = new Gtk::Button("DELETE");
-	deleteB->set_sensitive(false);
+	select = new Gtk::Button("SELECT");
 	select->set_sensitive(false);
 	m_TreeView = new Gtk::TreeView;
 	m_TextView = new Gtk::TextView;
@@ -44,13 +46,15 @@ CourseListMenu::CourseListMenu(int Type){
 	m_ScrolledWindow.set_size_request(250,400);
 
 	if(type == 0 || type == 111)	{
+		cout << "HI" << endl;
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
-	}else if(type == 1 || type == 2)	{
-		saveB = new Gtk::Button("Save Applications");
+	} else if(type == 1 || type == 2)	{
+		cout << "Hi 2" << endl;
+		saveB = new Gtk::Button("SAVE APPLICATIONS");
 		saveB->set_sensitive(false);
-		options = new Gtk::CheckButton("View all applications");
+		options = new Gtk::CheckButton("VIEW ALL APPLICATIONS");
 		grid->attach(*options,0,0,2,1);
 		grid->attach(m_ScrolledWindow,0,1,2,2);
 		grid->attach(m_ScrolledWindow2,0,3,2,1);
@@ -58,10 +62,16 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*cancel,0,5,2,1);
 		grid->attach(*saveB,0,6,2,1);
 	} else if(type == 222)	{
+		cout << "Hi 3" << endl;
+		addB = new Gtk::Button("ADD EXPERIENCE");
+		saveB = new Gtk::Button("SAVE CHANGES");
+		discardB = new Gtk::Button("DISCARD CHANGES");
 		grid->attach(m_ScrolledWindow,0,0,2,3);
-		grid->attach(*select,0,3,2,1);
-		grid->attach(*skip,0,4,2,1);
-		grid->attach(*deleteB,0,5,2,1);
+		grid->attach(*addB,0,3,2,1);
+		grid->attach(*select,0,4,2,1);	
+		grid->attach(*cancel,0,5,2,1);
+		grid->attach(*saveB,0,6,2,1);
+		grid->attach(*discardB,0,7,2,1);	
 	} else if (type >= 3)	{
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);
@@ -72,9 +82,10 @@ CourseListMenu::CourseListMenu(int Type){
 	m_refTreeModel = Gtk::ListStore::create(m_Columns);
 	m_TreeView->set_model(m_refTreeModel);
 
-	if(type == 3 || type == 222)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
+	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
 	else if(type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
 	else if(type == 111)	m_TreeView->append_column("APPLICATIONS", m_Columns.m_col_name);
+	else if(type == 222)	m_TreeView->append_column("WORK EXPERIENCE", m_Columns.m_col_name);
 	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
 
 	add(*grid);
@@ -82,18 +93,19 @@ CourseListMenu::CourseListMenu(int Type){
 
 //Default destructor
 CourseListMenu::~CourseListMenu()	{
-	if(saveB != 0) delete saveB;
 	delete(grid);
 	delete(cancel);
 	delete(skip);
 	delete(select);
-	delete(deleteB);
+	delete(saveB);
+	delete(addB);
+	delete(discardB);
 	delete(m_TreeView);
 	delete(m_TextView);
 }
 
 //Returns int type describing what list it is
-int CourseListMenu::getType(){
+int CourseListMenu::getType()	{
 	return type;
 }
 
@@ -182,9 +194,19 @@ Gtk::Button* CourseListMenu::getSelect()	{
 	return select;
 }
 
-//Returns delete button when called
-Gtk::Button* CourseListMenu::getDelete()	{
-	return deleteB;
+//Returns save button when called
+Gtk::Button* CourseListMenu::getSave()	{
+	return saveB;
+}
+
+//Returns discard button when called
+Gtk::Button* CourseListMenu::getDiscard()	{
+	return discardB;
+}
+
+//Returns add button when called
+Gtk::Button* CourseListMenu::getAdd()	{
+	return addB;
 }
 
 //Returns the current selection

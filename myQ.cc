@@ -66,7 +66,7 @@ template <class T> class myQ {
 		T* back();
 		bool isEmpty(); 
 		int length();
-		void deleteTail();
+		myQ<T>& deleteTail();
 		void clear();	
 		void save();
 
@@ -198,18 +198,18 @@ void myQ<T>::popFront()
 }
 
 template<class T>
-void myQ<T>::deleteTail()	{
+myQ<T>& myQ<T>::deleteTail()	{
 	Node *curr = 0;
 	Node *prev = 0;
 
-	if(isEmpty()) return;
+	if(isEmpty()) return *this;
 	cout << length() << endl;
 	if(length() == 1)	{
 		delete head->data;
 		delete head;
 		head = 0;
 		tail = 0;
-		return;
+		return *this;
 	}
 	curr = head;
 	while(curr->next != 0)	{
@@ -221,6 +221,8 @@ void myQ<T>::deleteTail()	{
 	delete curr;
 	prev->next = 0;
 	tail = prev;	
+	
+	return *this;
 }
 
 template<class T>

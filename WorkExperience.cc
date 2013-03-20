@@ -21,17 +21,14 @@ void WorkExperience::setTitle(string Title){
 
 }
 
-int WorkExperience::setDuration(string Duration){
-	stringstream toConvert(Duration);
-	if( ! (toConvert >> duration) )
-		return duration = -1;
-
-	return 0;
+void WorkExperience::setDuration(string Duration){
+	duration = Duration;
 }
 
 void WorkExperience:: setDuties(string Duties){
 	duties = Duties;
 }
+
 void WorkExperience:: setStart(string Start){
 	start = Start;
 }
@@ -45,7 +42,7 @@ string WorkExperience::getDuties(){
 }
 
 
-int WorkExperience:: getDuration(){
+string WorkExperience:: getDuration(){
 	return duration;
 }
 
