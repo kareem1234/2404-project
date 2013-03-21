@@ -124,6 +124,11 @@ WorkExperienceMenu::WorkExperienceMenu(int t)	{
 		addB->set_label("ADD EXPERIENCE");
 		grid->attach(*deleteB,0,7,6,1);
 	}
+	if(type == 2)	{
+		addB->set_label("ADD EXPERIENCE");
+		grid->attach(*deleteB,0,7,6,1);
+		titleT->set_editable(false);
+	}
 
 	add(*grid);
 }

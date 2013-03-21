@@ -1,3 +1,11 @@
+all : 	Qtest Assignment4
+
+Qtest:	Qtest.o myQ.o
+	g++ -o Qtest Qtest.o myQ.o
+
+Qtest.o:	Qtest.cc
+		g++ -c Qtest.cc
+
 Assignment4:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o AppListMenu.o VerificationMenu.o
 		g++ -o Assignment4 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o AppListMenu.o VerificationMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
 
@@ -69,5 +77,7 @@ Course.o:	Course.h Course.cc
 myQ.o:	myQ.cc 
 	g++ -c myQ.cc
 
+clean1:	
+	rm Qtest.o myQ.o Qtest
 clean: 		
-		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* temp.txt saveLog.txt Makefile~ Assignment3
+		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* saveLog.txt Makefile~ Assignment3 Qtest

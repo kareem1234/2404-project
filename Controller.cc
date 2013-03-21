@@ -435,7 +435,7 @@ void Controller::courselist_select_button_clicked()	{
 		cout << "Queue length is: " << queue->length() << endl;
 		(*queue) + temp;
 		cout << "Queue length is: " << queue->length() << endl;
-		setExperienceMenu(temp, editing);
+		setExperienceMenu(temp, 2);
 	}
 }
 
@@ -511,6 +511,7 @@ void Controller::courselist_cancel_button_clicked(){
 		courseList->getSelect()->set_sensitive(false);
 		courseList->getAdd()->set_sensitive(false);
 		courseList->getCancel()->set_sensitive(false);
+		courseList->getTreeView()->set_sensitive(false);
 		return;
 	} else	{
 		remove();
@@ -629,7 +630,7 @@ void Controller::taMenu_delete_button_clicked()	{
 void Controller::workExperience_add_button_clicked()	{
 	int type = workMenu->getType();
 	if(workMenu->checkInput())	{
-		if(currApp->duplicateWor(workMenu->getTitle()->get_text()))	{
+		if(type != 2 && currApp->duplicateWor(workMenu->getTitle()->get_text()))	{
 			Gtk::MessageDialog error("IDENTICAL WORK EXPERIENCE TITLE ALREADY SUBMITTED!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, false);
 			error.set_secondary_text("Only different work experience titles are allowed for each application.");
 			error.run();
@@ -640,7 +641,7 @@ void Controller::workExperience_add_button_clicked()	{
 		remove();	
 		delete(workMenu);
 		workMenu = 0;
-		if(type == 1)	setCourseListMenu(222);
+		if(type == 1 || type == 2)	setCourseListMenu(222);
 		else		setExperienceMenu(0, editing);
 	}
 }
