@@ -147,15 +147,6 @@ void myQ<T>:: testFunc()	{
 	cout<<"priting q3"<<endl;
 	intQ3.print(3);
 
-	!intQ1;
-	!intQ2;
-	!intQ3;
-	intQ1 - intQ2;
-	int one = 1;
-	intQ1+= &one;
-	intQ2+= &one;
-	intQ1-= intQ2;
-	intQ1.print(1);
 }
 
 template <class T>

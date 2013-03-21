@@ -713,6 +713,7 @@ int Controller::findHighestAppNum(){
 		i++;
 		cout<<"new appnum is: "<<i<<endl;
 		return i;
+<<<<<<< HEAD
 	}		
 }
 
