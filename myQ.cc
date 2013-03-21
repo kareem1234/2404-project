@@ -5,14 +5,14 @@
 using namespace std;
 
 template <class T> class myQ {
-
+	
 	public:
 		// inner node class
 		class Node	{
 			public:
 				T* data;
 				Node* next;
-
+				
 				Node() {
 					next = 0;
 					data = 0;
@@ -39,14 +39,14 @@ template <class T> class myQ {
 				currNode = nextNode;
 			}
 		};
-
-
+		
+		
 			// queue methods
-
+				
 		// operator overloads
 		bool operator==(myQ<T> * other);
 		T* operator[](int index);
-		void operator = (myQ<T> *other);
+		void operator = (myQ<T> * other);
 		void operator+=(T* data);
 		void operator-=(T* data);
 		void operator-=(myQ<T>& other);
@@ -77,25 +77,12 @@ template <class T> class myQ {
 
 };
 
-template<class T>
-void myQ<T>:: testFunc()	{
-	int *num1;
-	int *num2;
 
+template<class T>
+void myQ<T>:: testFunc(){
 	myQ<T> intQ1;
 	myQ<T> intQ2;
 	myQ<T> intQ3;
-
-	*num1 = 0;
-	*num2 = 5;
-	intQ1 + num1;
-	intQ1 + num2;
-	intQ2 + num1;
-	intQ2 + num2;
-	
-	intQ1 -= intQ2;
-	intQ1.deleteTail();
-	intQ2.print(2);
 	cout<<"adding 1-20 to q1"<<endl;
 	for(int i=0; i<20;i++){
 		int * intptr = new int(i+1);
@@ -123,7 +110,7 @@ void myQ<T>:: testFunc()	{
 	for(int i =0; i< intQ1.length();i++)
 		cout<<*intQ1[i]<<",";
 		cout<<endl;
-
+	
 	cout<<"removing 9 from q1"<<endl;
 	intQ1-= intQ1[intQ1.length()-1];
 	intQ1.print(1);
@@ -146,30 +133,39 @@ void myQ<T>:: testFunc()	{
 		intQ3 - intQ3.front();
 	cout<<"priting q3"<<endl;
 	intQ3.print(3);
-
+	
 	!intQ1;
 	!intQ2;
 	!intQ3;
 	intQ1 - intQ2;
 	int one = 1;
+	int two = 2;
 	intQ1+= &one;
-	intQ2+= &one;
+	intQ2+&one+&two;
+	intQ2.print(2);
 	intQ1-= intQ2;
 	intQ1.print(1);
+	intQ2.deleteTail();
+	intQ2.print(2);
+	!intQ1;
+	!intQ2;
+	intQ2+&one+&two;
+	intQ2.print(2);
+	intQ2.deleteTail();
+	intQ2.print(2);
+
 }
+
+
+
 
 template <class T>
  bool myQ<T>::isEmpty()	{
 	return (head == 0);
 }
-
 template <class T>
 void myQ<T>:: print(int i){
-<<<<<<< HEAD
-	cout<<"printing queue "<< i << ":";
-=======
-	cout<<"printing que:"<<i;
->>>>>>> 3281537b5884fe27ffd655cb94076cb664bbb718
+	cout<<"printing que"<<i;
 	Node* dummy = head;
 	while(dummy != 0){
 		cout<<*(dummy->data)<<",";
@@ -209,7 +205,6 @@ void myQ<T>::pushBack(T* ele)
 
 	if (isEmpty())	{
 		head = tmpNode;
-		tail = tmpNode;
 	} else {
 	  tail->next = tmpNode;
 	}
@@ -221,7 +216,7 @@ template <class T>
 void myQ<T>::popFront()
 {
 	if (isEmpty()){
-
+		
 		return;
 	}
 	Node* newHead = head;
@@ -235,9 +230,8 @@ void myQ<T>::deleteTail()	{
 	Node *prev = 0;
 
 	if(isEmpty()) return;
-	cout << length() << endl;
+	cout <<length() << endl;
 	if(length() == 1)	{
-		delete head->data;
 		delete head;
 		head = 0;
 		tail = 0;
@@ -248,12 +242,13 @@ void myQ<T>::deleteTail()	{
 		prev = curr;
 		curr = curr->next;
 	}
-
-	delete curr->data;
 	delete curr;
-	prev->next = 0;
-	tail = prev;	
+	tail = prev;
+	tail->next = 0;	
 }
+
+
+
 
 template<class T>
 T* myQ<T>::back()	{
@@ -264,7 +259,7 @@ T* myQ<T>::back()	{
 template<class T>
 void myQ<T>::clear()	{
 	Node* curr = 0;
-
+	
 	curr = head;
 	while(curr != 0)	{
 		delete curr->data;
@@ -283,13 +278,10 @@ void myQ<T>::save()	{
 	}
 }
 
-<<<<<<< HEAD
-=======
 
 
 
 
->>>>>>> 3281537b5884fe27ffd655cb94076cb664bbb718
 //overloading the [] operator
 template<class T>
 T* myQ<T>::operator[](int i)
@@ -298,35 +290,25 @@ T* myQ<T>::operator[](int i)
 	if(i < 0 ||i > length()){//Checking if the index i is within the bounds of the Queue
 		cout<<"Index out of bounds Exception"<<endl;
 		return 0;
+	
 	}
 	else{
 		int temp = 0;
-
+		
 		dummyNode = head;
 		while(i != temp){
 			dummyNode= dummyNode->next;	//Cycling through the nodes untill the desired index is reached.
 			temp++;	
 		}
-
-<<<<<<< HEAD
+		
 	}
 	return dummyNode->data;
 }
-=======
 
->>>>>>> 3281537b5884fe27ffd655cb94076cb664bbb718
 
-template<class T>
-<<<<<<< HEAD
-void myQ<T>::operator+=(T *data)	{	
-	if(data == 0) return;
-		pushBack(data);
-} 
+
 
 template<class T>
-void myQ<T>::operator+=(myQ<T>&  newQ){
-
-=======
 void myQ<T>::operator+=(T *data)
 {	if(data == 0) return;
 	pushBack(data);
@@ -338,7 +320,6 @@ void myQ<T>::operator+=(T *data)
 template<class T>
 void myQ<T>::operator+=(myQ<T>&  newQ){
 	
->>>>>>> 3281537b5884fe27ffd655cb94076cb664bbb718
 	if(newQ.isEmpty()) return;	
 	Node *temp;
 	temp = newQ.head;	
@@ -348,7 +329,6 @@ void myQ<T>::operator+=(myQ<T>&  newQ){
 		temp= temp->next;	
 	}
 }
-
 template<class T>
 myQ<T>& myQ<T>::operator - (T* data){
 	if(data != 0 )
@@ -357,20 +337,17 @@ myQ<T>& myQ<T>::operator - (T* data){
 
 
 }
-
 template<class T>
 myQ<T>& myQ<T>::operator - (myQ<T>& other){
 	if(!other.isEmpty())
 		*this	-= other;
 	return *this;
 }
-
 template<class T>
 void myQ<T>::operator!(){
 	while (! this->isEmpty())
 			this->popFront();
 }
-
 template<class T>
 void myQ<T>::operator-=(T* data){
 	if(data == 0) return;
@@ -380,7 +357,7 @@ void myQ<T>::operator-=(T* data){
 		popFront();		
 		return;
 	}
-
+	
 
 	Node *curr,*prev;
 	curr= head->next;
@@ -389,14 +366,15 @@ void myQ<T>::operator-=(T* data){
 	while(curr != 0){
 		if((curr->data) == data){
 			prev->next = curr->next; 
-			delete curr;
+			if(curr == tail)
+				tail = prev;
+			
 			return;
 		}
 		prev = curr;
 		curr = curr->next;			
 	}	
 }
-
 template<class T>
 void myQ<T>::operator-=(myQ<T>& other){
 	if(other.head == 0) return;
@@ -407,7 +385,6 @@ void myQ<T>::operator-=(myQ<T>& other){
 		cNode = cNode->next;
 	}	
 }
-
 template<class T>
 myQ<T>& myQ<T>::operator + (T* data){
 	if(data != 0)
@@ -423,4 +400,3 @@ myQ<T>& myQ<T>::operator + (myQ<T>& newQ){
 }
 
 #endif
-
