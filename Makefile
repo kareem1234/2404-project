@@ -80,4 +80,4 @@ myQ.o:	myQ.cc
 clean1:	
 	rm Qtest.o myQ.o Qtest
 clean: 		
-		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* saveLog.txt Makefile~ Assignment3 Qtest
+		rm *.o *.h~ *.cc~ *.txt~ *Applications.txt COMP* saveLog.txt Makefile~ Assignment4

@@ -61,7 +61,6 @@ void Undergrad::setGpa(string mark)	{
 //Save function saves all application under the student
 void Undergrad::save()	{
 	saveLog.open("saveLog.txt", ios::app);
-	cout << cgpa << " " << gpa << " " << year << endl;
 	saveLog << "Und" << "$" << getFirstName() << "$" << getLastName() << "$" << getStuNum() << "$" << getEmail() << "$" << maj << "$" << cgpa << "$" << gpa << "$"<< year << "$";
 	saveLog.close();
 	getApplications()->save();

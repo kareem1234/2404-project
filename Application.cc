@@ -92,8 +92,10 @@ bool Application::duplicateRel(string course)	{
 	int i;
 
 	for(i = 0; i < relatedCourses.length(); i++)	{
-		if(relatedCourses[i]->getCourseName() == course)
+		if(relatedCourses[i]->getCourseName() == course)	{
+			cout << "HI" << endl;		
 			return true;
+		}
 	}
 	return false;
 
@@ -111,7 +113,7 @@ bool Application::duplicateWor(string title)	{
 }
 
 //Returns assisted course with given course
-AssistantCourse* Application::findAss(string)	{
+AssistantCourse* Application::findAss(string course)	{
 	int i;
 
 	for(i = 0; i < assistedCourses.length(); i++)	{

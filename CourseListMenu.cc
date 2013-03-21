@@ -46,12 +46,10 @@ CourseListMenu::CourseListMenu(int Type){
 	m_ScrolledWindow.set_size_request(250,400);
 
 	if(type == 0 || type == 111)	{
-		cout << "HI" << endl;
 		grid->attach(m_ScrolledWindow,0,0,2,3);
 		grid->attach(*select,0,3,2,1);	
 		grid->attach(*cancel,0,4,2,1);
 	} else if(type == 1 || type == 2)	{
-		cout << "Hi 2" << endl;
 		saveB = new Gtk::Button("SAVE APPLICATIONS");
 		saveB->set_sensitive(false);
 		options = new Gtk::CheckButton("VIEW ALL APPLICATIONS");
@@ -62,7 +60,6 @@ CourseListMenu::CourseListMenu(int Type){
 		grid->attach(*cancel,0,5,2,1);
 		grid->attach(*saveB,0,6,2,1);
 	} else if(type == 222)	{
-		cout << "Hi 3" << endl;
 		addB = new Gtk::Button("ADD EXPERIENCE");
 		saveB = new Gtk::Button("SAVE CHANGES");
 		discardB = new Gtk::Button("DISCARD CHANGES");
@@ -84,7 +81,7 @@ CourseListMenu::CourseListMenu(int Type){
 
 	if(type == 3)	m_TreeView->append_column("RELATED COURSE", m_Columns.m_col_name);
 	else if(type == 4)	m_TreeView->append_column("TA COURSE LIST", m_Columns.m_col_name);
-	else if(type == 111)	m_TreeView->append_column("APPLICATIONS", m_Columns.m_col_name);
+	else if(type == 111)	m_TreeView->append_column("PENDING APPLICATIONS", m_Columns.m_col_name);
 	else if(type == 222)	m_TreeView->append_column("WORK EXPERIENCE", m_Columns.m_col_name);
 	else	m_TreeView->append_column("COURSE LIST", m_Columns.m_col_name);
 

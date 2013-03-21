@@ -47,12 +47,12 @@ template <class T> class myQ {
 		bool operator==(myQ<T> * other);
 		T* operator[](int index);
 		void operator = (myQ<T> * other);
-		void operator+=(T* data);
-		void operator-=(T* data);
-		void operator-=(myQ<T>& other);
+		myQ<T>& operator+=(T* data);
+		myQ<T>& operator-=(T* data);
+		myQ<T>& operator-=(myQ<T>& other);
 		myQ<T>& operator - (myQ<T>& other);
 		myQ<T>& operator - (T* data);
-		void operator+=(myQ<T>& other );
+		myQ<T>& operator+=(myQ<T>& other );
 		bool operator>( myQ<T> * other);		
 		bool operator<( myQ<T> * other);
 		myQ<T>& operator + (myQ<T>& other);
@@ -165,7 +165,7 @@ template <class T>
 }
 template <class T>
 void myQ<T>:: print(int i){
-	cout<<"printing que"<<i;
+	cout<<"printing queue "<< i << ":";
 	Node* dummy = head;
 	while(dummy != 0){
 		cout<<*(dummy->data)<<",";
@@ -230,7 +230,6 @@ void myQ<T>::deleteTail()	{
 	Node *prev = 0;
 
 	if(isEmpty()) return;
-	cout <<length() << endl;
 	if(length() == 1)	{
 		delete head;
 		head = 0;
@@ -246,9 +245,6 @@ void myQ<T>::deleteTail()	{
 	tail = prev;
 	tail->next = 0;	
 }
-
-
-
 
 template<class T>
 T* myQ<T>::back()	{
@@ -278,10 +274,6 @@ void myQ<T>::save()	{
 	}
 }
 
-
-
-
-
 //overloading the [] operator
 template<class T>
 T* myQ<T>::operator[](int i)
@@ -305,22 +297,18 @@ T* myQ<T>::operator[](int i)
 	return dummyNode->data;
 }
 
-
-
-
 template<class T>
-void myQ<T>::operator+=(T *data)
-{	if(data == 0) return;
+myQ<T>& myQ<T>::operator+=(T *data)
+{	if(data == 0) return *this;
+
 	pushBack(data);
+	return *this;
 } 
 
-
-
-
 template<class T>
-void myQ<T>::operator+=(myQ<T>&  newQ){
+myQ<T>& myQ<T>::operator+=(myQ<T>&  newQ){
 	
-	if(newQ.isEmpty()) return;	
+	if(newQ.isEmpty()) return *this;	
 	Node *temp;
 	temp = newQ.head;	
 
@@ -328,34 +316,37 @@ void myQ<T>::operator+=(myQ<T>&  newQ){
 		pushBack(temp->data);
 		temp= temp->next;	
 	}
+	return *this;
 }
+
 template<class T>
 myQ<T>& myQ<T>::operator - (T* data){
 	if(data != 0 )
 		*this	-= data;
 	return *this;
-
-
 }
+
 template<class T>
 myQ<T>& myQ<T>::operator - (myQ<T>& other){
 	if(!other.isEmpty())
 		*this	-= other;
 	return *this;
 }
+
 template<class T>
 void myQ<T>::operator!(){
 	while (! this->isEmpty())
 			this->popFront();
 }
+
 template<class T>
-void myQ<T>::operator-=(T* data){
-	if(data == 0) return;
-	if(head == 0) return;
+myQ<T>& myQ<T>::operator-=(T* data)	{
+	if(data == 0) return *this;
+	if(head == 0) return *this;
 
 	if(data == head->data){
 		popFront();		
-		return;
+		return *this;
 	}
 	
 
@@ -366,25 +357,28 @@ void myQ<T>::operator-=(T* data){
 	while(curr != 0){
 		if((curr->data) == data){
 			prev->next = curr->next; 
-			if(curr == tail)
-				tail = prev;
-			
-			return;
+			if(curr == tail)	tail = prev;
+			delete curr;
+			return *this;
 		}
 		prev = curr;
 		curr = curr->next;			
-	}	
+	}
+	return *this;
 }
+
 template<class T>
-void myQ<T>::operator-=(myQ<T>& other){
-	if(other.head == 0) return;
+myQ<T>& myQ<T>::operator-=(myQ<T>& other){
+	if(other.head == 0) return *this;
 
 	Node* cNode = other.head;
 	while(cNode != 0){
 		*this -= cNode->data;
 		cNode = cNode->next;
-	}	
+	}
+	return *this;
 }
+
 template<class T>
 myQ<T>& myQ<T>::operator + (T* data){
 	if(data != 0)

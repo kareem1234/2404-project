@@ -430,11 +430,8 @@ void Controller::courselist_select_button_clicked()	{
 		courseList = 0;
 		WorkExperience *temp = currApp->findWor(course);
 		myQ<WorkExperience> *queue = currApp->getExperience();
-		cout << "Queue length is: " << queue->length() << endl;
 		(*queue) -= temp;
-		cout << "Queue length is: " << queue->length() << endl;
 		(*queue) + temp;
-		cout << "Queue length is: " << queue->length() << endl;
 		setExperienceMenu(temp, 2);
 	}
 }
@@ -482,9 +479,7 @@ void Controller::searchMenu_saveB_clicked(){
 }
 
 void Controller::courselist_add_button_clicked()	{
-	cout << "Queue length is: " << currApp->getExperience()->length() << endl;
 	*(currApp->getExperience()) += (new WorkExperience());
-	cout << "Queue length is: " << currApp->getExperience()->length() << endl;
 	remove();
 	delete(courseList);
 	courseList = 0;
@@ -507,7 +502,6 @@ void Controller::courselist_cancel_button_clicked(){
 		setStudentMenu();
 	} else if(type == 222)	{
 		-(*currApp);
-		cout << "Status: " << currApp->getStatus() << endl;
 		courseList->getSelect()->set_sensitive(false);
 		courseList->getAdd()->set_sensitive(false);
 		courseList->getCancel()->set_sensitive(false);
@@ -600,7 +594,7 @@ void Controller::relMenu_add_button_clicked()	{
 void Controller::relMenu_delete_button_clicked()	{
 	myQ<RelatedCourse> *queue = currApp->getRelated();
 
-	(*queue) -= (*queue)[queue->length()-1];
+	queue->deleteTail();
 	remove();
 	delete(relMenu);
 	relMenu = 0;
@@ -620,7 +614,7 @@ void Controller::taMenu_add_button_clicked()	{
 void Controller::taMenu_delete_button_clicked()	{
 	myQ<AssistantCourse> *queue = currApp->getAssisted();
 
-	(*queue) -= (*queue)[queue->length()-1];
+	queue->deleteTail();
 	remove();
 	delete(taMenu);
 	taMenu = 0;
@@ -648,8 +642,10 @@ void Controller::workExperience_add_button_clicked()	{
 
 void Controller::workExperience_delete_button_clicked()	{
 	myQ<WorkExperience> *queue = currApp->getExperience();
+	WorkExperience *toDelete = (*queue)[queue->length()];
 
-	(*queue) -= (*queue)[queue->length()-1];
+	queue->deleteTail();
+	delete toDelete;
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -686,8 +682,7 @@ void Controller::createProfile(string s)	{
 	currApp = app;
 }
 
-int Controller::findHighestAppNum(){
-	cout<<"fidning highest"<<endl;
+int Controller::findHighestAppNum()	{
 	ifstream myfile("saveLog.txt");
 	string line;
 	string symbol;
@@ -695,23 +690,18 @@ int Controller::findHighestAppNum(){
 	while(getline(myfile,line)){
 		istringstream toParse (line, istringstream::in);
 		while(getline(toParse,symbol,'$')){
-			if(symbol.compare("App")==0){
+			if(symbol.compare("App") == 0){
 				appNum="";
 				getline(toParse,appNum,'$');
-				cout<<"found app number: "<<appNum<<endl;
 			}			
 		}
 	}
-	cout<<"app num is "<<appNum<<endl;
 	int i = atoi(appNum.c_str());
 	if(i == 0){
-		cout<<"appNum is: "<<appNum<<endl;
-		cout<<"length of appnum is 0"<<endl;
 		return 	-1;
 	}
 	else {
 		i++;
-		cout<<"new appnum is: "<<i<<endl;
 		return i;
 	}		
 }
@@ -777,7 +767,6 @@ bool Controller::loadStudent(string num)	{
 			getline(toParse,cgpa,'$');
 			getline(toParse,gpa,'$');
 			getline(toParse,standing,'$');
-			cout << standing << " " << cgpa << " " << gpa << endl;
 			if(stuNum == num)	{
 				loaded = true;
 				undergrad = new Undergrad(firstName, lastName, stuNum, email, major, standing, cgpa, gpa);
@@ -845,7 +834,4 @@ void Controller::loadStudentInfo(istringstream &toParse, Student &stu)	{
 			stu.getApplications()->back()->getExperience()->pushBack(new WorkExperience(title, duties, duration, start, end));
 		}
 	}
-=======
-	}	
->>>>>>> 3281537b5884fe27ffd655cb94076cb664bbb718
 }

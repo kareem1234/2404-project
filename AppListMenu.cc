@@ -42,7 +42,6 @@ void AppListMenu:: loadAppList(){
 		getline(toParse,trash,'$');
 		string symbol = "";
 		getline(toParse,firstname,'$');
-		cout<<firstname<<endl;
 		getline(toParse,lastname,'$');
 		while(getline(toParse,symbol,'$')){
 			if(symbol.compare("App") == 0)	{
@@ -88,7 +87,6 @@ void AppListMenu::editSaveLog(string app){
 
 }
 void AppListMenu::assignApp(){
-	cout<<"have been called"<<endl;
 	Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView->get_selection();
 	Gtk::TreeModel::iterator iter = refTreeSelection->get_selected();
 	if(iter)  {

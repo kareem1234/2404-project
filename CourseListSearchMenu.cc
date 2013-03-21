@@ -62,38 +62,36 @@ void CourseListSearchMenu::findApp(){
 				getline(toParse, status,'$');
 				getline(toParse,course,'$');
 				
-				cout<<"checking status"<<endl;
 				if(settings(status)){
-				cout<<"status checked"<<endl;
-				if( (course.compare(getString()) == 0 || options->get_active()) && type.compare("Und") ==0 ){
-					output<<"Applicant type: "<<"Undergraduate"<<endl;
-					output<<"Name: "<<firstName<<" "<<lastName<<endl;
-					output<<"Student Number: "<<stuNum<<endl;
-					output<<"Email: "<<email<<endl;
-					output<<"Major: "<<major<<endl;
-					output<<"Year Standing: "<<standing<<endl;
-					output<<"Cgpa: "<<cgpa<<endl;
-					output<<"Gpa: "<<gpa<<endl;
-					output<<"Applied to TA: "<<course<<endl;
-					output<<"---------------------------"<<endl;
-					found = true;
-					totalStuApps++;
-				}else if( (course.compare(getString())==0 || options->get_active()) && type.compare("Gra") == 0 ){
-					output1<<"Applicant type: "<<"Graduate"<<endl;
-					output1<<"Name: "<<firstName<<" "<<lastName<<endl;
-					output1<<"Student Number: "<<stuNum<<endl;
-					output1<<"Email: "<<email<<endl;
-					output1<<"Research Area: "<<research<<endl;
-					output1<<"Program: "<<program<<endl;
-					output1<<"Supervisor: "<<supervisor<<endl;
-					output1<<"Applied to TA: "<<course<<endl;
-					output1<<"----------------------------"<<endl;
-					found = true;
-					totalGradApps++;
+					if( (course.compare(getString()) == 0 || options->get_active()) && type.compare("Und") ==0 ){
+						output<<"Applicant type: "<<"Undergraduate"<<endl;
+						output<<"Name: "<<firstName<<" "<<lastName<<endl;
+						output<<"Student Number: "<<stuNum<<endl;
+						output<<"Email: "<<email<<endl;
+						output<<"Major: "<<major<<endl;
+						output<<"Year Standing: "<<standing<<endl;
+						output<<"Cgpa: "<<cgpa<<endl;
+						output<<"Gpa: "<<gpa<<endl;
+						output<<"Applied to TA: "<<course<<endl;
+						output<<"---------------------------"<<endl;
+						found = true;
+						totalStuApps++;
+					}else if( (course.compare(getString())==0 || options->get_active()) && type.compare("Gra") == 0 ){
+						output1<<"Applicant type: "<<"Graduate"<<endl;
+						output1<<"Name: "<<firstName<<" "<<lastName<<endl;
+						output1<<"Student Number: "<<stuNum<<endl;
+						output1<<"Email: "<<email<<endl;
+						output1<<"Research Area: "<<research<<endl;
+						output1<<"Program: "<<program<<endl;
+						output1<<"Supervisor: "<<supervisor<<endl;
+						output1<<"Applied to TA: "<<course<<endl;
+						output1<<"----------------------------"<<endl;
+						found = true;
+						totalGradApps++;
+					}
 				}
 			}
 		}
-	}
 	}
 	if(found){
 		stringstream returnString;
@@ -236,7 +234,7 @@ void CourseListSearchMenu::stringFix(string &output){
 void CourseListSearchMenu::checked(){
 	if(options->get_active()){
 		select->set_sensitive(true);
-		select->set_label("View All Applications");
+		select->set_label("VIEW ALL APPLICATIONS");
 		m_ScrolledWindow.set_sensitive(false);
 		setString("");
 		saveB->set_sensitive(false);
