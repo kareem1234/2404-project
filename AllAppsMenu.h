@@ -46,7 +46,7 @@ class AllAppsMenu :  public Gtk::Frame  {
 		void nextClicked();
 		void prevClicked();
 		void doSearch();
-		void getInfo(stringstream& output, istringstream& toParse);
+		void getInfo(stringstream& output, stringstream& toParse, string&);
 
 		
 		Gtk:: ScrolledWindow m_ScrolledWindow;

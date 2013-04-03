@@ -119,9 +119,9 @@ void AllAppsMenu::doSearch(){
 	string line;
 	stringstream output;
 	ifstream myfile("saveLog.txt");
-	while(getline(myfile,line)){
-		istringstream toParse (line, istringstream::in);
-		cout<<toParse.str()<<endl;
+	while(getline(myfile,line)) {
+		stringstream toParse (line, istringstream::in);
+		cout << toParse;
 		string  type, firstName, lastName, stuNum , email;
 	        string  major, standing, cgpa ,gpa;
 		string research, program, supervisor; 
@@ -135,7 +135,7 @@ void AllAppsMenu::doSearch(){
 			getline(toParse,cgpa,'$');
 			getline(toParse,gpa,'$');
 			getline(toParse,standing,'$');
-		}else{
+		} else {
 			getline(toParse,firstName,'$');
 			getline(toParse,lastName,'$');
 			getline(toParse,stuNum,'$');
@@ -146,62 +146,59 @@ void AllAppsMenu::doSearch(){
 		}
 		
 		string symbol = "";
-		while(getline(toParse,symbol,'$'))	{
-			//cout<<toParse.str()<<endl<<endl;
-			if(symbol.compare("App") == 0)	{
-				string appNum, status, course;
-				getline(toParse, appNum, '$');
-				getline(toParse, status,'$');
-				getline(toParse,course,'$');			
-					if( (searchCheck(appNum,stuNum,firstName,lastName)) && type.compare("Und") == 0 ){
-						output<<"Applicant type: "<<"Undergraduate"<<endl;
-						output<<"Name: "<<firstName<<" "<<lastName<<endl;
-						output<<"Student Number: "<<stuNum<<endl;
-						output<<"Email: "<<email<<endl;
-						output<<"Major: "<<major<<endl;
-						output<<"Year Standing: "<<standing<<endl;
-						output<<"Cgpa: "<<cgpa<<endl;
-						output<<"Gpa: "<<gpa<<endl;
-						output<<"Applied to TA: "<<course<<endl;
-						output<<"Application status: "<<status<<endl;
-						getInfo(output,toParse);
-						apps[index] = output.str();
-						output.str("");
-						output.clear();
-						index++;
-					}else if( (searchCheck(appNum,stuNum,firstName,lastName) ) && type.compare("Gra") == 0 ){
-						output<<"Applicant type: "<<"Graduate"<<endl;
-						output<<"Name: "<<firstName<<" "<<lastName<<endl;
-						output<<"Student Number: "<<stuNum<<endl;
-						output<<"Email: "<<email<<endl;
-						output<<"Research Area: "<<research<<endl;
-						output<<"Program: "<<program<<endl;
-						output<<"Supervisor: "<<supervisor<<endl;
-						output<<"Applied to TA: "<<course<<endl;
-						output<<"Application status: "<<status<<endl;
-						getInfo(output,toParse);
-						apps[index] = output.str();
-						output.str("");
-						output.clear();
-						index++;
-					}
-				}
+		getline(toParse, symbol, '$');
+		while(symbol.compare("App") == 0)	{
+			string appNum, status, course;
+			getline(toParse, appNum, '$');
+			getline(toParse, status,'$');
+			getline(toParse,course,'$');			
+			if( (searchCheck(appNum,stuNum,firstName,lastName)) && type.compare("Und") == 0 ){
+				output<<"Applicant type: "<<"Undergraduate"<<endl;
+				output<<"Name: "<<firstName<<" "<<lastName<<endl;
+				output<<"Student Number: "<<stuNum<<endl;
+				output<<"Email: "<<email<<endl;
+				output<<"Major: "<<major<<endl;
+				output<<"Year Standing: "<<standing<<endl;
+				output<<"Cgpa: "<<cgpa<<endl;
+				output<<"Gpa: "<<gpa<<endl;
+				output<<"Applied to TA: "<<course<<endl;
+				output<<"Application status: "<<status<<endl;
+				getInfo(output,toParse, symbol);
+				apps[index] = output.str();
+				output.str("");
+				output.clear();
+				index++;
+			}else if( (searchCheck(appNum,stuNum,firstName,lastName) ) && type.compare("Gra") == 0 ){
+				output<<"Applicant type: "<<"Graduate"<<endl;
+				output<<"Name: "<<firstName<<" "<<lastName<<endl;
+				output<<"Student Number: "<<stuNum<<endl;
+				output<<"Email: "<<email<<endl;
+				output<<"Research Area: "<<research<<endl;
+				output<<"Program: "<<program<<endl;
+				output<<"Supervisor: "<<supervisor<<endl;
+				output<<"Applied to TA: "<<course<<endl;
+				output<<"Application status: "<<status<<endl;
+				getInfo(output,toParse, symbol);
+				apps[index] = output.str();
+				output.str("");
+				output.clear();
+				index++;
+			}
 		}		
 	}
 
 	total = index;
 	index= 0;
-	if(total == 0 ) m_refTextBuffer->set_text("NO applications found");
+	if(total == 0 ) m_refTextBuffer->set_text("No applications found");
 	else {
 		setText();
 		setControls();
 	}
 
 }
-void AllAppsMenu::getInfo(stringstream& output, istringstream& toParse){
-	string symbol="";
+void AllAppsMenu::getInfo(stringstream& output, stringstream& toParse, string &symbol){
 	while(getline(toParse,symbol,'$') ){
-		if(symbol.compare("Ass")==0 ){
+		if(symbol.compare("Ass") == 0 ){
 			string name, term, year, supervisor;
 			getline(toParse,name,'$');
 			getline(toParse,term,'$');
@@ -212,7 +209,7 @@ void AllAppsMenu::getInfo(stringstream& output, istringstream& toParse){
 			output<<"Course term: "<<term<<endl;
 			output<<"Course year: "<<year<<endl;
 			output<<"Course supervisor: "<<supervisor<<endl;
-		}else if(symbol.compare("Rel")==0){
+		}else if(symbol.compare("Rel") == 0){
 			string name, term, year, final;
 			getline(toParse,name,'$');
 			getline(toParse,term,'$');
@@ -223,7 +220,7 @@ void AllAppsMenu::getInfo(stringstream& output, istringstream& toParse){
 			output<<"Course term: "<<term<<endl;
 			output<<"Course year: "<<year<<endl;
 			output<<"Final grade: "<<final<<endl;
-		}else if(symbol.compare("Wor")==0){
+		}else if(symbol.compare("Wor") == 0){
 			string title, duration,start,end,duties;
 			output<<endl<<"		Previous Work Experience :"<<endl;
 			getline(toParse,title,'$');
@@ -234,10 +231,8 @@ void AllAppsMenu::getInfo(stringstream& output, istringstream& toParse){
 			output<<"Job title: "<<title<<endl;
 			output<<"Months at position: "<<duration<<"  From:  "<<start<<"  To:  "<<end<<endl;
 			output<<"Position Duties: "<<duties<<endl;
-		}else if( symbol.compare("App")==0){
-			cout<<"parsing problem"<<endl;
-			
-		
+		}else if(symbol.compare("App") == 0)	{
+			return;		
 		}
 	}
 	
