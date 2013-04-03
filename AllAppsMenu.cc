@@ -121,7 +121,6 @@ void AllAppsMenu::doSearch(){
 	ifstream myfile("saveLog.txt");
 	while(getline(myfile,line)) {
 		stringstream toParse (line, istringstream::in);
-		cout << toParse;
 		string  type, firstName, lastName, stuNum , email;
 	        string  major, standing, cgpa ,gpa;
 		string research, program, supervisor; 
@@ -229,7 +228,7 @@ void AllAppsMenu::getInfo(stringstream& output, stringstream& toParse, string &s
 			getline(toParse,end,'$');
 			getline(toParse,duties,'$');
 			output<<"Job title: "<<title<<endl;
-			output<<"Months at position: "<<duration<<"  From:  "<<start<<"  To:  "<<end<<endl;
+			output<<"Duration: "<<duration<<"  From:  "<<start<<"  To:  "<<end<<endl;
 			output<<"Position Duties: "<<duties<<endl;
 		}else if(symbol.compare("App") == 0)	{
 			return;		
