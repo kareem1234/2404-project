@@ -23,6 +23,7 @@
 #include "RelatedCourse.h"
 #include "AssistantCourse.h"
 #include "AppListMenu.h"
+#include "AllAppsMenu.h"
 
 class Controller : public Gtk::Window 	{
 	//Private members
@@ -31,6 +32,7 @@ class Controller : public Gtk::Window 	{
 		Application *currApp;
 		bool editing;
 		TeacherMenu *teacherMenu;
+		AllAppsMenu *allAppsMenu;
 		StudentMenu *studentMenu;
 		AppListMenu *appList;
 		CourseListMenu *courseList;
@@ -59,6 +61,7 @@ class Controller : public Gtk::Window 	{
 		void login_student_button_clicked();
 		void verify_submit_button_clicked();
 		void typeMenu_grad_button_clicked();
+		void teacher_viewAll_button_clicked();
 		void typeMenu_undergrad_button_clicked();
 		void teacher_cancel_button_clicked();
 		void teacher_summary_button_clicked();
@@ -93,6 +96,12 @@ class Controller : public Gtk::Window 	{
 		void searchMenu_saveB_clicked();
 		void createProfile(string s);
 		int findHighestAppNum();
+		void setAllAppsMenu();
+		void allApps_cancel_button_clicked();
+		void allApps_search_button_cliked();
+		void allApps_next_button_cliked();
+		void allApps_prev_button_cliked();
+		void allApps_clear();
 		void saveToFile();
 		void removeStudentFromFile(string num);
 		void loadStudentInfo(istringstream &toParse, Student &stu);

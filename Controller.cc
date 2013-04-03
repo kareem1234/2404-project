@@ -11,6 +11,7 @@ Controller::Controller()	{
 	currApp = 0;
 	editing = false;
 	studentMenu = 0;
+	allAppsMenu = 0;
 	searchMenu= 0;
 	courseList = 0;
 	loginMenu = 0;
@@ -83,6 +84,20 @@ void Controller::setTypeMenu()	{
 	typeMenu->getGrad()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::typeMenu_grad_button_clicked));
 }
 
+void Controller:: setAllAppsMenu(){
+	allAppsMenu = new AllAppsMenu();
+	add(*allAppsMenu);
+	resize(allAppsMenu->getGrid()->get_width(), allAppsMenu->getGrid()->get_height());
+	show_all();
+
+	allAppsMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_cancel_button_clicked));
+	allAppsMenu->getSearch()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_search_button_cliked));
+	allAppsMenu->getNext()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_next_button_cliked));
+	allAppsMenu->getPrevious()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_prev_button_cliked));
+	allAppsMenu->getName()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_clear));
+	allAppsMenu->getAppNum()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_clear));
+	allAppsMenu->getStuNum()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::allApps_clear));
+}
 //Sets general info menu
 void Controller::setGenInfoMenu()	{
 
@@ -116,7 +131,6 @@ void Controller::setCourseListMenu(int type){
 		refTreeSelection->signal_changed().connect(sigc::mem_fun(*this,&Controller::courselist_treeview_row_selected));
 		searchMenu->getSelect()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_select_button_clicked));
 		searchMenu->getCancel()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::courselist_cancel_button_clicked));
-		searchMenu->getOptions();
 		searchMenu->getOptions()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_option_clicked));
 		searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
 	} else { 
@@ -185,6 +199,7 @@ void Controller::setTeacherMenu(){
 	teacherMenu->getSummaryButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_summary_button_clicked));
 	teacherMenu->getAssignedButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_viewAssigned_button_clicked));
 	teacherMenu->getAppButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_viewApps_button_clicked));
+	teacherMenu->getAllButton()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::teacher_viewAll_button_clicked));
 }
 
 //Sets the related course menu, waiting for input
@@ -243,6 +258,7 @@ void Controller::login_student_button_clicked()	{
 	setVerifyMenu();
 }
 
+
 void Controller::verify_submit_button_clicked()	{
 	if(verifyMenu->checkInput())	{
 		loginID = verifyMenu->getNumber()->get_text();
@@ -290,6 +306,26 @@ void Controller::student_cancel_button_clicked()	{
 	studentMenu = 0;
 	setLoginMenu();
 }
+void Controller::allApps_cancel_button_clicked(){
+	delete(allAppsMenu);
+	allAppsMenu= 0;
+	remove();
+	setTeacherMenu();
+}
+
+void Controller::allApps_clear(){
+	allAppsMenu->clear();
+
+}
+void Controller::allApps_search_button_cliked(){
+	allAppsMenu->doSearch();
+}
+void Controller::allApps_next_button_cliked(){
+	allAppsMenu->nextClicked();
+}
+void Controller::allApps_prev_button_cliked(){
+	allAppsMenu->prevClicked();
+}
 
 void Controller::student_create_button_clicked(){
 	remove();
@@ -331,6 +367,13 @@ void Controller:: teacher_viewApps_button_clicked(){
 	delete(teacherMenu);
 	teacherMenu = 0;
 	setAppListMenu();
+}
+
+void Controller:: teacher_viewAll_button_clicked(){
+	remove();
+	delete(teacherMenu);
+	teacherMenu=0;
+	setAllAppsMenu();
 }
 
 void Controller::courselist_treeview_row_selected(){
@@ -701,7 +744,7 @@ int Controller::findHighestAppNum()	{
 		return 	-1;
 	}
 	else {
-		i++;
+
 		return i;
 	}		
 }

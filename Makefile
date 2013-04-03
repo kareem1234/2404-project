@@ -6,8 +6,8 @@ Qtest:	Qtest.o myQ.o
 Qtest.o:	Qtest.cc
 		g++ -c Qtest.cc
 
-Assignment4:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o AppListMenu.o VerificationMenu.o
-		g++ -o Assignment4 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o AppListMenu.o VerificationMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
+Assignment4:	Main.o Controller.o Student.o Undergrad.o Grad.o Application.o GenInfoMenu.o StudentMenu.o LoginMenu.o CourseListMenu.o TeacherMenu.o RelatedCourseMenu.o AllAppsMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o WorkExperienceMenu.o StudentTypeMenu.o myQ.o CourseListSearchMenu.o AppListMenu.o VerificationMenu.o
+		g++ -o Assignment4 Main.o Controller.o Student.o Undergrad.o Grad.o Application.o TeacherMenu.o GenInfoMenu.o StudentMenu.o AllAppsMenu.o LoginMenu.o CourseListMenu.o AppListMenu.o VerificationMenu.o CourseListSearchMenu.o RelatedCourseMenu.o WorkExperience.o TACourseMenu.o AssistantCourse.o RelatedCourse.o Course.o myQ.o WorkExperienceMenu.o StudentTypeMenu.o `pkg-config gtkmm-3.0 --cflags --libs`
 
 Main.o:		Main.h Main.cc 
 		g++ -c Main.cc `pkg-config gtkmm-3.0 --cflags --libs`
@@ -29,6 +29,9 @@ Application.o:	Application.h Application.cc
 
 GenInfoMenu.o:	GenInfoMenu.h GenInfoMenu.cc
 		g++ -c GenInfoMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
+
+AllAppsMenu.o:	AllAppsMenu.h AllAppsMenu.cc
+		g++ -c AllAppsMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`
 
 StudentMenu.o:	StudentMenu.h StudentMenu.cc
 		g++ -c StudentMenu.cc `pkg-config gtkmm-3.0 --cflags --libs`

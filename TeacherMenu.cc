@@ -13,6 +13,9 @@ TeacherMenu::TeacherMenu(){
 	viewApp = new Gtk::Button("ASSIGN A SUCCESFUL APPLICATION", false);
 	viewApp->set_size_request(300, 60); 
 
+	all = new Gtk::Button("VIEW ALL APPLICATIONS",false);
+	all->set_size_request(300,60);
+
 	viewSummary = new Gtk::Button("VIEW  PENDING APPLICATIONS", false);
 	viewSummary->set_size_request(300, 60); 
 	
@@ -30,6 +33,7 @@ TeacherMenu::TeacherMenu(){
 
 	//Add buttons to the frame
 	box->pack_start(*viewApp);
+	box->pack_start(*all);
 	box->pack_start(*editTa);
 	box->pack_start(*viewSummary);
 	box->pack_start(*viewAssigned);
@@ -45,6 +49,7 @@ TeacherMenu::~TeacherMenu()	{
 	delete(cancelB);
 	delete(viewAssigned);
 	delete(viewSummary);
+	delete(all);
 }
 
 Gtk::VBox* TeacherMenu::getBox()	{
@@ -68,6 +73,10 @@ Gtk::Button* TeacherMenu::getCancelButton(){
 	return cancelB;
 }
 
+Gtk::Button* TeacherMenu:: getAllButton(){
+	return all;
+}
+	
 
 
 

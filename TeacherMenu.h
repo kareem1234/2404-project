@@ -11,6 +11,7 @@ class TeacherMenu: public Gtk::Frame	{
 	private:
 		Gtk::VBox* box;
 		Gtk::Button* viewApp;
+		Gtk::Button* all;
 		Gtk::Button* viewSummary;
 		Gtk::Button* viewAssigned;
 		Gtk::Button* editTa;
@@ -25,6 +26,7 @@ class TeacherMenu: public Gtk::Frame	{
 		Gtk::Button* getAssignedButton();
 		Gtk::Button* getEditButton();
 		Gtk::Button* getCancelButton();
+		Gtk::Button* getAllButton();
 };
 
 #endif
