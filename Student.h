@@ -31,21 +31,35 @@ class Student 	{
 	public:
 		Student(string f = "", string l = "", string s = "", string e = "");
 		~Student();
-		string getFirstName();
-		string getLastName();
-		string getStuNum();
-		string getEmail();
-		int getNumApps();
-		myQ<Application>* getApplications();
-		void setName(string name1, string name2);
-		void setStuNum(string num);
-		void setEmail(string emailAdd);
-		bool duplicateApp(string);
-		Application* getApp(string);
+		virtual string getFirstName();
+		virtual string getLastName();
+		virtual string getStuNum();
+		virtual string getEmail();
+		virtual int getNumApps();
+		virtual myQ<Application>* getApplications();
+		virtual void setName(string name1, string name2);
+		virtual void setStuNum(string num);
+		virtual void setEmail(string emailAdd);
+		virtual bool duplicateApp(string);
+		virtual Application* getApp(string);
+		virtual void save() = 0;
 		static bool checkName(string name);
 		static bool checkStuNum(string num);
 		static bool checkEmail(string emailAdd);
-		void save();
+		virtual string getMajor() { return ""; };
+		virtual string getStanding() { return ""; };
+		virtual string getCgpa() { return ""; };
+		virtual string getGpa() { return ""; };
+		virtual void setMajor(string study) {};
+		virtual void setStanding(string standing) {};
+		virtual void setCgpa(string mark) {};
+		virtual void setGpa(string mark) {};
+		virtual string getResearch() { return ""; };
+		virtual string getProgram() { return ""; };
+		virtual string getSupervisor() { return ""; };
+		virtual void setResearch(string res) {};
+		virtual void setProgram(string pro) {};
+		virtual void setSupervisor(string sup) {};
 };
 
 #endif
