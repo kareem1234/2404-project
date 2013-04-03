@@ -121,6 +121,7 @@ void AllAppsMenu::doSearch(){
 	ifstream myfile("saveLog.txt");
 	while(getline(myfile,line)){
 		istringstream toParse (line, istringstream::in);
+		cout<<toParse.str()<<endl;
 		string  type, firstName, lastName, stuNum , email;
 	        string  major, standing, cgpa ,gpa;
 		string research, program, supervisor; 
@@ -146,13 +147,13 @@ void AllAppsMenu::doSearch(){
 		
 		string symbol = "";
 		while(getline(toParse,symbol,'$'))	{
-			
+			//cout<<toParse.str()<<endl<<endl;
 			if(symbol.compare("App") == 0)	{
 				string appNum, status, course;
 				getline(toParse, appNum, '$');
 				getline(toParse, status,'$');
 				getline(toParse,course,'$');			
-					if( (searchCheck(appNum,stuNum,firstName,lastName)) && type.compare("Und") ==0 ){
+					if( (searchCheck(appNum,stuNum,firstName,lastName)) && type.compare("Und") == 0 ){
 						output<<"Applicant type: "<<"Undergraduate"<<endl;
 						output<<"Name: "<<firstName<<" "<<lastName<<endl;
 						output<<"Student Number: "<<stuNum<<endl;
@@ -163,6 +164,7 @@ void AllAppsMenu::doSearch(){
 						output<<"Gpa: "<<gpa<<endl;
 						output<<"Applied to TA: "<<course<<endl;
 						output<<"Application status: "<<status<<endl;
+						getInfo(output,toParse);
 						apps[index] = output.str();
 						output.str("");
 						output.clear();
@@ -177,6 +179,7 @@ void AllAppsMenu::doSearch(){
 						output<<"Supervisor: "<<supervisor<<endl;
 						output<<"Applied to TA: "<<course<<endl;
 						output<<"Application status: "<<status<<endl;
+						getInfo(output,toParse);
 						apps[index] = output.str();
 						output.str("");
 						output.clear();
@@ -195,7 +198,50 @@ void AllAppsMenu::doSearch(){
 	}
 
 }
-
+void AllAppsMenu::getInfo(stringstream& output, istringstream& toParse){
+	string symbol="";
+	while(getline(toParse,symbol,'$') ){
+		if(symbol.compare("Ass")==0 ){
+			string name, term, year, supervisor;
+			getline(toParse,name,'$');
+			getline(toParse,term,'$');
+			getline(toParse,year,'$');
+			getline(toParse,supervisor,'$');
+			output<<endl<<" 	Previous Assisted Course"<<endl;
+			output<<"Course name: "<<name<<endl;
+			output<<"Course term: "<<term<<endl;
+			output<<"Course year: "<<year<<endl;
+			output<<"Course supervisor: "<<supervisor<<endl;
+		}else if(symbol.compare("Rel")==0){
+			string name, term, year, final;
+			getline(toParse,name,'$');
+			getline(toParse,term,'$');
+			getline(toParse,year,'$');
+			getline(toParse,final,'$');
+			output<<endl<<"		 Previous Attended Course"<<endl;
+			output<<"Course name: "<<name<<endl;
+			output<<"Course term: "<<term<<endl;
+			output<<"Course year: "<<year<<endl;
+			output<<"Final grade: "<<final<<endl;
+		}else if(symbol.compare("Wor")==0){
+			string title, duration,start,end,duties;
+			output<<endl<<"		Previous Work Experience :"<<endl;
+			getline(toParse,title,'$');
+			getline(toParse,duration,'$');
+			getline(toParse,start,'$');
+			getline(toParse,end,'$');
+			getline(toParse,duties,'$');
+			output<<"Job title: "<<title<<endl;
+			output<<"Months at position: "<<duration<<"  From:  "<<start<<"  To:  "<<end<<endl;
+			output<<"Position Duties: "<<duties<<endl;
+		}else if( symbol.compare("App")==0){
+			cout<<"parsing problem"<<endl;
+			
+		
+		}
+	}
+	
+}
 void AllAppsMenu:: setControls(){
 	next->set_sensitive(true);
 	previous->set_sensitive(true);
@@ -208,6 +254,8 @@ void AllAppsMenu:: setControls(){
 	if(index -1 < 0)previous->set_sensitive(false);
 
 }
+
+
 bool AllAppsMenu:: searchCheck(string appNum,string stuNum,string firstName, string lastName){
 	string keyword = searchTerm->get_text();
 	if(appNumber->get_active()){
