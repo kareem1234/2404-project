@@ -57,16 +57,6 @@ void Student::setEmail(string emailAdd)	{
 	email = emailAdd;
 }
 
-//Save function saves all application under the student
-void Student::save()	{
-	saveLog.open("saveLog.txt", ios::app);
-	saveLog << "Stu" << "$" << firstName << "$" << lastName << "$" << stuNum << "$" << email << "$";
-	saveLog.close();
-	applications.save();
-	saveLog << endl;
-	saveLog.close();
-}
-
 //Check functions check all data members for correct values
 bool Student::checkName(string name)	{
 	//Check that the name doesn't have numbers

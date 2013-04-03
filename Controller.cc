@@ -8,6 +8,7 @@ Controller::Controller()	{
 		
 	// create window
 	loginID = "";
+	stuType = "";
 	currApp = 0;
 	editing = false;
 	studentMenu = 0;
@@ -284,6 +285,7 @@ void Controller::student_cancel_button_clicked()	{
 	undergrad = 0;
 	grad = 0;
 	loginID = "";
+	stuType = "";
 
 	remove();
 	delete (studentMenu);

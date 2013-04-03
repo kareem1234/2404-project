@@ -28,6 +28,7 @@ class Controller : public Gtk::Window 	{
 	//Private members
 	private:
 		string loginID;
+		string stuType;
 		Application *currApp;
 		bool editing;
 		TeacherMenu *teacherMenu;

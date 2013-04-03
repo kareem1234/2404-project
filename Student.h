@@ -31,21 +31,35 @@ class Student 	{
 	public:
 		Student(string f = "", string l = "", string s = "", string e = "");
 		~Student();
-		string getFirstName();
-		string getLastName();
-		string getStuNum();
-		string getEmail();
-		int getNumApps();
-		myQ<Application>* getApplications();
-		void setName(string name1, string name2);
-		void setStuNum(string num);
-		void setEmail(string emailAdd);
-		bool duplicateApp(string);
-		Application* getApp(string);
+		virtual string getFirstName() = 0;
+		virtual string getLastName() = 0;
+		virtual string getStuNum() = 0;
+		virtual string getEmail() = 0;
+		virtual int getNumApps() = 0;
+		virtual myQ<Application>* getApplications() = 0;
+		virtual void setName(string name1, string name2) = 0;
+		virtual void setStuNum(string num) = 0;
+		virtual void setEmail(string emailAdd) = 0;
+		virtual bool duplicateApp(string) = 0;
+		virtual Application* getApp(string) = 0;
+		virtual void save() = 0;
 		static bool checkName(string name);
 		static bool checkStuNum(string num);
 		static bool checkEmail(string emailAdd);
-		void save();
+		virtual string getMajor() {};
+		virtual string getStanding() {};
+		virtual string getCgpa() {};
+		virtual string getGpa() {};
+		virtual void setMajor(string study) {};
+		virtual void setStanding(string standing) {};
+		virtual void setCgpa(string mark) {};
+		virtual void setGpa(string mark) {};
+		virtual string getResearch() {};
+		virtual string getProgram() {};
+		virtual string getSupervisor() {};
+		virtual void setResearch(string res) {};
+		virtual void setProgram(string pro) {};
+		virtual void setSupervisor(string sup) {};
 };
 
 #endif
