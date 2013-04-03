@@ -14,8 +14,7 @@
 #include "TACourseMenu.h"
 #include "WorkExperienceMenu.h"
 #include "RelatedCourseMenu.h"
-#include "Grad.h"
-#include "Undergrad.h"
+#include "Student.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -45,8 +44,7 @@ class Controller : public Gtk::Window 	{
 		RelatedCourseMenu *relMenu;
 		TACourseMenu *taMenu;
 		WorkExperienceMenu *workMenu;
-		Undergrad *undergrad;
-		Grad *grad;
+		Student *student;
 		void setLoginMenu();
 		void setVerifyMenu();
 		void setTypeMenu();

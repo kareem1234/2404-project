@@ -2,7 +2,8 @@
 
 //Include statements
 #include "GenInfoMenu.h"
-#include "Student.h"
+#include "Undergrad.h"
+#include "Grad.h"
 #include <sstream>
 
 //Default constructor
@@ -26,39 +27,26 @@ GenInfoMenu::GenInfoMenu(string type)	{
 	emailL = new Gtk::Label("EMAIL");
 	emailL->set_size_request(70, 30);
 
-	if(type == "Undergrad")	{
-		gpaL = new Gtk::Label("GPA");
-		gpaL->set_size_request(70, 30);
-	
-		cgpaL = new Gtk::Label("CGPA");
-		cgpaL->set_size_request(70, 30);
-	
-		yearL = new Gtk::Label("YEAR");
-		yearL->set_size_request(70, 30);
+	gpaL = new Gtk::Label("GPA");
+	gpaL->set_size_request(70, 30);
 
-		majorL = new Gtk::Label("MAJOR");
-		majorL->set_size_request(70, 30);
+	cgpaL = new Gtk::Label("CGPA");
+	cgpaL->set_size_request(70, 30);
 
-		researchL = 0;
-		programL = 0;
-		supervisorL = 0;		
-	}
+	yearL = new Gtk::Label("YEAR");
+	yearL->set_size_request(70, 30);
 
-	if(type == "Grad")	{
-		researchL = new Gtk::Label("RESEARCH AREA");
-		researchL->set_size_request(70, 30);
-	
-		programL = new Gtk::Label("PROGRAM");
-		programL->set_size_request(70, 30);
-	
-		supervisorL = new Gtk::Label("SUPERVISOR");
-		supervisorL->set_size_request(70, 30);
+	majorL = new Gtk::Label("MAJOR");
+	majorL->set_size_request(70, 30);
 
-		gpaL = 0;
-		cgpaL = 0;
-		majorL = 0;
-		yearL = 0;
-	}
+	researchL = new Gtk::Label("RESEARCH AREA");
+	researchL->set_size_request(70, 30);
+
+	programL = new Gtk::Label("PROGRAM");
+	programL->set_size_request(70, 30);
+
+	supervisorL = new Gtk::Label("SUPERVISOR");
+	supervisorL->set_size_request(70, 30);
 	
 	//Create buttons
 	nextB = new Gtk::Button("CONTINUE");
@@ -73,66 +61,55 @@ GenInfoMenu::GenInfoMenu(string type)	{
 	
 	stuNumT = new Gtk::Entry();
 	stuNumT->set_size_request(70,30);
+	stuNumT->set_editable(false);
 
 	emailT = new Gtk::Entry();
 	emailT->set_size_request(70,30);
 
-	if(type == "Undergrad")	{
-		majorT = new Gtk::Entry();
-		majorT->set_size_request(70,30);
-	
-		yearT = new Gtk::Entry();
-		yearT->set_size_request(70,30);
+	majorT = new Gtk::Entry();
+	majorT->set_size_request(70,30);
 
-		gpaT = new Gtk::Entry();
-		gpaT->set_size_request(70,30);
+	yearT = new Gtk::Entry();
+	yearT->set_size_request(70,30);
 
-		cgpaT = new Gtk::Entry();
-		cgpaT->set_size_request(70,30);
+	gpaT = new Gtk::Entry();
+	gpaT->set_size_request(70,30);
 
-		researchT = 0;
-		programT = 0;
-		supervisorT = 0;
-	}
-	if(type == "Grad")	{
-		researchT = new Gtk::ComboBoxText();
-		researchT->set_size_request(70,30);
+	cgpaT = new Gtk::Entry();
+	cgpaT->set_size_request(70,30);
 
-		programT = new Gtk::ComboBoxText();
-		programT->set_size_request(70,30);
+	researchT = new Gtk::ComboBoxText();
+	researchT->set_size_request(70,30);
 
-		supervisorT = new Gtk::Entry();
-		supervisorT->set_size_request(70,30);
+	programT = new Gtk::ComboBoxText();
+	programT->set_size_request(70,30);
 
-		research_refTreeModel = Gtk::ListStore::create(research_Columns);
-		researchT->set_model(research_refTreeModel);
+	supervisorT = new Gtk::Entry();
+	supervisorT->set_size_request(70,30);
 
-		program_refTreeModel = Gtk::ListStore::create(program_Columns);
-		programT->set_model(program_refTreeModel);
+	research_refTreeModel = Gtk::ListStore::create(research_Columns);
+	researchT->set_model(research_refTreeModel);
 
-		Gtk::TreeModel::Row row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "Algorithms and Complexity";
-		row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "Knowledge Based and Intelligent Systems";
-		row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "Software Engineering";
-		row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "Parallel and Distributed Systems";
-		row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "Information Systems Security and Applied Cryptography";
-		row = *(research_refTreeModel->append());
-		row[research_Columns.m_col_value] = "BioInformatics and Biomedical Computing";
+	program_refTreeModel = Gtk::ListStore::create(program_Columns);
+	programT->set_model(program_refTreeModel);
 
-		Gtk::TreeModel::Row row1 = *(program_refTreeModel->append());
-		row1[program_Columns.m_col_value] = "MCS";
-		row1 = *(program_refTreeModel->append());
-		row1[program_Columns.m_col_value] = "PhD";
+	Gtk::TreeModel::Row row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "Algorithms and Complexity";
+	row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "Knowledge Based and Intelligent Systems";
+	row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "Software Engineering";
+	row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "Parallel and Distributed Systems";
+	row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "Information Systems Security and Applied Cryptography";
+	row = *(research_refTreeModel->append());
+	row[research_Columns.m_col_value] = "BioInformatics and Biomedical Computing";
 
-		majorT = 0;
-		yearT = 0;
-		gpaT = 0;
-		cgpaT = 0;
-	}
+	Gtk::TreeModel::Row row1 = *(program_refTreeModel->append());
+	row1[program_Columns.m_col_value] = "MCS";
+	row1 = *(program_refTreeModel->append());
+	row1[program_Columns.m_col_value] = "PhD";
 	
 	//Position them all
 	grid->attach(*genInfoL,1,0,2,1);
@@ -145,7 +122,7 @@ GenInfoMenu::GenInfoMenu(string type)	{
 	grid->attach(*emailL,1,4,1,1);	
 	grid->attach(*emailT,2,4,1,1);
 	
-	if(type == "Undergrad")	{
+	if(type == "UNDERGRAD")	{
 		grid->attach(*majorL,1,5,1,1);	
 		grid->attach(*majorT,2,5,1,1);
 		grid->attach(*cgpaL,1,6,1,1);	
@@ -156,7 +133,7 @@ GenInfoMenu::GenInfoMenu(string type)	{
 		grid->attach(*yearT,2,8,1,1);	
 		grid->attach(*nextB,1,9,2,1);
 	}
-	if(type == "Grad")	{
+	if(type == "GRAD")	{
 		grid->attach(*researchL,1,5,1,1);	
 		grid->attach(*researchT,2,5,1,1);	
 		grid->attach(*programL,1,6,1,1);	
@@ -399,56 +376,32 @@ bool GenInfoMenu::checkInfo(string type)	{
 }
 
 //Sets the incoming student values from form currently displayed
-void GenInfoMenu::setUndergradInfo(Undergrad *s)	{
-	if(s == 0)	return;	
+void GenInfoMenu::setInfo(Student &stu)	{
 	
-	setFirstName(s->getFirstName());
-	setLastName(s->getLastName());
-	setStuNum(s->getStuNum());
-	if(s->getStuNum() != "")	stuNumT->set_editable(false);
-	setMajor(s->getMajor());
-	setYear(s->getStanding());
-	setEmail(s->getEmail());
-	setCgpa(s->getCgpa());
-	setGpa(s->getGpa());
-}
-
-//Sets the incoming student values from form currently displayed
-void GenInfoMenu::setGradInfo(Grad *s)	{
-	if(s == 0)	return;	
-
-	setFirstName(s->getFirstName());
-	setLastName(s->getLastName());
-	setStuNum(s->getStuNum());
-	if(s->getStuNum() != "")	stuNumT->set_editable(false);
-	setEmail(s->getEmail());
-	setResearch(s->getResearch());
-	setProgram(s->getProgram());
-	setSupervisor(s->getSupervisor());
+	setFirstName(stu.getFirstName());
+	setLastName(stu.getLastName());
+	setStuNum(stu.getStuNum());
+	setMajor(stu.getMajor());
+	setYear(stu.getStanding());
+	setEmail(stu.getEmail());
+	setCgpa(stu.getCgpa());
+	setGpa(stu.getGpa());
+	setResearch(stu.getResearch());
+	setProgram(stu.getProgram());
+	setSupervisor(stu.getSupervisor());
 }
 
 //Applies menu info to given undergrad
-void GenInfoMenu::applyUnderInfo(Undergrad *undergrad)	{ 
-	if(undergrad != 0)	{
-		undergrad->setName(getFirstName()->get_text(), getLastName()->get_text());
-		undergrad->setStuNum(getStuNum()->get_text());
-		undergrad->setEmail(getEmail()->get_text());
-		undergrad->setMajor(getMajor()->get_text());
-		undergrad->setStanding(getYear()->get_text());
-		undergrad->setCgpa(getCgpa()->get_text());
-		undergrad->setGpa(getGpa()->get_text());
-	}
-}
-
-//Applies menu info to given grad
-void GenInfoMenu::applyGradInfo(Grad *grad)	{ 
-	if(grad != 0)	{
-		grad->setName(getFirstName()->get_text(), getLastName()->get_text());
-		grad->setStuNum(getStuNum()->get_text());
-		grad->setEmail(getEmail()->get_text());
-		grad->setResearch(getResearch()->get_active_text());
-		grad->setProgram(getProgram()->get_active_text());
-		grad->setSupervisor(getSupervisor()->get_text());
-	}
+void GenInfoMenu::applyInfo(Student &stu)	{
+	stu.setName(getFirstName()->get_text(), getLastName()->get_text());
+	stu.setStuNum(getStuNum()->get_text());
+	stu.setEmail(getEmail()->get_text());
+	stu.setMajor(getMajor()->get_text());
+	stu.setStanding(getYear()->get_text());
+	stu.setCgpa(getCgpa()->get_text());
+	stu.setGpa(getGpa()->get_text());
+	stu.setResearch(getResearch()->get_active_text());
+	stu.setProgram(getProgram()->get_active_text());
+	stu.setSupervisor(getSupervisor()->get_text());
 }
 

@@ -1,4 +1,6 @@
 #include "Controller.h"
+#include "Grad.h"
+#include "Undergrad.h"
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
@@ -22,9 +24,8 @@ Controller::Controller()	{
 	relMenu = 0;
 	taMenu = 0;
 	workMenu = 0;
-	undergrad = 0;
-	grad = 0;
 	appList = 0;
+	student = 0;
 	setLoginMenu();
 }
 
@@ -40,8 +41,9 @@ Controller::~Controller()	{
 	delete(relMenu);
 	delete(taMenu);
 	delete(workMenu);
-	delete(undergrad);
-	delete(grad);
+	delete(appList);
+	delete(allAppsMenu);
+	delete(student);
 }
 
 //Sets the login menu
@@ -54,7 +56,6 @@ void Controller::setLoginMenu()  {
 	// connect signal handlers
 	loginMenu->getStudentButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_student_button_clicked));
 	loginMenu->getTeacherButton()->signal_clicked().connect(sigc::mem_fun(*this, &Controller::login_teacher_button_clicked));
-	
 }
 
 
@@ -103,14 +104,8 @@ void Controller:: setAllAppsMenu(){
 void Controller::setGenInfoMenu()	{
 
 	// allocate new GenInfoMenu
-	if(undergrad != 0)	{
-		genInfoMenu = new GenInfoMenu("Undergrad");
-		genInfoMenu->setUndergradInfo(undergrad);
-	}
-	if(grad != 0)	{		
-		genInfoMenu = new GenInfoMenu("Grad");
-		genInfoMenu->setGradInfo(grad);
-	}
+	genInfoMenu = new GenInfoMenu(stuType);
+	genInfoMenu->setInfo(*student);
 
 	add(*genInfoMenu);
 	resize(genInfoMenu->getGrid()->get_width(), genInfoMenu->getGrid()->get_height());
@@ -125,6 +120,7 @@ void Controller::setCourseListMenu(int type){
 	if(type == 1 || type == 2)	{
 	 	searchMenu = new CourseListSearchMenu(type);
 		searchMenu->loadCourseList();
+
 		add(*searchMenu);
 		resize(searchMenu->getGrid()->get_width(), searchMenu->getGrid()->get_height());
 		show_all();
@@ -136,11 +132,10 @@ void Controller::setCourseListMenu(int type){
 		searchMenu->getSave()->signal_clicked().connect(sigc::mem_fun(*this,&Controller::searchMenu_saveB_clicked));
 	} else { 
 		courseList = new CourseListMenu(type);
-		if(type == 111)	{
-			if(undergrad != 0)	courseList->loadApplications(*undergrad, "pending");
-			if(grad != 0)		courseList->loadApplications(*grad, "pending");
-		} else if(type == 222)		courseList->loadWorkExperience(*currApp);
-		else				courseList->loadCourseList();
+		if(type == 111)		courseList->loadApplications(*student, "pending");
+		else if(type == 222)	courseList->loadWorkExperience(*currApp);
+		else			courseList->loadCourseList();
+
 		add(*courseList);
 		resize(courseList->getGrid()->get_width(), courseList->getGrid()->get_height());
 		show_all();
@@ -278,8 +273,10 @@ void Controller::verify_submit_button_clicked()	{
 }
 
 void Controller::typeMenu_undergrad_button_clicked()	{
-	undergrad = new Undergrad();
-	undergrad->setStuNum(loginID);
+	student = new Undergrad();
+	student->setStuNum(loginID);
+	stuType = "UNDERGRAD";
+
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
@@ -287,8 +284,10 @@ void Controller::typeMenu_undergrad_button_clicked()	{
 }
 
 void Controller::typeMenu_grad_button_clicked()	{
-	grad = new Grad();
-	grad->setStuNum(loginID);
+	student = new Grad();
+	student->setStuNum(loginID);
+	stuType = "GRAD";
+
 	remove();
 	delete typeMenu;
 	typeMenu = 0;
@@ -296,10 +295,8 @@ void Controller::typeMenu_grad_button_clicked()	{
 }
 
 void Controller::student_cancel_button_clicked()	{
-	delete(undergrad);
-	delete(grad);
-	undergrad = 0;
-	grad = 0;
+	delete(student);
+	student = 0;
 	loginID = "";
 	stuType = "";
 
@@ -415,13 +412,7 @@ void Controller::courselist_select_button_clicked()	{
 	int type = courseList->getType();
 	string course(courseList->getString());
 	if(type == 0)	{
-		if(undergrad != 0 && undergrad->duplicateApp(course))	{
-			Gtk::MessageDialog error("IDENTICAL PENDING APPLICATION ALREADY SUBMITTED!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, false);
-			error.set_secondary_text("Only one pending application for each course is allowed.");
-			error.run();
-			return;
-		}
-		if(grad != 0 && grad->duplicateApp(course))	{
+		if(student->duplicateApp(course))	{
 			Gtk::MessageDialog error("IDENTICAL PENDING APPLICATION ALREADY SUBMITTED!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK, false);
 			error.set_secondary_text("Only one pending application for each course is allowed.");
 			error.run();
@@ -466,8 +457,7 @@ void Controller::courselist_select_button_clicked()	{
 		delete(courseList);
 		courseList = 0;
 		editing = true;
-		if(undergrad != 0)	currApp = undergrad->getApp(course);
-		if(grad != 0)		currApp = grad->getApp(course);
+		currApp = student->getApp(course);
 		setGenInfoMenu();
 	} else if(type == 222)	{
 		remove();
@@ -498,14 +488,8 @@ void Controller::courselist_discard_button_clicked()	{
 	currApp = 0;
 	editing = false;
 	
-	if(undergrad != 0)	{
-		stuNum = undergrad->getStuNum();
-		delete undergrad;
-	}
-	if(grad != 0)	{
-		stuNum = grad->getStuNum();
-		delete grad;
-	}
+	stuNum = student->getStuNum();
+	delete student;
 	
 	remove();
 	delete(courseList);
@@ -572,11 +556,9 @@ void Controller::courselist_skip_button_clicked()	{
 }
 
 void Controller::genInfo_next_button_clicked()	{
-	if(undergrad != 0 && !genInfoMenu->checkInfo("Undergrad"))	return;
-	if(grad != 0 && !genInfoMenu->checkInfo("Grad"))	return;
+	if(!genInfoMenu->checkInfo(stuType))	return;
 
-	if(undergrad != 0)	genInfoMenu->applyUnderInfo(undergrad);
-	if(grad != 0)	genInfoMenu->applyGradInfo(grad);
+	genInfoMenu->applyInfo(*student);
 	remove();
 	delete (genInfoMenu);
 	genInfoMenu = 0;
@@ -616,8 +598,7 @@ void Controller::workExperience_submit_button_clicked(){
 		}
 		*(currApp->getExperience()) += (new WorkExperience());
 		workMenu->applyWorkExperience(*currApp);
-		if(undergrad != 0)	*(undergrad->getApplications()) += currApp;
-		if(grad != 0)		*(grad->getApplications()) += currApp;
+		*(student->getApplications()) += currApp;
 		saveToFile();
 		remove();	
 		delete(workMenu);
@@ -687,10 +668,8 @@ void Controller::workExperience_add_button_clicked()	{
 
 void Controller::workExperience_delete_button_clicked()	{
 	myQ<WorkExperience> *queue = currApp->getExperience();
-	WorkExperience *toDelete = (*queue)[queue->length()];
 
 	queue->deleteTail();
-	delete toDelete;
 	remove();
 	delete(workMenu);
 	workMenu = 0;
@@ -698,9 +677,9 @@ void Controller::workExperience_delete_button_clicked()	{
 }
 
 void Controller::workExperience_skip_button_clicked()	{
-	if(undergrad != 0)	*(undergrad->getApplications()) += currApp;
-	if(grad != 0)		*(grad->getApplications()) += currApp;
+	*(student->getApplications()) += currApp;
 	saveToFile();
+
 	remove();	
 	delete(workMenu);
 	workMenu = 0;
@@ -752,14 +731,8 @@ int Controller::findHighestAppNum()	{
 }
 
 void Controller::saveToFile()	{
-	if(undergrad != 0)	{
-		removeStudentFromFile(undergrad->getStuNum());
-		undergrad->save();
-	}
-	if(grad != 0)	{
-		removeStudentFromFile(grad->getStuNum());
-		grad->save();
-	}
+	removeStudentFromFile(student->getStuNum());
+	student->save();
 }
 
 void Controller::removeStudentFromFile(string num)	{
@@ -814,8 +787,9 @@ bool Controller::loadStudent(string num)	{
 			getline(toParse,standing,'$');
 			if(stuNum == num)	{
 				loaded = true;
-				undergrad = new Undergrad(firstName, lastName, stuNum, email, major, standing, cgpa, gpa);
-				loadStudentInfo(toParse, *undergrad);
+				stuType = "UNDERGRAD";
+				student = new Undergrad(firstName, lastName, stuNum, email, major, standing, cgpa, gpa);
+				loadStudentInfo(toParse, *student);
 			}
 		} else {
 			string research, program, supervisor; 
@@ -828,8 +802,9 @@ bool Controller::loadStudent(string num)	{
 			getline(toParse,supervisor,'$');
 			if(stuNum == num)	{
 				loaded = true;
-				grad = new Grad(firstName, lastName, stuNum, email, research, program, supervisor);
-				loadStudentInfo(toParse, *grad);
+				stuType = "GRAD";
+				student = new Grad(firstName, lastName, stuNum, email, research, program, supervisor);
+				loadStudentInfo(toParse, *student);
 			}
 		}
 	}
