@@ -432,11 +432,11 @@ void Controller::courselist_select_button_clicked()	{
 			RelatedCourse *temp = currApp->findRel(course);
 			myQ<RelatedCourse> *queue = currApp->getRelated();
 			(*queue) -= temp;
-			(*queue) + temp;
+			(*queue) += temp;
 			setRelatedCourseMenu(temp, editing);
 			return;
 		}
-		*(currApp->getRelated()) + (new RelatedCourse(course));
+		*(currApp->getRelated()) += (new RelatedCourse(course));
 		setRelatedCourseMenu(0, editing);
 	} else if(type == 4)	{
 		remove();
@@ -446,11 +446,11 @@ void Controller::courselist_select_button_clicked()	{
 			AssistantCourse *temp = currApp->findAss(course);
 			myQ<AssistantCourse> *queue = currApp->getAssisted();
 			(*queue) -= temp;
-			(*queue) + temp;
+			(*queue) += temp;
 			setTACourseMenu(temp, editing);
 			return;
 		}
-		*(currApp->getAssisted()) + (new AssistantCourse(course));
+		*(currApp->getAssisted()) += (new AssistantCourse(course));
 		setTACourseMenu(0, editing);
 	} else if(type == 111)	{
 		remove();
@@ -466,7 +466,7 @@ void Controller::courselist_select_button_clicked()	{
 		WorkExperience *temp = currApp->findWor(course);
 		myQ<WorkExperience> *queue = currApp->getExperience();
 		(*queue) -= temp;
-		(*queue) + temp;
+		(*queue) += temp;
 		setExperienceMenu(temp, 2);
 	}
 }

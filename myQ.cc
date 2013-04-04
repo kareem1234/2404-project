@@ -156,15 +156,13 @@ void myQ<T>:: testFunc(){
 
 }
 
-
-
-
 template <class T>
- bool myQ<T>::isEmpty()	{
+bool myQ<T>::isEmpty()	{
 	return (head == 0);
 }
+
 template <class T>
-void myQ<T>:: print(int i){
+void myQ<T>::print(int i){
 	cout<<"printing queue "<< i << ":";
 	Node* dummy = head;
 	while(dummy != 0){
@@ -320,17 +318,35 @@ myQ<T>& myQ<T>::operator+=(myQ<T>&  newQ){
 }
 
 template<class T>
-myQ<T>& myQ<T>::operator - (T* data){
-	if(data != 0 )
-		*this	-= data;
-	return *this;
+myQ<T>& myQ<T>::operator-(T* data){
+	Node currNode = 0;
+	myQ<T>& newQ = new myQ<T>();
+
+	currNode = head;
+	while(currNode != 0)	{
+		newQ += new Node(currNode->data);
+		currNode = currNode->next;
+	}
+
+	if(data != 0)	newQ -= data;
+
+	return newQ;
 }
 
 template<class T>
-myQ<T>& myQ<T>::operator - (myQ<T>& other){
-	if(!other.isEmpty())
-		*this	-= other;
-	return *this;
+myQ<T>& myQ<T>::operator-(myQ<T>& other){
+	Node currNode = 0;
+	myQ<T>& newQ = new myQ<T>();
+
+	currNode = head;
+	while(currNode != 0)	{
+		newQ += new Node(currNode->data);
+		currNode = currNode->next;
+	}
+
+	newQ -= other;
+
+	return newQ;
 }
 
 template<class T>
@@ -368,7 +384,7 @@ myQ<T>& myQ<T>::operator-=(T* data)	{
 }
 
 template<class T>
-myQ<T>& myQ<T>::operator-=(myQ<T>& other){
+myQ<T>& myQ<T>::operator-=(myQ<T>& other)	{
 	if(other.head == 0) return *this;
 
 	Node* cNode = other.head;
@@ -380,17 +396,35 @@ myQ<T>& myQ<T>::operator-=(myQ<T>& other){
 }
 
 template<class T>
-myQ<T>& myQ<T>::operator + (T* data){
-	if(data != 0)
-		*this += data;
-	return *this;
+myQ<T>& myQ<T>::operator+(T* data)	{
+	Node currNode = 0;
+	myQ<T>& newQ = new myQ<T>();
+
+	currNode = head;
+	while(currNode != 0)	{
+		newQ += new Node(currNode->data);
+		currNode = currNode->next;
+	}
+	
+	if(data != 0)	newQ += new Node(data);
+
+	return newQ;
 }
 
 template<class T>
-myQ<T>& myQ<T>::operator + (myQ<T>& newQ){
-	if(!newQ.isEmpty())
-		*this += newQ;
-	return *this;
+myQ<T>& myQ<T>::operator+(myQ<T>& newQ)	{
+	Node currNode = 0;	
+	myQ<T>& newestQ = new myQ<T>();
+
+	currNode = head;
+	while(currNode != 0)	{
+		newestQ += new Node(currNode->data);
+		currNode = currNode->next;
+	}
+	
+	newestQ += newQ;
+
+	return newestQ;
 }
 
 #endif
